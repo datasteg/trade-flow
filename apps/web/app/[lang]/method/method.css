@@ -1,0 +1,76 @@
+/* The method page (and the coverage chart, shared with /method/checks): one reading column in `measure`, serif
+   headings from site.css (.page--doc), Larch prose (.lr-prose) and tables (.lr-table). Classes mt-*, cov-*.
+   Only var(--token) colours. */
+
+.mt { max-width: calc(var(--measure) + 2 * var(--gutter)); }
+.mt-head { margin-bottom: var(--space-6); }
+.mt-head .lr-kicker { margin-bottom: var(--space-3); }
+
+/* Contents */
+.mt-toc { margin: 0 0 var(--space-7); padding: var(--space-4) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.mt-toc ol { columns: 2; column-gap: var(--space-6); margin: var(--space-2) 0 0; padding-left: 1.4em; font: 400 15px/24px var(--font-sans); color: var(--ink-muted); }
+.mt-toc li { break-inside: avoid; }
+.mt-toc a { color: var(--link); text-decoration: none; }
+.mt-toc a:hover { text-decoration: underline; }
+@media (max-width: 719px) { .mt-toc ol { columns: 1; } }
+
+/* Sections */
+.mt-sec { scroll-margin-top: calc(var(--header-height) + var(--space-4)); margin: 0 0 var(--space-8); }
+.mt-sec h2 { margin: 0 0 var(--space-4); color: var(--ink); text-wrap: balance; }
+.mt-h3 { margin: var(--space-6) 0 var(--space-3); font: 600 18px/26px var(--font-sans); color: var(--ink); }
+.mt .lr-prose p { margin: 0 0 var(--space-4); }
+.mt .lr-prose p:last-child { margin-bottom: 0; }
+.mt .lr-prose + .lr-prose, .mt .mt-table + .lr-prose, .mt .mt-fig + .lr-prose { margin-top: var(--space-5); }
+.mt .lr-prose strong { font-weight: 600; }
+.mt .lr-prose:lang(ko) strong { font-weight: 700; }
+.mt .lr-prose .lr-hs, .mt .lr-table .lr-hs { display: inline; padding: 1px 4px; font-size: 14px; white-space: nowrap; }
+.mt-list { margin: 0; padding-left: 1.2em; }
+.mt-list li { margin: 0 0 var(--space-3); }
+.mt-list li::marker { color: var(--ink-muted); }
+.mt-url { font: 500 14px/22px var(--font-mono); color: var(--link); overflow-wrap: anywhere; }
+.mt-cite { margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4); border-left: 2px solid var(--line-strong); background: var(--surface-raised); font: 400 15px/24px var(--font-sans); color: var(--ink); }
+.mt-source { margin-top: var(--space-5); }
+.mt-muted { color: var(--ink-muted); }
+
+/* Tables in the reading column */
+.mt-table { margin: var(--space-5) 0; }
+.mt-table--narrow .lr-table { max-width: 520px; }
+.mt-table .lr-table td, .mt-table .lr-table th[scope="row"] { font-size: 14px; line-height: 20px; }
+.lr-table th.mt-rowhead { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--line); font: 600 14px/20px var(--font-sans); color: var(--ink); text-align: left; vertical-align: top; white-space: nowrap; }
+.mt-table .lr-table caption .lr-hs { font-size: 12px; padding: 0 4px; }
+
+/* A figure: title, unit, plot, table view, caption */
+.mt-fig { margin: var(--space-6) 0; }
+.mt-fig__title { margin: 0; font: 600 15px/22px var(--font-sans); color: var(--ink); }
+.mt-fig__unit { margin: 0 0 var(--space-3); font: 400 13px/18px var(--font-sans); color: var(--ink-muted); }
+.mt-fig__caption { margin-top: var(--space-3); }
+.mt-details { margin-top: var(--space-3); }
+.mt-details summary { cursor: pointer; font: 500 13px/18px var(--font-sans); color: var(--link); }
+.mt-details[open] summary { margin-bottom: var(--space-2); }
+.mt-scroll { max-height: 320px; overflow-y: auto; }
+.mt-scroll thead th { position: sticky; top: 0; background: var(--surface); }
+
+/* The coverage line */
+.cov { position: relative; height: 220px; padding: 8px 0 24px 36px; box-sizing: border-box; }
+.cov__y span { position: absolute; left: 0; width: 28px; transform: translateY(-50%); text-align: right; font: 400 11px/14px var(--font-sans); color: var(--ink-muted); }
+.cov__y { position: absolute; left: 0; top: 8px; bottom: 24px; width: 28px; }
+.cov__plot { position: relative; height: 100%; }
+.cov__plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cov__band { fill: var(--viz-band); }
+.cov__grid { stroke: var(--viz-grid); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.cov__axis { stroke: var(--viz-axis); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.cov__line { fill: none; stroke: var(--viz-focus); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.cov__hit { fill: transparent; }
+.cov__hit:hover { fill: var(--viz-grid); fill-opacity: 0.5; }
+.cov__dot { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--viz-focus); box-shadow: 0 0 0 2px var(--surface); pointer-events: none; }
+.cov__bandlabel { position: absolute; top: 4px; margin-left: 6px; font: 500 11px/14px var(--font-sans); color: var(--ink-muted); pointer-events: none; }
+.cov__note { position: absolute; font: 500 12px/16px var(--font-sans); color: var(--ink-secondary); white-space: nowrap; pointer-events: none; }
+.cov__note--complete { margin: 10px 8px 0 0; }
+.cov__note--end { right: 12px; }
+.cov__note--above { margin-bottom: 6px; }
+.cov__note--below { margin-top: 8px; }
+.cov__x { position: absolute; left: 36px; right: 0; bottom: 0; height: 20px; }
+.cov__x span { position: absolute; top: 4px; transform: translateX(-50%); font: 400 11px/14px var(--font-sans); color: var(--ink-muted); }
+.cov__x span:first-child { transform: none; }
+@media (max-width: 479px) { .cov { height: 200px; } .cov__note { font-size: 11px; } }
+.mt-table a { color: var(--link); }

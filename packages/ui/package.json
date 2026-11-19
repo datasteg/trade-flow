@@ -1,0 +1,24 @@
+{
+  "name": "@larch/ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Larch React components: the .lr-* markup of design/larch.css as typed components, and the EN/KO number and date formatters",
+  "exports": {
+    ".": "./src/index.ts",
+    "./format": "./src/format.ts",
+    "./family.css": "./src/family.css"
+  },
+  "dependencies": {
+    "lucide-react": "1.52.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "react": "19.3.0"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

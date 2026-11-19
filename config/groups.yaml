@@ -1,0 +1,42 @@
+# Predefined groupings for colouring the maps (Explore's "Colour by", the maps of chain, event and case pages),
+# in place of Louvain communities, which change from year to year. scripts/build_snapshots.py merges this file
+# with config/memberships.csv (one row per group, economy, join date, last day, source) into
+# data/groups/memberships.json.
+#
+# Each group has a fixed colour token (design/tokens.json, viz-1 … viz-8), the same on every page and in every
+# year; economies outside the selected groups are viz-context grey. A flow is drawn in a group's colour when both
+# ends belong to that group, in grey otherwise.
+#
+# - regions: mutually exclusive, the default. UN M49 subregions (meta.nodes[].subregion, from the Comtrade node
+#   list) in eight regions; membership does not change over time.
+# - blocs: trade agreements, with dates (memberships.csv). Readers colour several at once; an economy in two
+#   selected blocs takes the first in the reader's order.
+# - clubs: overlapping country groups with dates, highlighted one at a time.
+
+regions:
+  NAM: {en: North America, ko: 북미, colour: viz-3, subregions: [Northern America]}
+  LAC: {en: Latin America and the Caribbean, ko: 중남미·카리브, colour: viz-6, subregions: [Latin America and the Caribbean]}
+  EUR: {en: Europe, ko: 유럽, colour: viz-5, subregions: [Eastern Europe, Northern Europe, Southern Europe, Western Europe]}
+  MENA: {en: Middle East and North Africa, ko: 중동·북아프리카, colour: viz-8, subregions: [Northern Africa, Western Asia]}
+  SSA: {en: Sub-Saharan Africa, ko: 사하라 이남 아프리카, colour: viz-1, subregions: [Sub-Saharan Africa]}
+  CSA: {en: Central and South Asia, ko: 중앙·남아시아, colour: viz-7, subregions: [Central Asia, Southern Asia]}
+  EAS: {en: East and Southeast Asia, ko: 동·동남아시아, colour: viz-4, subregions: [Eastern Asia, South-eastern Asia]}
+  OCE: {en: Oceania, ko: 오세아니아, colour: viz-2, subregions: [Australia and New Zealand, Melanesia, Micronesia, Polynesia]}
+
+blocs:
+  EU: {en: European Union, ko: 유럽연합, colour: viz-5, note: {en: EEC and EC before November 1993, ko: 1993년 11월 이전은 EEC·EC}}
+  ASEAN: {en: ASEAN, ko: 아세안, colour: viz-4}
+  USMCA: {en: USMCA (NAFTA), ko: USMCA(NAFTA), colour: viz-3, note: {en: NAFTA from 1994 until 30 June 2020, ko: 1994년부터 2020년 6월 30일까지는 NAFTA}}
+  MERCOSUR: {en: MERCOSUR, ko: 메르코수르, colour: viz-6, note: {en: Full members (States Parties) only, ko: 정회원국만}}
+  GCC: {en: Gulf Cooperation Council, ko: 걸프협력회의, colour: viz-8}
+  EAEU: {en: Eurasian Economic Union, ko: 유라시아경제연합, colour: viz-7}
+  AFCFTA: {en: African Continental FTA, ko: 아프리카대륙자유무역지대, colour: viz-1, note: {en: State parties that have ratified the agreement, ko: 협정을 비준한 당사국}}
+
+clubs:
+  G7: {en: G7, ko: G7, colour: viz-3}
+  G20: {en: G20, ko: G20, colour: viz-5, note: {en: The 19 member countries; the EU and the African Union are not economies on the map, ko: 19개 회원국. 유럽연합과 아프리카연합은 지도의 경제권이 아닙니다}}
+  OECD: {en: OECD, ko: OECD, colour: viz-6}
+  BRICS: {en: BRICS, ko: 브릭스, colour: viz-4, note: {en: Full members only, not partner countries, ko: 정회원국만, 파트너국 제외}}
+
+# The colour of a custom list (Explore: ISO3 codes typed by the reader).
+custom: {en: Custom list, ko: 직접 고른 경제권, colour: viz-3}

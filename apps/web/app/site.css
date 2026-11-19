@@ -1,0 +1,77 @@
+/* Page furniture for trade-flow.datasteg.com: the page ground, the shell (skip link, sticky Masthead, the
+   narrow-screen nav row) and the page widths. Components are styled by @larch/design/larch.css (.lr-* classes);
+   only var(--token) colours here, never a literal. */
+
+html { background: var(--surface); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+/* Korean text never breaks inside a word (larch.css sets the same on .lr:lang(ko)). */
+html:lang(ko) body { word-break: keep-all; line-break: strict; }
+main { display: block; }
+main:focus { outline: none; }
+
+.skip-link {
+  position: absolute; left: var(--space-4); top: var(--space-2); z-index: var(--z-tooltip);
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--on-accent); font: 500 14px/20px var(--font-sans); text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+/* Masthead: stays at the top. Below 800px its nav moves to a scrolling row under the bar. */
+.site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--surface); }
+.site-subnav { display: none; gap: var(--space-5); overflow-x: auto; padding: 0 var(--space-5); border-bottom: 1px solid var(--line); }
+.site-subnav a {
+  position: relative; flex: none; display: flex; align-items: center; height: 44px;
+  font: 500 14px/20px var(--font-sans); color: var(--ink-secondary); text-decoration: none;
+}
+.site-subnav a:hover { color: var(--ink); }
+.site-subnav a[aria-current="page"] { color: var(--link); }
+.site-subnav a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); }
+@media (max-width: 799px) {
+  .site-header .lr-nav { display: none; }
+  .site-header .lr-masthead { gap: var(--space-3); padding: 0 var(--space-4); }
+  .site-subnav { display: flex; padding: 0 var(--space-4); }
+}
+
+/* The server-rendered first view of the all-goods network (components/explore/StaticMap, lib/firstView.ts): the
+   explorer's placeholder and the home page's network block. Token colours are set inline per group. */
+.gx-static__inner { width: 100%; height: 100%; }
+.gx-static__svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.gxs-f path { fill: none; stroke-linecap: round; opacity: var(--opacity-edge); }
+.gxs-n circle { stroke: var(--node-ring); stroke-width: var(--node-ring-width); }
+/* the static first view's ground: region tints and names, as NetView draws them (packages/net/src/net.css .ln-region) */
+.gxs-r { opacity: 0.09; }
+.gxs-rn { paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .gxs-r { opacity: 0.13; } }
+:root[data-theme="dark"] .gxs-r { opacity: 0.13; }
+
+/* Pages: --width-page for the explorer and home, --width-doc for chains, events, cases and method, --measure for
+   reading text. 16px side gutter on phones. */
+.page { box-sizing: border-box; max-width: calc(var(--width-page) + 2 * var(--gutter)); margin: 0 auto; padding: var(--space-7) var(--gutter) var(--space-9); }
+.page--doc { max-width: calc(var(--width-doc) + 2 * var(--gutter)); }
+.measure { max-width: var(--measure); }
+@media (max-width: 719px) { .page { padding: var(--space-6) var(--space-4) var(--space-8); } }
+
+.page__title { margin: 0 0 var(--space-4); font: 600 30px/38px var(--font-sans); letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
+.page__lede { max-width: var(--measure); margin: 0 0 var(--space-5); font: 400 17px/28px var(--font-sans); color: var(--ink-secondary); }
+
+/* Reading pages (chains, events, cases, method): serif titles and headings, Gowun Batang on Korean pages. */
+.page--doc .page__title, .page--doc h2 { font-family: var(--font-serif); }
+.page--doc .page__title { font-size: 38px; line-height: 46px; letter-spacing: -0.012em; }
+.page--doc h2 { font-weight: 600; font-size: 26px; line-height: 34px; letter-spacing: -0.008em; }
+.page--doc .page__lede { font: 400 20px/30px var(--font-serif); }
+.page--doc :is(.page__title, h2):lang(ko) { font-family: var(--font-ko-serif); font-weight: 700; letter-spacing: -0.02em; }
+.page--doc .page__title:lang(ko) { font-size: 30px; line-height: 40px; }
+.page--doc .page__lede:lang(ko) { font: 400 18px/30px var(--font-ko-serif); }
+@media (max-width: 719px) {
+  .page--doc .page__title { font-size: 30px; line-height: 38px; }
+  .page--doc .page__title:lang(ko) { font-size: 26px; line-height: 36px; }
+  .page--doc .page__lede { font-size: 18px; line-height: 28px; }
+}

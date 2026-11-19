@@ -1,0 +1,44 @@
+/* The datasteg type (family/type.css, 9 Nov 2026): every public site sets type as www (Cairn) does. Newsreader, in its
+   optical sizes, sets headlines and big numbers; Libre Franklin sets text, menus, labels and charts; JetBrains Mono
+   sets codes, ids and paths. Korean falls back to Noto Serif KR in the serif roles and Pretendard in the sans roles.
+   Loaded after each design system's own stylesheets, it points their font tokens at these three stacks, so every
+   component keeps its sizes and spacing and changes only its typeface. Source: family/ (sync.mjs copies it into each
+   app as lib/ds-type.css). */
+:root {
+  --ds-serif: 'Newsreader Variable', 'Noto Serif KR Variable', Georgia, 'Times New Roman', serif;
+  --ds-sans: 'Libre Franklin Variable', 'Pretendard Variable', 'Helvetica Neue', Arial, sans-serif;
+  --ds-mono: 'JetBrains Mono Variable', ui-monospace, Menlo, Consolas, monospace;
+  --ds-ko-serif: 'Noto Serif KR Variable', 'Newsreader Variable', Georgia, serif;
+  /* the design systems' token names: Sinho (money-flow), Larch (trade-flow), Oreum (global-network),
+     Oliveto (open-research), Glacier (articles) */
+  --font-sans: var(--ds-sans);
+  --font-text: var(--ds-sans);
+  --font-condensed: var(--ds-sans);
+  --font-serif: var(--ds-serif);
+  --font-display: var(--ds-serif);
+  --font-ko-serif: var(--ds-ko-serif);
+  --font-ko-sans: var(--ds-sans);
+  --font-mono: var(--ds-mono);
+}
+/* Newsreader's optical sizes: display cuts at headline sizes, text cuts in running text. */
+h1, h2, h3, h4 { font-optical-sizing: auto; }
+
+/* Headlines as on www: Newsreader at a light-to-book weight with slightly tight tracking, never bold. The :not(#ds)
+   lifts these rules above each system's single-class heading styles without touching their sizes or spacing. */
+main :is(h1, h2):not(#ds),
+:is(.mf-h3, .mf-board__h3, .gl-story__title, .gl-card__title, .hub__title):not(#ds) {
+  font-family: var(--ds-serif); font-optical-sizing: auto; letter-spacing: -0.012em;
+}
+main h1:not(#ds) { font-weight: 400; }
+main h2:not(#ds), :is(.mf-h3, .mf-board__h3, .gl-story__title, .gl-card__title, .hub__title):not(#ds) { font-weight: 500; }
+/* Korean headlines: Noto Serif KR reads heavier than Newsreader at the same weight */
+:lang(ko) main h1:not(#ds) { font-weight: 500; }
+:lang(ko) main h2:not(#ds) { font-weight: 600; }
+
+/* The wordmark: the site's mark from the family icon set, then the name in Newsreader, the same on every site. */
+:is(.sn-wordmark, .lr-wordmark, .gn-wordmark, .or-wordmark, .gl-wordmark):not(#ds) {
+  display: inline-flex; align-items: center; gap: 9px; font-family: var(--ds-serif); font-optical-sizing: auto;
+  font-weight: 500; font-stretch: normal; letter-spacing: -0.015em;
+}
+:is(.sn-wordmark, .lr-wordmark, .gn-wordmark, .or-wordmark, .gl-wordmark) .ds-wordmark-mark { flex: none; }
+:is(.sn-wordmark, .lr-wordmark, .gn-wordmark, .or-wordmark, .gl-wordmark) :is(.mf-mast__tag) { font-family: var(--ds-sans); letter-spacing: 0; }

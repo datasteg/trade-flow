@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" width="1280" height="320" role="img" aria-labelledby="t d">
+  <title id="t">trade-flow</title>
+  <desc id="d">The trade-flow banner in the Larch design system: the canopy band, the larch mark, a chain's ladder of five stages and a small trade network.</desc>
+  <!-- Larch tokens: canopy #1E3B2C, canopy-line #3A5747, on-canopy #EEF2EA, on-canopy-muted #B9C8BC,
+       canopy-accent #E8B04A, stage-1..5 #733C1A #945418 #B46D10 #CC871B #E0A028, rowan-red #F0866F (dusk),
+       flow-out #E8B04A, flow-in #2FB5B5 (dusk), spruce #14231B -->
+  <rect width="1280" height="320" fill="#1E3B2C"/>
+
+  <!-- contour lines, as on the TrailHead band -->
+  <g fill="none" stroke="#3A5747" stroke-width="1">
+    <path d="M1280 40 A 420 420 0 0 0 860 460"/>
+    <path d="M1280 80 A 380 380 0 0 0 900 460"/>
+    <path d="M1280 120 A 340 340 0 0 0 940 460"/>
+    <path d="M1280 160 A 300 300 0 0 0 980 460"/>
+    <path d="M1280 200 A 260 260 0 0 0 1020 460"/>
+  </g>
+
+  <!-- a small network: flows out of the focus economy in gold, flows in in teal -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M1010 150 Q 1080 70 1170 96" stroke="#E8B04A" stroke-width="5" opacity="0.85"/>
+    <path d="M1010 150 Q 1100 160 1188 214" stroke="#E8B04A" stroke-width="3" opacity="0.85"/>
+    <path d="M1010 150 Q 950 210 902 250" stroke="#E8B04A" stroke-width="2" opacity="0.85"/>
+    <path d="M846 108 Q 920 100 1010 150" stroke="#2FB5B5" stroke-width="4" opacity="0.85"/>
+    <path d="M1100 262 Q 1040 230 1010 150" stroke="#2FB5B5" stroke-width="2.5" opacity="0.85"/>
+    <path d="M846 108 Q 1000 40 1170 96" stroke="#B9C8BC" stroke-width="1" opacity="0.45"/>
+    <path d="M902 250 Q 1000 290 1100 262" stroke="#B9C8BC" stroke-width="1" opacity="0.45"/>
+    <path d="M1188 214 Q 1200 150 1170 96" stroke="#B9C8BC" stroke-width="1" opacity="0.45"/>
+  </g>
+  <g stroke="#1E3B2C" stroke-width="1.5">
+    <circle cx="846" cy="108" r="13" fill="#8FA295"/>
+    <circle cx="1170" cy="96" r="16" fill="#8FA295"/>
+    <circle cx="1188" cy="214" r="10" fill="#8FA295"/>
+    <circle cx="902" cy="250" r="8" fill="#8FA295"/>
+    <circle cx="1100" cy="262" r="11" fill="#8FA295"/>
+    <circle cx="1010" cy="150" r="22" fill="#E8B04A"/>
+  </g>
+  <circle cx="1010" cy="150" r="25" fill="none" stroke="#EEF2EA" stroke-width="2"/>
+
+  <!-- the larch mark -->
+  <g transform="translate(64 58) scale(2.6)">
+    <path d="M12 2.5 C13 4.5, 14.4 6.4, 15.6 7.6 C14 7.4, 10 7.4, 8.4 7.6 C9.6 6.4, 11 4.5, 12 2.5 Z" fill="#E8B04A"/>
+    <path d="M12 6.2 C13.4 8.6, 15.6 10.9, 17.6 12.4 C15 12.1, 9 12.1, 6.4 12.4 C8.4 10.9, 10.6 8.6, 12 6.2 Z" fill="#E8B04A"/>
+    <path d="M12 10.6 C13.8 13.2, 16.8 15.8, 19.8 17.4 C16 17, 8 17, 4.2 17.4 C7.2 15.8, 10.2 13.2, 12 10.6 Z" fill="#E8B04A"/>
+    <path d="M12 17v4.5 M7.5 21.5h9" fill="none" stroke="#EEF2EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- kicker, title, dek -->
+  <text x="140" y="84" fill="#E8B04A" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="2.2">DATASTEG · LARCH</text>
+  <text x="138" y="140" fill="#EEF2EA" font-family="Georgia, 'Times New Roman', Times, serif" font-size="60" font-weight="600" letter-spacing="-0.8">trade-flow</text>
+  <text x="140" y="180" fill="#B9C8BC" font-family="Georgia, 'Times New Roman', Times, serif" font-size="21">The world trade network and ten product chains,</text>
+  <text x="140" y="208" fill="#B9C8BC" font-family="Georgia, 'Times New Roman', Times, serif" font-size="21">from ore to product, with the events that moved them.</text>
+
+  <!-- a chain's ladder: five rungs, the chokepoint ringed in rowan -->
+  <g font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#B9C8BC">
+    <rect x="140" y="244" width="102" height="16" rx="2" fill="#733C1A"/>
+    <rect x="250" y="244" width="102" height="16" rx="2" fill="#945418"/>
+    <rect x="360" y="244" width="102" height="16" rx="2" fill="#B46D10"/>
+    <rect x="470" y="244" width="102" height="16" rx="2" fill="#CC871B"/>
+    <rect x="580" y="244" width="102" height="16" rx="2" fill="#E0A028"/>
+    <rect x="247" y="241" width="108" height="22" rx="4" fill="none" stroke="#F0866F" stroke-width="2"/>
+    <text x="140" y="284">S1 ORE</text>
+    <text x="250" y="284">S2 REFINED</text>
+    <text x="360" y="284">S3 MATERIAL</text>
+    <text x="470" y="284">S4 PART</text>
+    <text x="580" y="284">S5 PRODUCT</text>
+  </g>
+  <!-- the trail marker -->
+  <rect x="701" y="245" width="12" height="12" fill="#E8B04A" stroke="#14231B" stroke-width="1" transform="rotate(45 707 251)"/>
+</svg>

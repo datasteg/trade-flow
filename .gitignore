@@ -1,0 +1,26 @@
+# Generated data (built by the Python scripts from the trade collector's network tables; never committed)
+data/
+data-in/
+validators/
+
+# Node (apps/web, packages/)
+node_modules/
+.next/
+.next-*/
+out/
+*.tsbuildinfo
+next-env.d.ts
+# Copied from world-atlas before every dev and build (apps/web/scripts/world-map.mjs)
+apps/web/public/world-110m.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+
+# Local
+.env
+.env.*
+!.env.example
+.DS_Store

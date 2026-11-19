@@ -1,0 +1,14 @@
+{
+  "name": "datasteg-trade-flow",
+  "private": true,
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "tokens": "node packages/tokens-build/build.mjs",
+    "dev": "pnpm tokens && pnpm --filter @trade-flow/web dev",
+    "build": "pnpm tokens && pnpm --filter @trade-flow/web build",
+    "start": "pnpm --filter @trade-flow/web start"
+  }
+}

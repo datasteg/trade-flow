@@ -1,0 +1,5 @@
+{
+  "note": "IndexNow: the key is served at /<key>.txt and sent with the sitemap URLs after each release. The key is not part of the public snapshot.",
+  "host": "trade-flow.datasteg.com",
+  "key": "<indexnow-key>"
+}

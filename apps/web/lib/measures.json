@@ -1,0 +1,605 @@
+{
+  "version": 1,
+  "note": "The measures registry: every quantity the flow sites, the API and the articles desk publish, defined once. A page, an API field or a desk column that shows a measure uses its id, its name and its definition from here. Copied into each app at deploy (lib/measures.json) by family/sync.mjs; the copies are checked like family.json. Korean names and definitions: drafted with `claude -p` while qkr is training, recorded in .ko-refine/ledger.jsonl as engine claude-p. Desk lint fields: `aliases` (other English names a text may use), `never_call` (names that are wrong for the measure; `{economy}` stands for an economy's name), `inputs` (the measures a composite is built from, for the mechanical flag) and, on stress_count, `signals` (the seven joint signals and their inputs).",
+  "measures": {
+    "goods_exports_partner": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Goods exports, as partners record them",
+        "ko": "상품수출(상대국 기록 기준)"
+      },
+      "definition": {
+        "en": "The goods an economy's partners record importing from it, summed over a window of months. Each flow takes the importer's report where it filed the month; otherwise the exporter's report spliced to the importer's level (κ), or the exporter's report times 1.06 (CIF/FOB). Values are CIF, by country of origin, in US dollars. They differ from the economy's own customs figures by design.",
+        "ko": "교역상대국이 해당 경제로부터 수입했다고 기록한 상품을 여러 달의 창에 걸쳐 합산한 값입니다. 교역 흐름마다 수입국이 그 달을 보고했으면 수입국 보고를 씁니다. 보고하지 않았으면 수출국 보고를 수입국 수준에 맞춰 연결한 값(κ)이나 수출국 보고에 1.06을 곱한 값(CIF/FOB)을 씁니다. 금액은 원산지 기준 CIF 가격이며 미 달러로 표시합니다. 해당 경제의 자체 통관 수치와는 설계상 다릅니다."
+      },
+      "source": "trade-flow series/W TOTAL x (build_windows composite)",
+      "basis": "partner-recorded, CIF, origin",
+      "period": "window of months, named by its last month (window_to)",
+      "aliases": [
+        "goods exports",
+        "dollar exports",
+        "exports of goods",
+        "dollar goods exports"
+      ]
+    },
+    "goods_imports_own": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Goods imports, as the economy records them",
+        "ko": "상품수입(자국 기록 기준)"
+      },
+      "definition": {
+        "en": "The goods an economy records importing, summed over a window of months, CIF. Where the economy did not file a month, the partners' export reports stand in (spliced or times 1.06), and the value is marked estimated.",
+        "ko": "해당 경제가 수입했다고 기록한 상품을 여러 달의 창에 걸쳐 합산한 값이며 CIF 가격입니다. 해당 경제가 어떤 달을 보고하지 않았으면 교역상대국의 수출 보고(연결한 값 또는 1.06을 곱한 값)로 대신하고 추정치로 표시합니다."
+      },
+      "source": "trade-flow series/W TOTAL m (build_windows composite)",
+      "basis": "importer-recorded, CIF",
+      "period": "window of months (window_to)"
+    },
+    "goods_trade_growth": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Growth over the year",
+        "ko": "전년비 증감률"
+      },
+      "definition": {
+        "en": "The change of a window's value against the window of the same length that ends twelve months earlier. Empty when either window is incomplete.",
+        "ko": "창의 값을 12개월 앞서 끝나는 같은 길이의 창과 비교한 변화율입니다. 두 창 가운데 하나라도 자료가 다 채워지지 않았으면 비워 둡니다."
+      },
+      "source": "trade-flow and global-network, month arithmetic t − 12",
+      "basis": "same measure at both ends",
+      "period": "window_to and base_window_to",
+      "aliases": [
+        "export growth",
+        "growth of goods exports",
+        "growth over the year",
+        "dollar export growth"
+      ]
+    },
+    "exports_gs_bop": {
+      "app": "global-network",
+      "name": {
+        "en": "Exports of goods and services (balance of payments)",
+        "ko": "상품·서비스 수출(국제수지)"
+      },
+      "definition": {
+        "en": "Exports of goods and services as the economy's balance of payments records them (World Bank WDI annually, IMF BOP quarterly as four-quarter sums). A different measure from goods exports as partners record them: it includes services and values goods FOB.",
+        "ko": "해당 경제의 국제수지에 기록된 상품·서비스 수출입니다. 연간은 세계은행 WDI, 분기는 IMF BOP의 최근 4분기 합계를 씁니다. 상대국 기록 기준 상품수출과는 다른 지표입니다. 서비스를 포함하고 상품을 FOB 가격으로 평가합니다."
+      },
+      "source": "WDI BX.GSR.GNFS.CD; IMF BOP quarterly",
+      "basis": "economy's own balance of payments, FOB",
+      "period": "calendar year, or four quarters to a quarter end",
+      "never_call": [
+        "goods exports as partners record them"
+      ]
+    },
+    "bank_claims_short_term": {
+      "app": "money-flow",
+      "name": {
+        "en": "BIS banks' claims due within a year",
+        "ko": "BIS 보고은행의 잔존만기 1년 이하 채권"
+      },
+      "definition": {
+        "en": "International claims of BIS reporting banks on the economy with a remaining maturity of up to one year: cross-border claims plus local claims in foreign currency of foreign banks' offices in the economy, all sectors and currencies, by immediate counterparty (BIS consolidated statistics, bank type 4O). It counts long-term claims falling due within a year and only bank creditors, so it is not the economy's short-term external debt.",
+        "ko": "BIS 보고은행이 해당 경제에 대해 보유한 국제 채권, 곧 해당 경제가 이 은행들에 진 채무 가운데 잔존만기가 1년 이하인 금액입니다. 국경 간 채권에 해당 경제에 있는 외국은행 영업점의 외화표시 현지 채권을 더한 값입니다. 모든 부문과 통화를 포함하며 직접 거래상대방 기준으로 집계합니다(BIS 연결 은행통계, 은행 유형 4O). 1년 안에 만기가 돌아오는 장기 채권도 포함하고 채권자는 은행만 집계하므로 해당 경제의 단기외채가 아닙니다."
+      },
+      "source": "BIS WS_CBS_PUB Q.S.5A.4O.F.I.A.U.TO1.A.<cc>",
+      "basis": "consolidated, immediate counterparty, remaining maturity",
+      "period": "quarter end",
+      "aliases": [
+        "BIS banks' claims due within a year",
+        "claims due within a year",
+        "bank claims due within a year"
+      ],
+      "never_call": [
+        "short-term external debt",
+        "short-term foreign debt",
+        "short-term debt",
+        "external short-term debt"
+      ]
+    },
+    "bank_claims_foreign_ur": {
+      "app": "money-flow",
+      "name": {
+        "en": "Foreign claims of BIS banks, ultimate risk",
+        "ko": "BIS 보고은행 대외채권(최종위험 기준)"
+      },
+      "definition": {
+        "en": "Foreign claims of BIS reporting banks (bank type 4R) on the economy, allocated to the country of ultimate risk, all maturities and instruments, including local claims in local currency.",
+        "ko": "BIS 보고은행(은행 유형 4R)이 이 경제에 대해 보유한 대외채권입니다. 최종위험 국가 기준으로 배분하며, 모든 만기와 금융상품을 포함합니다. 현지통화로 표시된 현지채권도 포함합니다."
+      },
+      "source": "BIS WS_CBS_PUB, bank type 4R, ultimate risk",
+      "basis": "consolidated, ultimate risk",
+      "period": "quarter end",
+      "never_call": [
+        "total external debt"
+      ]
+    },
+    "bank_loans_lbs": {
+      "app": "money-flow",
+      "name": {
+        "en": "Bank loans and deposits owed (BIS locational)",
+        "ko": "은행 대출·예금 채무(BIS 소재지 기준)"
+      },
+      "definition": {
+        "en": "Loans and deposits that banks located in BIS reporting countries hold on the economy's residents, all sectors (interbank included), all currencies, by residence of the lending office, not the bank's nationality.",
+        "ko": "BIS 보고국에 소재한 은행이 이 경제의 거주자에게 보유한 대출·예금입니다. 은행 간 거래를 포함한 모든 부문과 모든 통화를 포함합니다. 은행의 국적이 아니라 대출 영업점의 소재지를 기준으로 집계합니다."
+      },
+      "source": "BIS WS_LBS_D_PUB, instrument G, all reporting countries 5A",
+      "basis": "locational, residence",
+      "period": "quarter end",
+      "aliases": [
+        "bank loans and deposits owed",
+        "cross-border bank loans owed",
+        "loans owed to foreign banks"
+      ],
+      "never_call": [
+        "{economy}'s bank loans",
+        "{economy}'s foreign bank loans",
+        "total external debt",
+        "external debt"
+      ]
+    },
+    "bank_flow_lbs": {
+      "app": "money-flow",
+      "name": {
+        "en": "Bank loans and deposits flow",
+        "ko": "은행 대출·예금 흐름"
+      },
+      "definition": {
+        "en": "The quarter's change in bank loans and deposits owed (BIS locational), adjusted by the BIS for exchange rates and breaks in series. It is a flow, not the change between two stocks.",
+        "ko": "은행 대출·예금 채무(BIS 소재지 기준)의 분기 중 변동분으로, BIS가 환율 변동과 시계열 단절을 조정한 값입니다. 두 시점 잔액의 차이가 아니라 흐름 통계입니다."
+      },
+      "source": "BIS WS_LBS_D_PUB flows, instrument G",
+      "basis": "locational, residence, FX- and break-adjusted",
+      "period": "quarter",
+      "aliases": [
+        "bank flow",
+        "cross-border bank flow"
+      ]
+    },
+    "lender_share": {
+      "app": "money-flow",
+      "name": {
+        "en": "Lender share",
+        "ko": "대출국 비중"
+      },
+      "definition": {
+        "en": "The share of bank loans and deposits owed (BIS locational) that banks located in one reporting country hold. Reporters that publish all instruments only, without a loans-and-deposits split, are listed apart with their all-instrument amount and have no share.",
+        "ko": "은행 대출·예금 채무(BIS 소재지 기준) 가운데 한 보고국에 소재한 은행이 보유한 비중입니다. 대출·예금을 따로 구분하지 않고 전체 금융상품 합계만 공표하는 보고국은 전체 금액과 함께 별도로 표시하며, 비중은 산출하지 않습니다."
+      },
+      "source": "BIS WS_LBS_D_PUB by lending country",
+      "basis": "locational, residence",
+      "period": "quarter end",
+      "never_call": [
+        "lending country",
+        "{economy}'s lender share"
+      ]
+    },
+    "intl_debt_securities": {
+      "app": "money-flow",
+      "name": {
+        "en": "International debt securities",
+        "ko": "국제 채무증권"
+      },
+      "definition": {
+        "en": "Debt securities issued outside the economy's domestic market by its residents (BIS international debt securities, nationality basis where stated).",
+        "ko": "이 경제의 거주자가 국내 시장 밖에서 발행한 채무증권입니다(BIS 국제 채무증권 통계, 별도 표기한 경우 국적 기준)."
+      },
+      "source": "BIS WS_DEBT_SEC2_PUB",
+      "basis": "as stated per view",
+      "period": "quarter end; net issuance per quarter"
+    },
+    "net_reserves": {
+      "app": "money-flow",
+      "name": {
+        "en": "Net reserves",
+        "ko": "순외환보유액"
+      },
+      "definition": {
+        "en": "Official reserve assets (IMF reserve template, section I) less the predetermined short-term net drains in foreign currency (section II). It can be negative.",
+        "ko": "공식 준비자산(IMF 외환보유액 통계양식 I부)에서 외화 단기 확정 순유출(II부)을 뺀 값입니다. 음수일 수 있습니다."
+      },
+      "source": "IMF IRFCL sections I and II",
+      "basis": "central bank and government",
+      "period": "quarter end",
+      "never_call": [
+        "reserves minus short-term external debt"
+      ]
+    },
+    "a2_reserve_base": {
+      "app": "money-flow",
+      "name": {
+        "en": "Reserve base of A2",
+        "ko": "A2 외환보유액 기준"
+      },
+      "definition": {
+        "en": "The denominator of A2: net reserves, but never less than a tenth of gross reserves, so the ratio stays finite. Used only in A2; a floored value is flagged.",
+        "ko": "A2의 분모입니다. 순외환보유액을 쓰되 총외환보유액의 10분의 1보다 작아지지 않게 해 비율이 무한히 커지지 않도록 합니다. A2에서만 쓰며, 하한을 적용한 값에는 표시를 붙입니다."
+      },
+      "source": "money-flow rules.py net_reserves()",
+      "basis": "net reserves with a floor",
+      "period": "quarter end"
+    },
+    "gross_reserves": {
+      "app": "money-flow",
+      "name": {
+        "en": "Gross reserves",
+        "ko": "총외환보유액"
+      },
+      "definition": {
+        "en": "Official reserve assets (IMF reserve template, section I, or the central bank's monthly release where stated).",
+        "ko": "공식 준비자산입니다(IMF 외환보유액 통계양식 I부, 따로 밝힌 경우에는 중앙은행 월간 발표 자료)."
+      },
+      "source": "IMF IRFCL section I; ECOS for Korea's monthly tile",
+      "basis": "central bank and government",
+      "period": "quarter end or month end, as stated"
+    },
+    "a2": {
+      "app": "money-flow",
+      "name": {
+        "en": "A2: BIS banks' claims due within a year ÷ reserve base",
+        "ko": "A2: BIS 보고은행의 잔존만기 1년 이내 채권 ÷ A2 외환보유액 기준"
+      },
+      "definition": {
+        "en": "BIS banks' claims due within a year as a percentage of A2's reserve base.",
+        "ko": "BIS 보고은행이 보유한 잔존만기 1년 이내 채권을 A2 외환보유액 기준으로 나눈 백분율입니다."
+      },
+      "source": "money-flow board a2",
+      "basis": "see bank_claims_short_term and a2_reserve_base",
+      "period": "quarter end",
+      "never_call": [
+        "short-term external debt to reserves"
+      ]
+    },
+    "gdp_bis": {
+      "app": "money-flow",
+      "name": {
+        "en": "GDP (BIS-implied, four quarters)",
+        "ko": "GDP(BIS 통계 기준, 최근 4개 분기)"
+      },
+      "definition": {
+        "en": "Nominal GDP over the last four quarters in US dollars, implied by the BIS total credit statistics at the end-quarter exchange rate. The newest quarter may carry the previous one forward, flagged.",
+        "ko": "최근 4개 분기 명목 GDP를 미 달러로 나타낸 값입니다. BIS 총신용 통계에서 분기 말 환율로 역산합니다. 최신 분기는 직전 분기 값을 그대로 쓸 수 있으며, 이 경우 표시를 붙입니다."
+      },
+      "source": "BIS WS_TC",
+      "basis": "four quarters, end-quarter rate",
+      "period": "quarter end"
+    },
+    "gdp_weo": {
+      "app": "money-flow",
+      "name": {
+        "en": "GDP (IMF WEO, year)",
+        "ko": "GDP(IMF WEO, 연간)"
+      },
+      "definition": {
+        "en": "Nominal GDP for a calendar year in US dollars from the IMF World Economic Outlook.",
+        "ko": "IMF 세계경제전망(WEO)의 연간 명목 GDP입니다. 미 달러 기준입니다."
+      },
+      "source": "IMF WEO NGDPD",
+      "basis": "calendar year",
+      "period": "year"
+    },
+    "gdp_wdi": {
+      "app": "global-network",
+      "name": {
+        "en": "GDP (World Bank WDI, year)",
+        "ko": "GDP(세계은행 WDI, 연간)"
+      },
+      "definition": {
+        "en": "Nominal GDP for a calendar year in US dollars from the World Bank's World Development Indicators.",
+        "ko": "세계은행 세계개발지표(WDI)의 연간 명목 GDP입니다. 미 달러 기준입니다."
+      },
+      "source": "WDI NY.GDP.MKTP.CD",
+      "basis": "calendar year",
+      "period": "year"
+    },
+    "gdp_qnea": {
+      "app": "global-network",
+      "name": {
+        "en": "GDP (IMF quarterly national accounts, four quarters)",
+        "ko": "GDP(IMF 분기 국민계정, 4개 분기 합계)"
+      },
+      "definition": {
+        "en": "Nominal GDP over four quarters from the IMF quarterly national accounts, in US dollars at average exchange rates.",
+        "ko": "IMF 분기 국민계정의 4개 분기 명목 GDP 합계입니다. 평균 환율로 환산한 미 달러 기준입니다."
+      },
+      "source": "IMF QNEA, BIS XRU",
+      "basis": "four quarters, average rate",
+      "period": "quarter end"
+    },
+    "financing_need": {
+      "app": "global-network",
+      "name": {
+        "en": "Financing need",
+        "ko": "자금조달 필요액"
+      },
+      "definition": {
+        "en": "BIS banks' claims due within a year plus the current-account deficit (zero when in surplus), at a quarter end.",
+        "ko": "분기말 기준 BIS 보고은행의 잔존만기 1년 이내 채권(이 경제가 해당 은행들에 진 채무)에 경상수지 적자(흑자이면 0)를 더한 금액입니다."
+      },
+      "source": "money-flow board st, ca, gdp",
+      "basis": "see bank_claims_short_term",
+      "period": "quarter end",
+      "inputs": [
+        "bank_claims_short_term",
+        "gdp_bis"
+      ],
+      "never_call": [
+        "external financing requirement"
+      ]
+    },
+    "j2": {
+      "app": "global-network",
+      "name": {
+        "en": "Financing need over goods exports",
+        "ko": "상품수출 대비 자금조달 필요액"
+      },
+      "definition": {
+        "en": "Financing need at a quarter end as a percentage of goods exports as partners record them over the 12 months ending in that quarter's last month (up to six months earlier, marked partial).",
+        "ko": "분기말 자금조달 필요액을 상품수출로 나눈 백분율입니다. 상품수출은 교역상대국이 집계한 값으로, 그 분기 마지막 달까지 12개월 합계입니다. 최대 6개월 앞선 시점에 끝나는 12개월 합계를 쓰기도 하며, 이때는 부분 자료로 표시합니다."
+      },
+      "source": "global-network stress.py",
+      "basis": "see financing_need and goods_exports_partner",
+      "period": "quarter end and trade_window_to",
+      "inputs": [
+        "financing_need",
+        "goods_exports_partner"
+      ]
+    },
+    "overlap": {
+      "app": "global-network",
+      "name": {
+        "en": "Lender and export market overlap",
+        "ko": "대출국·수출시장 중첩도"
+      },
+      "definition": {
+        "en": "The sum over partners of the smaller of two shares: the partner's lender share and its share of the economy's goods exports. 100 means lenders and buyers are the same economies in the same proportions.",
+        "ko": "상대국마다 두 비중 가운데 작은 값을 골라 모두 더한 값입니다. 두 비중은 상대국이 이 경제에 대한 대출에서 차지하는 비중과 이 경제의 상품수출에서 차지하는 비중입니다. 100이면 대출국과 수출 상대국이 같은 나라들이고 비중도 같다는 뜻입니다."
+      },
+      "source": "global-network stress J5",
+      "basis": "see lender_share and goods_exports_partner",
+      "period": "quarter end and trade_window_to",
+      "aliases": [
+        "dual dependence"
+      ],
+      "inputs": [
+        "lender_share",
+        "goods_exports_partner"
+      ]
+    },
+    "withdrawal_replay": {
+      "app": "global-network",
+      "name": {
+        "en": "Bank and bond withdrawal replay",
+        "ko": "은행·채권 자금 유출 재생"
+      },
+      "definition": {
+        "en": "The economy's worst past quarter of bank loans and deposits flow plus international debt securities net issuance, as a share of their stock, applied to today's stock and set against net reserves.",
+        "ko": "이 경제가 과거에 겪은 최악의 분기에서 은행 대출·예금 흐름과 국제채무증권 순발행액을 합하고, 그 합을 잔액 대비 비율로 구합니다. 이 비율을 현재 잔액에 적용한 뒤 순외환보유액과 비교합니다."
+      },
+      "source": "global-network build.py replay",
+      "basis": "see bank_loans_lbs, intl_debt_securities, net_reserves",
+      "period": "quarter end"
+    },
+    "asia_nes": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Asia, not elsewhere specified",
+        "ko": "기타 아시아(달리 명시되지 않은 지역)"
+      },
+      "definition": {
+        "en": "UN Comtrade partner 490 ('Other Asia, not elsewhere specified'). Taiwan does not report to UN Comtrade, so most importers record their trade with Taiwan here; Gulf exporters book here much of the oil they ship to Asian destinations they do not name. datasteg shows it under this name, never as Taiwan, and counts it as a partner in shares, rankings and concentration measures; it has no economy page and is never a bank lender.",
+        "ko": "UN Comtrade의 상대국 코드 490('Other Asia, not elsewhere specified')입니다. 대만은 UN Comtrade에 자료를 보고하지 않습니다. 이 때문에 대부분의 수입국이 대만과의 교역을 이 항목에 기록합니다. 걸프 지역 수출국도 아시아로 보내는 원유 가운데 상당량을 행선지를 밝히지 않고 이 항목에 기록합니다. datasteg는 이 항목을 이 이름으로만 표시하며 대만으로 표시하지 않습니다. 비중, 순위, 집중도 산출에서는 상대국으로 포함합니다. 경제별 페이지는 없으며 은행 대출국으로는 다루지 않습니다."
+      },
+      "source": "UN Comtrade partner code 490",
+      "basis": "partner code",
+      "period": "as the flow"
+    },
+    "vulnerability_v": {
+      "app": "money-flow",
+      "name": {
+        "en": "Vulnerability score V",
+        "ko": "취약성 점수 V"
+      },
+      "definition": {
+        "en": "A 0–100 score at a quarter end: half exposure (A1, A2), half missing buffers (net international investment position, current account), each read against its own history and the pool (money-flow Signal Board).",
+        "ko": "분기 말 기준 0~100 범위의 점수입니다. 절반은 노출도(A1, A2), 절반은 완충력 부족(순대외금융자산, 경상수지)으로 구성합니다. 각 지표는 해당 경제의 과거 추이와 비교 대상 국가군에 비추어 평가합니다(money-flow 신호판)."
+      },
+      "source": "money-flow board v",
+      "basis": "as the method version states",
+      "period": "quarter end",
+      "aliases": [
+        "funding vulnerability score",
+        "vulnerability score"
+      ],
+      "inputs": [
+        "a2",
+        "niip_gdp"
+      ],
+      "never_call": [
+        "probability of a crisis",
+        "crisis probability",
+        "default probability"
+      ]
+    },
+    "flow_score_f": {
+      "app": "money-flow",
+      "name": {
+        "en": "Flow score F",
+        "ko": "흐름 점수 F"
+      },
+      "definition": {
+        "en": "Bank and bond funding coming in (above zero) or leaving (below zero): 400 × (bank loans and deposits flow + international debt securities net issuance) ÷ their stock, % a year.",
+        "ko": "은행·채권 자금의 유입(0보다 큼)과 유출(0보다 작음)을 나타냅니다. 400 × (은행 대출·예금 흐름 + 국제채무증권 순발행액) ÷ 두 항목의 잔액으로 산출하며, 단위는 연율 %입니다."
+      },
+      "source": "money-flow board flow",
+      "basis": "see bank_flow_lbs, intl_debt_securities",
+      "period": "quarter",
+      "aliases": [
+        "net bank and bond funding",
+        "bank and bond funding flow",
+        "funding flow"
+      ],
+      "inputs": [
+        "bank_flow_lbs",
+        "intl_debt_securities"
+      ]
+    },
+    "niip_gdp": {
+      "app": "money-flow",
+      "name": {
+        "en": "Net international investment position, % of GDP",
+        "ko": "GDP 대비 순대외금융자산(%)"
+      },
+      "definition": {
+        "en": "IMF international investment position, assets less liabilities, over the board's GDP (gdp_bis).",
+        "ko": "IMF 국제투자대조표의 대외금융자산에서 대외금융부채를 뺀 값을 신호판의 GDP(gdp_bis)로 나눈 값입니다."
+      },
+      "source": "IMF IIP; money-flow board",
+      "basis": "residence",
+      "period": "quarter end"
+    },
+    "export_market_hhi": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Concentration of export markets",
+        "ko": "수출시장 집중도"
+      },
+      "definition": {
+        "en": "Herfindahl index of an economy's goods export destinations over a 12-month window (0–1), on goods exports as partners record them.",
+        "ko": "한 경제의 상품수출 대상국 분포를 12개월 창에서 산출한 허핀달 지수(0~1)입니다. 교역상대국이 집계한 상품수출을 기준으로 합니다."
+      },
+      "source": "trade-flow nodes/W",
+      "basis": "see goods_exports_partner",
+      "period": "window_to"
+    },
+    "mirror_ratio": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Mirror ratio",
+        "ko": "거울 비율"
+      },
+      "definition": {
+        "en": "The importer's report of a goods flow divided by the exporter's report of the same flow over the same window.",
+        "ko": "같은 상품 교역 흐름을 같은 기간에서 수입국이 집계한 값을 수출국이 집계한 값으로 나눈 비율입니다."
+      },
+      "source": "trade-flow",
+      "basis": "both reports",
+      "period": "window_to"
+    },
+    "stage_hhi": {
+      "app": "trade-flow",
+      "name": {
+        "en": "Concentration of a chain stage",
+        "ko": "사슬 단계 집중도"
+      },
+      "definition": {
+        "en": "Herfindahl index of world exporters of one supply-chain stage in a calendar year; above 0.25 the stage is a chokepoint.",
+        "ko": "공급망 한 단계의 세계 수출국 분포를 역년 기준으로 산출한 허핀달 지수입니다. 0.25를 넘으면 그 단계는 병목입니다."
+      },
+      "source": "trade-flow chain_stats",
+      "basis": "annual mirror rule",
+      "period": "year"
+    },
+    "j1_import_cover": {
+      "app": "global-network",
+      "name": {
+        "en": "Import cover",
+        "ko": "수입 충당 개월수"
+      },
+      "definition": {
+        "en": "Net reserves ÷ (goods imports over the window joined at the quarter ÷ 12), in months. Not meaningful when net reserves are not positive or under 1% of gross reserves.",
+        "ko": "순외환보유액을 (창 기간 상품수입을 분기 시점에 맞춰 결합한 값 ÷ 12)로 나눈 값이며 단위는 개월입니다. 순외환보유액이 양수가 아니거나 총외환보유액의 1% 미만이면 의미가 없습니다."
+      },
+      "source": "global-network stress J1",
+      "basis": "see net_reserves and goods_imports_own",
+      "period": "quarter end and trade_window_to",
+      "inputs": [
+        "net_reserves",
+        "goods_imports_own"
+      ]
+    },
+    "finance_to_trade": {
+      "app": "global-network",
+      "name": {
+        "en": "Finance-to-trade ratio",
+        "ko": "교역 대비 금융 비율"
+      },
+      "definition": {
+        "en": "Bank loans and deposits, portfolio and direct-investment positions in both directions, over goods trade both ways; each direction's goods over its exporter's own complete 12-month window ending in the quarter's last month, or up to six months earlier (partial).",
+        "ko": "양방향 은행 대출·예금, 증권투자·직접투자 잔액을 양방향 상품교역으로 나눈 값입니다. 방향별 상품교역은 수출국 자체의 12개월 창 가운데 분기 마지막 달에 끝나는 완결된 창을 씁니다. 그런 창이 없으면 최대 6개월 앞서 끝나는 창을 씁니다(부분)."
+      },
+      "source": "global-network pair",
+      "basis": "see bank_loans_lbs and goods_exports_partner",
+      "period": "quarter end and two windows"
+    },
+    "stress_count": {
+      "app": "global-network",
+      "name": {
+        "en": "Stress signals at threshold",
+        "ko": "임계치에 도달한 스트레스 신호"
+      },
+      "definition": {
+        "en": "How many of the seven joint funding-and-trade stress signals are at or past their threshold at a quarter.",
+        "ko": "자금조달과 교역을 함께 보는 스트레스 신호 7개 가운데 해당 분기에 임계치에 도달했거나 넘어선 신호의 수입니다."
+      },
+      "source": "global-network stress",
+      "basis": "see each signal",
+      "period": "quarter end",
+      "inputs": [
+        "j1_import_cover",
+        "j2",
+        "overlap"
+      ],
+      "never_call": [
+        "probability of stress"
+      ],
+      "signals": {
+        "j1": {
+          "measure": "j1_import_cover"
+        },
+        "j2": {
+          "measure": "j2"
+        },
+        "j3": {
+          "name": "Double hit",
+          "aliases": [
+            "double-hit score",
+            "double hit"
+          ],
+          "inputs": [
+            "flow_score_f",
+            "goods_trade_growth"
+          ],
+          "definition": "0.5 × (100 − the flow score F's percentile in the economy's own history) + 0.5 × (100 − export momentum's own-history percentile): high when funding leaves and exports weaken at once"
+        },
+        "j4": {
+          "name": "Partner stress",
+          "inputs": [
+            "vulnerability_v",
+            "goods_exports_partner"
+          ],
+          "definition": "the vulnerability scores of the economy's export partners, weighted by their shares of its goods exports"
+        },
+        "j5": {
+          "measure": "overlap"
+        },
+        "j6": {
+          "name": "Dollar channel",
+          "inputs": [
+            "goods_trade_growth"
+          ],
+          "definition": "the broad dollar's change over four quarters times the slope of export growth on that change for economies in the same tercile of foreign-currency credit"
+        },
+        "j7": {
+          "name": "Commodities against buffers",
+          "inputs": [
+            "net_reserves"
+          ],
+          "definition": "commodity share of goods exports times the buffer weakness half of the vulnerability score"
+        }
+      }
+    }
+  }
+}

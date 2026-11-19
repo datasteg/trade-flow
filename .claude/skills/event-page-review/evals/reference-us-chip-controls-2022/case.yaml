@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: reference-us-chip-controls-2022
+expected_outcome: |
+  A critique file notes/event-critiques/us-chip-controls-2022.md exists with the counterintuitive numbers quoted
+  as the page shows them (Netherlands → China 10.6% → 46.6% of Dutch exports; China imports +30.8%; Japan → China
+  +16.4 pp but only about +$0.2bn), a mechanism table, a window audit that calls Jul–Sep 2023 anticipation and
+  proposes a +12-month view rather than changing view.t, and the two labelling issues (the flow listed twice; the
+  duplicate 반도체 제조장비 selector label). config/events.yaml gains a `reading` block for that event only, with
+  2–4 bilingual items under about 60 words each, every item citing sources that resolve, and new sources appended
+  with the next n. The event's data file was rebuilt with build_stories.py --only, the page renders the section
+  after the key charts in both languages, and the final message has the summary table.

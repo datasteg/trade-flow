@@ -1,0 +1,49 @@
+/* /method/checks: tables at the doc width, statuses as an icon and a word in the status colour (never colour alone).
+   Classes ck-*; the coverage chart's styles come from ../method.css. Only var(--token) colours. */
+
+.ck.page--doc { max-width: calc(var(--width-page) + 2 * var(--gutter)); }
+.ck-head { max-width: var(--measure); margin-bottom: var(--space-6); }
+.ck-head .lr-kicker { margin-bottom: var(--space-3); }
+.ck-tiles { margin: 0 0 var(--space-8); padding: var(--space-5) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.ck-sec { margin: 0 0 var(--space-8); scroll-margin-top: calc(var(--header-height) + var(--space-4)); }
+.ck-sec h2 { margin: 0 0 var(--space-3); color: var(--ink); }
+.ck-lede { max-width: var(--measure); margin: 0 0 var(--space-4); font: 400 15px/24px var(--font-sans); color: var(--ink-secondary); }
+.ck-narrow { max-width: var(--measure); }
+.ck-narrow .lr-prose p { margin: 0 0 var(--space-4); }
+
+/* Status: icon + word (+ a note in ink-secondary) */
+.ck-status { display: inline-flex; align-items: center; gap: 6px; font: 500 13px/18px var(--font-sans); white-space: nowrap; }
+.ck-status svg { flex: none; width: 16px; height: 16px; }
+.ck-status__word { font-weight: 600; white-space: nowrap; }
+.ck-status__note { margin-left: 2px; font-weight: 400; color: var(--ink-secondary); white-space: normal; }
+.ck-status--pass { color: var(--status-good); }
+.ck-status--watch { color: var(--status-warning); }
+.ck-status--fail { color: var(--status-critical); }
+.ck-status--info { color: var(--link); }
+.ck-status--notrun { color: var(--ink-muted); }
+.lr-table th .ck-status { font-size: 12px; }
+
+/* The checks table */
+.ck-table td { font-size: 14px; }
+.ck-what { min-width: 260px; }
+.ck-threshold { min-width: 180px; color: var(--ink-secondary); }
+.ck-nowrap { white-space: nowrap; }
+.ck-count { font-weight: 600; }
+.ck-zero { color: var(--ink-muted); }
+.ck-total { padding: var(--space-2) var(--space-3); font: 600 13px/18px var(--font-sans); color: var(--ink-secondary); text-align: left; }
+.ck-table tfoot td, .ck-table tfoot th { border-bottom: 0; border-top: 1px solid var(--line-strong); }
+.ck-id { font: 500 12px/16px var(--font-mono); color: var(--ink-secondary); white-space: nowrap; }
+
+/* The per-product table */
+.ck-prodtable .lr-table td { font-size: 14px; }
+.ck-prod { font-weight: 500; }
+.ck-kind { display: inline-block; min-width: 9em; color: var(--ink-secondary); }
+.ck-t1 { display: grid; gap: 2px; }
+.ck-open { font: 500 13px/18px var(--font-sans); color: var(--link); white-space: nowrap; }
+.ck-prodtable .lr-table td .ck-status { white-space: normal; align-items: flex-start; }
+.ck-prodtable .lr-table td .ck-status svg { margin-top: 1px; }
+.ck-prodtable .lr-table td .ck-status__note { min-width: 9em; }
+@media (max-width: 719px) {
+  .ck-what { min-width: 200px; }
+  .ck-threshold { min-width: 150px; }
+}

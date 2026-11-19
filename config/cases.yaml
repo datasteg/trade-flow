@@ -1,0 +1,1194 @@
+# Case studies for trade-flow.datasteg.com: nine papers' findings or scenarios rebuilt on the
+# Comtrade network, so a reader can see them and change them.
+# scripts/build_snapshots.py reads this file. Every paper was found in the jejualps archive and
+# every quoted phrase checked against its abstract or text on 24 Oct 2026 (`artools jejualps doc`
+# and `chunks --around`); `ref` is the archive id, kept here and not shown on the site.
+#
+# Conventions
+#   events        the events' numbers: "A1", "A2", "1" … "12"
+#   products      TOTAL, HS:<chapter>, B:<basket> (trade-collector config/network.yaml) or
+#                 C:<chain>:<stage> (config/chains.yaml; a stage shared by two chains is named after
+#                 the first, e.g. C:semiconductors:wafers). "C:*" means every chain stage (78).
+#   codes         a measure on part of a product (gas: 271121 pipeline, 271111 LNG); the builder has
+#                 to split the product by code, since snapshots are built per product
+#   periods       YYYY or YYYYMM. Monthly measures name a lens: L = 12-month sum,
+#                 M = 3-month sum, S = the single month (January and February one period)
+#   importers     complete = economies that filed every month of the window; filed = those that
+#                 filed the period; all = every importer (annual); or ISO3 / group keys / a list
+#   against       same_month_year_before, or a period the change is measured from
+#   importer, supplier, exporter: ISO3, a network.yaml group key, or a list (a list of economies
+#                 to sum; under `each:` one result per economy)
+#   quote         the verbatim phrase as found (whitespace and line breaks normalised); a list when
+#                 the finding quotes more than one phrase. verified: every phrase was found.
+#   plan_numbers  numbers stated in the plan, to be re-measured by the builder (null: none given)
+#   scenario      the first-round engine: exposure = import share × cut, the gap
+#                 filled by the importer's other suppliers in proportion, the shortfall passed one
+#                 stage down through chains.yaml feeds. A tariff is entered as the share of the
+#                 partner's flow it removes (the engine has no prices).
+# Regions not in network.yaml groups are ISO3 lists; the Gulf (Hormuz) is written once below.
+
+regions:
+  gulf: &gulf [SAU, ARE, IRQ, KWT, QAT, IRN, OMN, BHR]
+
+cases:
+  # ----------------------------------------------------------------------------------------------
+  - id: lockdowns-2020
+    num: 1
+    events: ["4"]
+    title: {en: "Lockdowns travel along supply chains", ko: "봉쇄는 공급망을 타고 번진다"}
+    question:
+      en: "How much of the 2020 trade collapse came from lockdowns abroad rather than from demand, and through which flows?"
+      ko: "2020년 무역 붕괴 가운데 수요가 아니라 해외 봉쇄에서 비롯된 몫은 얼마이며, 그 몫이 어떤 흐름을 타고 번졌는지 살펴봅니다."
+    carries_over: []
+    papers:
+      - ref: "jejualps:67760"
+        authors: "Aiyar, Malacrino, Mohommad & Presbitero"
+        year: 2022
+        series: "IMF Working Paper"
+        number: "WP/22/120"
+        title: "International Trade Spillovers from Domestic COVID-19 Lockdowns"
+        url: "https://www.elibrary.imf.org/view/journals/001/2022/120/001.2022.issue-120-en.xml"
+        date: 2022-06-17
+        finding:
+          en: "International spillovers from lockdowns “accounted for up to 60 percent of the observed decline in trade in the early phase of the pandemic, but their effect was shortlived, concentrated among goods produced in key global value chains”."
+          ko: "저자들은 다른 나라의 봉쇄가 낳은 국제 파급효과를 분석했습니다. 저자들은 이 효과가 “팬데믹 초기에 관찰된 무역 감소의 최대 60%를 설명했다”고 썼습니다. 그러나 “그 효과는 오래가지 않았고 핵심 글로벌 가치사슬에서 생산되는 재화에 집중되었다”고 덧붙였습니다."
+        quote: "accounted for up to 60 percent of the observed decline in trade in the early phase of the pandemic, but their effect was shortlived, concentrated among goods produced in key global value chains"
+        verified: true
+      - ref: "jejualps:67862"
+        authors: "Boranova, Huidrom, Ozturk, Stepanyan, Topalova & Zhang"
+        year: 2022
+        series: "IMF Working Paper"
+        number: "WP/22/006"
+        title: "Cars in Europe: Supply Chains and Spillovers during COVID-19 Times"
+        url: "https://www.elibrary.imf.org/view/journals/001/2022/006/001.2022.issue-006-en.xml"
+        date: 2022-01-14
+        finding:
+          en: "In a multi-country model of the pandemic's labour-supply shocks, Europe's major car producers see “one-third of the decline in the value added of the car sector attributable to spillovers via supply chains within and across borders”."
+          ko: "저자들은 팬데믹 초기의 노동공급 충격이 유럽 주요 자동차 생산국에 미친 영향을 다국가·다부문 일반균형 모형으로 분석했습니다. 저자들은 “자동차 부문 부가가치 감소의 3분의 1”이 “국경 안팎의 공급망을 통한 파급효과”에서 비롯되었다고 분석했습니다."
+        quote: "one-third of the decline in the value added of the car sector attributable to spillovers via supply chains within and across borders"
+        verified: true
+      - ref: "jejualps:96588"
+        authors: "Bonadio, Huo, Levchenko & Pandalai-Nayar"
+        year: 2020
+        series: "NBER Working Paper"
+        number: "w27224"
+        title: "Global Supply Chains in the Pandemic"
+        url: "https://www.nber.org/papers/w27224"
+        date: 2020-05-01
+        finding:
+          en: "A multi-sector model of 64 countries traces how the pandemic's labour-supply shock travelled through supply chains: “One quarter of the total model-implied real GDP decline is due to transmission through global supply chains.”"
+          ko: "저자들은 64개국 다부문 모형으로 팬데믹 노동공급 충격의 공급망 파급 경로를 추적했습니다. 저자들은 “모형이 함의하는 실질 GDP 감소 전체의 4분의 1은 글로벌 공급망을 통한 파급 때문”이라고 썼습니다."
+        quote: "One quarter of the total model-implied real GDP decline is due to transmission through global supply chains."
+        verified: true
+    network:
+      freq: M
+      products: [TOTAL, "B:car_parts", "B:chips_ic"]
+      from: 202001
+      to: 202112
+      base: "same month of 2019"
+      measures:
+        - kind: world_change
+          product: TOTAL
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          periods: [202004, 202005]
+          against: same_month_year_before
+          en: "Imports of the economies that filed every month of 2019 and 2020, April and May 2020 against the same months of 2019"
+          ko: "2019년과 2020년에 매달 신고한 경제의 수입, 2020년 4월과 5월 전년동월대비"
+          note: "Single months (lens S), as the plan's −24% and −28%; the event strip itself shows lens M."
+        - kind: world_change
+          product: TOTAL
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          periods: [202006, 202007, 202008, 202009, 202010, 202011, 202012]
+          against: same_month_year_before
+          en: "The same imports month by month to December 2020: the first month back at the 2019 level"
+          ko: "같은 수입의 2020년 12월까지 월별 전년동월대비 변화. 2019년 수준을 처음 회복한 달"
+          # A3 (1 Nov 2026): the panel is balanced every month (115 files a month, none set aside), so the dips are not
+          # a reporting gap. They follow working days and the base months: Jun 2020 had two more weekdays than Jun
+          # 2019, Jul the same, Sep one more, Oct one fewer; Jul 2019 was strong (UK gold); China drove Sep (+13.9%).
+          note: "The Jul and Oct dips are calendar effects, not lost trade: June and September 2020 had more weekdays than a year earlier, July the same and October one fewer, so single months jump around. Fuels (HS 27) lower every month by 4 to 5 points as oil prices fell; without them imports are above 2019 from September."
+          note_ko: "7월과 10월의 감소는 교역 위축이 아니라 달력 효과입니다. 2020년 6월과 9월은 전년 같은 달보다 평일이 많았습니다. 7월은 평일 수가 같았고, 10월은 하루 적었습니다. 그래서 한 달 단위 수치는 변동이 큽니다. 유가 급락으로 연료(HS 27)가 매달 증감률을 4~5%p 끌어내렸습니다. 연료를 제외하면 9월부터 2019년 수준을 웃돕니다."
+        - kind: world_change
+          product: "B:car_parts"
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          periods: [202002, 202003, 202004, 202005, 202006]
+          against: same_month_year_before
+          en: "Car-parts imports of the same economies, January–February to June 2020 against a year earlier"
+          ko: "같은 경제의 자동차 부품 수입, 2020년 1~2월부터 6월까지 전년동월대비"
+        - kind: world_change
+          product: "B:chips_ic"
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          periods: [202002, 202003, 202004, 202005, 202006]
+          against: same_month_year_before
+          en: "Chip imports of the same economies in the same months"
+          ko: "같은 경제의 집적회로 수입, 같은 기간"
+        # A7: the one decomposition customs data supports, a test of the supplier-lockdown channel: did imports from the
+        # supplier in lockdown fall more than imports from everyone else, in its lockdown months?
+        - kind: partner_split
+          product: TOTAL
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          partner: CHN
+          periods: [202002, 202003]
+          en: "Imports from China and from everyone else, January–February and March 2020, when China was in lockdown"
+          ko: "중국이 봉쇄되었던 2020년 1~2월과 3월, 중국산 수입과 그 밖의 수입"
+        - kind: partner_split
+          product: TOTAL
+          importers: complete
+          window: [201901, 202012]
+          lens: S
+          partner: EU27
+          outside: true
+          periods: [202004, 202005]
+          en: "Imports from the EU and from everyone else, April and May 2020, when Europe was in lockdown (importers outside the EU)"
+          ko: "유럽이 봉쇄되었던 2020년 4월과 5월, EU산 수입과 그 밖의 수입(EU 밖의 수입국)"
+          note: "Importers inside the EU are left out: their imports from one another mix the exporter's lockdown with their own."
+          note_ko: "EU 안의 수입국은 제외했습니다. 회원국 간 수입에는 수출국의 봉쇄와 수입국 자신의 봉쇄 효과가 섞여 있기 때문입니다."
+        - kind: korea_exposure
+          product: "B:car_parts"
+          supplier: CHN
+          periods: [2019]
+          en: "China's share of Korea's car-parts imports in 2019, where the scenario starts"
+          ko: "시나리오의 출발점인 2019년 한국 자동차 부품 수입의 중국 비중"
+      plan_numbers:
+        en: "Imports of 113 economies −24% (Apr) and −28% (May 2020) on a year earlier; back to the 2019 level by Sep 2020"
+        ko: "113개 경제의 수입은 전년동월대비 2020년 4월 −24%, 5월 −28%였습니다. 9월에는 2019년 수준을 회복했습니다."
+        # 1 Nov 2026: no 2019–2020 monthly file arrived after the plan (manifest), and no file of those months is set aside,
+        # so the count did not change with new data; the plan's 113 cannot be reproduced from the files.
+        note:
+          en: "The plan counted 113 economies; the same rule (every month of 2019 and 2020 filed) gives 115 on today's files. No file for those months arrived after the plan, so the two differ in how the earlier count was made, not in the data."
+          ko: "계획서는 113개 경제를 집계했습니다. 같은 규칙(2019년과 2020년 매달 신고)을 현재 파일에 적용하면 115개입니다. 해당 기간 파일 가운데 계획서 이후 새로 들어온 것은 없습니다. 따라서 차이는 자료가 아니라 앞선 집계 방식에서 생겼습니다."
+      # A2 (1 Nov 2026): recomputed independently from the layer; genuine coincidences at one decimal:
+      # chips Jan–Feb +8.428% vs Mar +8.407%, all goods Dec +8.398%; car parts Jun −27.226% vs all goods May −27.163%.
+      reviewed_repeats:
+        values: ["+8.4%", "-27.2%"]
+    scenario:
+      kind: cut_supplier
+      product: "C:steel:car_parts"
+      supplier: CHN
+      alternatives: [EU27]
+      cut: 1.0
+      period: 2019
+      down_stage: "C:steel:cars"
+      note: "The stage C:steel:car_parts adds engines (8407.34, 8408.20) to the basket's 8708, so the shortfall can pass to cars."
+      en: "Close China (as in February 2020) or Europe (as in April 2020) and see whose car-parts imports were most exposed, and which car makers one stage down"
+      ko: "중국(2020년 2월처럼)이나 유럽(2020년 4월처럼)의 공급을 차단합니다. 어느 나라의 자동차 부품 수입이 가장 크게 노출되는지 살펴봅니다. 그 부족이 한 단계 아래 어느 완성차 생산국으로 이어지는지도 살펴봅니다."
+    korea:
+      en: "The plan gives no Korean number for this case. The page compares Korea's car-parts and chip imports from February to June 2020 with the same months of 2019, and measures China's share of Korea's car-parts imports in 2019, the exposure the scenario starts from."
+      ko: "계획서에는 이 사례의 한국 수치가 없습니다. 페이지는 2020년 2월부터 6월까지 한국의 자동차 부품·반도체 수입을 2019년 같은 달과 비교합니다. 시나리오의 출발점인 2019년 한국 자동차 부품 수입의 중국 비중도 산출합니다."
+    limits:
+      en: "Customs values cannot tell a supply shock from a demand shock: the fall is the same number either way. Aiyar et al. separate the two with an import-demand model and their partners' lockdown stringency, Boranova et al. and Bonadio et al. with multi-country models of labour supply. Values also move with prices (oil fell sharply in 2020), and the scenario's first-round map assumes no stocks and no substitution."
+      ko: "통관 금액만으로는 공급 충격과 수요 충격을 구분할 수 없습니다. 어느 쪽이든 감소액은 같습니다. 아이야르 등은 수입수요 모형과 교역상대국의 봉쇄 강도로 둘을 구분합니다. 보라노바 등과 보나디오 등은 노동공급을 다룬 다국가 모형을 씁니다. 금액은 가격에 따라서도 변합니다(2020년에는 유가가 급락했습니다). 시나리오의 1차 효과 지도는 재고와 대체가 없다고 가정합니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: japan-2011
+    num: 2
+    events: ["A2"]
+    title: {en: "After Japan's 2011 quake, buyers switched suppliers", ko: "2011년 일본 지진 뒤 구매자들은 공급처를 바꿨다"}
+    question:
+      en: "After the earthquake, did buyers of Japanese car parts and electronics bring production home, move it nearby, or switch suppliers?"
+      ko: "지진 뒤 일본산 자동차 부품·전자부품 수입국은 생산을 자국으로 되돌렸습니까, 인근 국가로 옮겼습니까, 아니면 공급처를 바꿨습니까?"
+    carries_over: []
+    papers:
+      - ref: "jejualps:79233"
+        authors: "Freund, Mattoo, Mulabdic & Ruta"
+        year: 2021
+        series: "World Bank Policy Research Working Paper"
+        number: "WPS9719"
+        title: "Natural Disasters and the Reshaping of Global Value Chains"
+        url: "http://documents.worldbank.org/curated/en/293731624900715587/Natural-Disasters-and-the-Reshaping-of-Global-Value-Chains"
+        date: 2021-06-28
+        finding:
+          en: "The 2011 shock “did not lead to reshoring, nearshoring, or diversification”. “Imports did shift to new suppliers, especially where dependence on Japan was greater. But production relocated to developing countries rather than to other top exporters.”"
+          ko: "저자들은 2011년 충격이 “리쇼어링, 니어쇼어링, 다변화로 이어지지 않았다”고 썼다. 또 “수입은 새 공급처로 옮겨 갔고, 일본 의존도가 컸던 나라일수록 더 그랬다. 그러나 생산은 다른 주요 수출국이 아니라 개발도상국으로 옮겨 갔다”고 썼다."
+        quote:
+          - "did not lead to reshoring, nearshoring, or diversification"
+          - "Imports did shift to new suppliers, especially where dependence on Japan was greater. But production relocated to developing countries rather than to other top exporters."
+        verified: true
+      - ref: "jejualps:69197"
+        authors: "Korniyenko, Pinat & Dew"
+        year: 2017
+        series: "IMF Working Paper"
+        number: "WP/17/30"
+        title: "Assessing the Fragility of Global Trade: The Impact of Localized Supply Shocks Using Network Analysis"
+        url: "https://www.elibrary.imf.org/view/journals/001/2017/030/001.2017.issue-030-en.xml"
+        date: 2017-02-13
+        finding:
+          en: "Natural disasters revealed choke points in the trade network, such as “hard drive components and Thailand flooding, Japanese auto components post-Fukushima”."
+          ko: "자연재해는 무역 네트워크의 병목을 드러냈습니다. 저자들은 그 예로 “하드디스크 부품과 태국 홍수, 후쿠시마 이후 일본 자동차 부품”을 들었습니다."
+        quote: "hard drive components and Thailand flooding, Japanese auto components post-Fukushima"
+        verified: true
+    network:
+      freq: A
+      products: ["B:car_parts", "B:semiconductors"]
+      from: 2009
+      to: 2014
+      base: 2010
+      note: "The plan adds monthly views from 2010, but monthly snapshots of products other than all goods start in January 2014 (FIRST_MONTH in scripts/build_snapshots.py), so the case is annual unless that changes. Hard-drive parts (8471.70, 8473.30) are in no basket or stage."
+      measures:
+        - kind: top_exporters
+          product: "B:car_parts"
+          periods: [2010, 2011, 2012, 2014]
+          en: "Shares of world car-parts exports: Japan's, and who rose"
+          ko: "세계 자동차 부품 수출의 국가별 비중(일본과 비중이 높아진 나라)"
+        - kind: top_exporters
+          product: "B:semiconductors"
+          periods: [2010, 2011, 2012, 2014]
+          en: "Shares of world exports of chips and other semiconductors"
+          ko: "세계 반도체(집적회로와 개별소자) 수출에서 각국이 차지한 비중"
+        - kind: share_change
+          product: "B:car_parts"
+          supplier: JPN
+          each: {importer: [USA, CHN, THA, KOR]}
+          periods: [2010, 2012]
+          en: "Japan's share of the largest importers' car-parts imports, 2010 against 2012"
+          ko: "주요 수입국의 자동차 부품 수입에서 일본이 차지한 비중, 2010년과 2012년 비교"
+        - kind: partner_shares
+          product: "B:car_parts"
+          importer: USA
+          partners: [JPN, MEX, CAN, CHN, DEU, KOR]
+          from: 2009
+          to: 2014
+          en: "US car-parts imports by supplier, 2009–2014"
+          ko: "미국의 공급국별 자동차 부품 수입, 2009~2014년"
+        - kind: korea_exposure
+          product: "B:car_parts"
+          supplier: JPN
+          periods: [2010, 2012]
+          en: "Japan's share of Korea's car-parts imports, 2010 and 2012"
+          ko: "한국 자동차 부품 수입의 일본 비중, 2010년과 2012년"
+        - kind: korea_exposure
+          product: "B:semiconductors"
+          supplier: JPN
+          periods: [2010, 2012]
+          en: "Japan's share of Korea's semiconductor imports, 2010 and 2012"
+          ko: "한국 반도체 수입의 일본 비중, 2010년과 2012년"
+      plan_numbers: null
+    scenario:
+      kind: cut_supplier
+      product: "C:steel:car_parts"
+      supplier: JPN
+      cut: 1.0
+      period: 2010
+      down_stage: "C:steel:cars"
+      en: "Remove Japan from car parts (or chips) and rank who fills the gap in the first round, then compare with the shares that actually moved in 2011–2012"
+      ko: "자동차 부품(또는 반도체) 공급에서 일본을 제외하고 1차로 이를 대체하는 공급국의 순위를 매깁니다. 이를 2011~2012년에 실제로 변한 비중과 비교합니다."
+    korea:
+      en: "The plan gives no Korean number for this case. The page measures Japan's share of Korea's car-parts and chip imports in 2010 and 2012, and whether Korean suppliers gained share in other importers' car-parts imports after March 2011."
+      ko: "계획서에는 이 사례의 한국 수치가 없습니다. 페이지는 2010년과 2012년 한국의 자동차 부품·반도체 수입에서 일본이 차지한 비중을 산출합니다. 2011년 3월 이후 다른 나라의 자동차 부품 수입에서 한국산 비중이 높아졌는지도 살펴봅니다."
+    limits:
+      en: "Trade shows where imports came from, not where production moved: Freund et al. test reshoring, nearshoring and diversification with detailed product data, and Boehm, Flaaen and Pandalai-Nayar (further reading) need firm-level data on US affiliates of Japanese firms to measure how hard inputs are to replace. Annual totals blur a shock that lasted months, and the scenario fills the gap only from suppliers the importer already uses, so it cannot see the new suppliers the paper finds."
+      ko: "무역 자료로는 수입이 어디서 왔는지만 알 수 있고, 생산이 어디로 옮겨 갔는지는 알 수 없습니다. 프로인트 등은 상세한 품목 자료로 리쇼어링, 니어쇼어링, 다변화를 검정했습니다. 뵘·플라엔·판달라이나야르(더 읽을거리)는 일본 기업 미국 자회사의 기업 단위 자료를 썼습니다. 투입재를 대체하기가 얼마나 어려운지 측정하기 위해서입니다. 연간 합계에서는 몇 달 동안 이어진 충격이 희석됩니다. 시나리오는 수입국의 기존 공급처로만 부족분을 메우므로 논문이 찾은 새 공급처는 반영하지 못합니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: blocs-connectors
+    num: 3
+    events: ["1", "6"]
+    title: {en: "Trade is splitting into blocs, with connectors between", ko: "무역은 블록으로 갈라지고 연결국이 사이를 잇는다"}
+    question:
+      en: "Is trade splitting along geopolitical lines, and are “connector” economies bridging the blocs or just relabelling Chinese goods?"
+      ko: "무역은 지정학적 경계를 따라 갈라지고 있습니다. ‘연결국’들은 블록 사이를 잇는가, 아니면 중국산의 원산지만 바꾸어 붙이는가?"
+    carries_over: ["US–China", "nearshoring", "blocs"]
+    papers:
+      - ref: "jejualps:67306"
+        authors: "Gopinath, Gourinchas, Presbitero & Topalova"
+        year: 2024
+        series: "IMF Working Paper"
+        number: "WP/24/76"
+        title: "Changing Global Linkages: A New Cold War?"
+        url: "https://www.elibrary.imf.org/view/journals/001/2024/076/001.2024.issue-076-en.xml"
+        date: 2024-04-05
+        finding:
+          en: "Since the war in Ukraine, trade and FDI between geopolitically distant blocs fell relative to flows within blocs, “roughly 12% and 20%, respectively”; “nonaligned ‘connector’ countries are rapidly gaining importance”."
+          ko: "저자들은 우크라이나 전쟁 이후 지정학적으로 먼 블록 간 무역과 직접투자가 감소했다고 썼습니다. 같은 블록 안의 흐름에 비해 각각 약 12%와 20% 줄었다고 분석했습니다. 저자들은 “비동맹 ‘연결국’들이 빠르게 중요해지고 있다”고 썼습니다."
+        quote:
+          - "roughly 12% and 20%, respectively"
+          - "nonaligned ‘connector’ countries are rapidly gaining importance"
+        verified: true
+      - ref: "jejualps:77010"
+        authors: "Freund, Mattoo, Mulabdic & Ruta"
+        year: 2023
+        series: "World Bank Policy Research Working Paper"
+        number: "WPS10593"
+        title: "Is US Trade Policy Reshaping Global Supply Chains ?"
+        url: "http://documents.worldbank.org/curated/en/099812010312311610/IDU0938e50fe0608704ef70b7d005cda58b5af0d"
+        date: 2023-10-31
+        finding:
+          en: "In US tariff-line import data, “China’s share of US imports fell from 22 to 16 percent” between 2017 and 2022, and the paper shows that the decline is due to US tariffs."
+          ko: "저자들은 미국의 세번 단위 수입 자료로 2017년부터 2022년까지를 분석했습니다. 저자들은 “미국 수입에서 중국의 비중이 22%에서 16%로 떨어졌다”고 썼습니다. 저자들은 이 하락이 미국 관세 때문이라고 분석했습니다."
+        quote: "China’s share of US imports fell from 22 to 16 percent"
+        verified: true
+      - ref: "jejualps:67009"
+        authors: "Schulze & Xin"
+        year: 2025
+        series: "IMF Working Paper"
+        number: "WP/25/129"
+        title: "Demystifying Trade Patterns In A Fragmenting World"
+        url: "https://www.elibrary.imf.org/view/journals/001/2025/129/001.2025.issue-129-en.xml"
+        date: 2025-06-27
+        finding:
+          en: "Of six Asian connectors, only Vietnam shows clear evidence: “Vietnam appears to have benefited from trade reallocation, with increased domestic content in its exports to the US”, instead of significant transshipment of Chinese exports."
+          ko: "아시아 연결국 여섯 나라 가운데 증거가 뚜렷한 나라는 베트남뿐입니다. 저자들은 “베트남은 무역 재배치의 혜택을 받은 것으로 보이며, 대미 수출에서 국내 부가가치 비중이 늘었다”고 썼습니다. 중국산의 대규모 우회수출은 아니었다는 것입니다."
+        quote: "Vietnam appears to have benefited from trade reallocation, with increased domestic content in its exports to the US"
+        verified: true
+      - ref: "jejualps:205"
+        authors: "Qiu, Shin & Zhang"
+        year: 2023
+        series: "BIS Bulletin"
+        number: "78"
+        title: "Mapping the realignment of global value chains"
+        url: "https://www.bis.org/publ/bisbull78.htm"
+        date: 2023-10-03
+        finding:
+          en: "Firm-level supplier data show chains from China to the US lengthening, “where firms from other jurisdictions, notably in Asia, have interposed themselves in the supply chain”."
+          ko: "기업 단위 공급망 자료로 보면 중국에서 미국으로 가는 공급망이 길어졌습니다. 저자들은 “다른 지역, 특히 아시아의 기업들이 그 공급망 사이에 끼어들었다”고 썼습니다."
+        quote: "firms from other jurisdictions, notably in Asia, have interposed themselves in the supply chain"
+        verified: true
+      - ref: "jejualps:44598"
+        authors: "Qiu, Xia & Yetman"
+        year: 2024
+        series: "BIS Quarterly Review"
+        number: "September 2024"
+        title: "Deconstructing global trade: the role of geopolitical alignment"
+        url: "https://www.bis.org/publ/qtrpdf/r_qt2409c.htm"
+        date: 2024-09-16
+        finding:
+          en: "Between 2017 and 2023 the quarter-on-quarter change in trade volumes “was 2.5% lower on average between geopolitically distant countries relative to those that were closer”."
+          ko: "저자들은 2017~2023년 무역량의 전분기 대비 변화율을 비교했습니다. 저자들은 이 변화율이 “지정학적으로 먼 나라들 사이에서 가까운 나라들에 비해 평균 2.5% 낮았다”고 썼습니다."
+        quote: "was 2.5% lower on average between geopolitically distant countries relative to those that were closer"
+        verified: true
+    network:
+      freq: A
+      products: [TOTAL, "C:solar:pv_modules", "C:solar:pv_cells", "C:semiconductors:ics"]
+      from: 2013
+      to: 2024
+      base: 2017
+      note: "Group colouring uses the narrow blocs WEST and EAST of network.yaml; every other economy is a third economy (connector candidate). Solar cells have their own code only from HS2022 (codes_pre2022: []), so the cells scatter uses 2022 onwards."
+      measures:
+        - kind: between_groups
+          product: TOTAL
+          a: WEST
+          b: EAST
+          freq: A
+          from: 1990
+          to: 2024
+          en: "Trade between the narrow West and East blocs as a share of world trade, 1990–2024"
+          ko: "좁은 의미의 서방 블록과 동방 블록 사이 무역이 세계 무역에서 차지하는 비중, 1990~2024년"
+        - kind: between_groups
+          product: TOTAL
+          a: WEST
+          b: EAST
+          freq: M
+          lens: L
+          from: 201801
+          to: 202412
+          en: "The same by month, 12-month sums, to December 2024 (the last complete month)"
+          ko: "같은 비중의 월별 추이(12개월 합계), 2024년 12월(자료가 모두 들어온 마지막 달)까지"
+        - kind: partner_shares
+          product: TOTAL
+          importer: USA
+          partners: [CHN, MEX, VNM, CAN, S19, KOR]
+          from: 2013
+          to: 2024
+          en: "Shares of US imports by partner, all goods"
+          ko: "미국 수입의 상대국별 비중, 전체 상품"
+        - kind: share_change
+          product: TOTAL
+          supplier: CHN
+          importer: USA
+          periods: [2017, 2022]
+          en: "China's share of US imports, 2017 against 2022 (Freund et al.: 22 to 16 percent)"
+          ko: "미국 수입의 중국 비중, 2017년과 2022년 비교(프로인트 등 22% → 16%)"
+        - kind: connector_scatter
+          a: USA
+          b: CHN
+          windows: [[2013, 2017], [2018, 2023]]
+          each: {product: [TOTAL, "C:solar:pv_modules", "C:semiconductors:ics"]}
+          en: "Connectors: change in third economies' share of US imports against change in their share of China's exports, 2013–17 to 2018–23 (Gopinath et al., Fig. 4A)"
+          ko: "연결국 산점도. 제3국의 미국 수입 비중과 중국 수출 비중의 변화, 2013~17년 → 2018~23년(고피나스 등, 그림 4A)"
+        - kind: connector_scatter
+          a: USA
+          b: CHN
+          windows: [[2022, 2022], [2024, 2024]]
+          product: "C:solar:pv_cells"
+          en: "The same for solar cells, 2022 against 2024, the years the code exists"
+          ko: "태양전지의 같은 산점도, 코드가 있는 2022년과 2024년 비교"
+        - kind: partner_shares
+          product: TOTAL
+          each: {importer: [VNM, MEX]}
+          partners: [CHN]
+          from: 2013
+          to: 2024
+          en: "The back door: China's share of Vietnam's and Mexico's imports"
+          ko: "뒷문: 베트남과 멕시코 수입의 중국 비중"
+        - kind: share_change
+          product: TOTAL
+          supplier: KOR
+          importer: USA
+          periods: [2017, 2022]
+          focus: KOR          # measured for one economy: shown with ?focus=KOR only
+          en: "Korea's share of US imports, 2017 against 2022"
+          ko: "미국 수입의 한국 비중, 2017년과 2022년 비교"
+      plan_numbers:
+        en: "No measured numbers in the plan; the papers' figure to re-measure: China's share of US imports 22% (2017) → 16% (2022)"
+        ko: "계획서에는 산출한 수치가 없습니다. 재산출할 논문 수치는 미국 수입의 중국 비중 22%(2017년) → 16%(2022년)입니다."
+    scenario:
+      kind: tariff
+      product: "C:solar:pv_modules"
+      supplier: CHN
+      importer: USA
+      cut: 0.5
+      period: 2017
+      down_stage: null
+      note: "The China → connector → US paths read the connectors' imports from China of the same stage and the stage above (cells from 2022, wafers before)."
+      en: "Put a tariff on China in one stage (solar modules by default; cells or chips), entered as the share of China's flow it removes, and see which connectors fill the US gap and how much of that stage and the one above they buy from China"
+      ko: "한 단계(기본값은 태양광 모듈, 태양전지나 집적회로로 바꿀 수 있습니다)에서 중국산에 관세를 부과합니다. 관세는 그 관세로 사라지는 중국 물량의 비중으로 입력합니다. 어느 연결국이 미국의 부족분을 대체하는지 확인합니다. 그 나라들이 같은 단계와 바로 위 단계를 중국에서 얼마나 수입하는지도 확인합니다."
+    korea:
+      en: "Under the narrow blocs Korea belongs to neither, so it sits among the third economies of the connector scatter. The page measures Korea's share of US imports in 2017 and 2022, China's share of Korea's imports, and where Korea falls in the scatter for all goods and for chips."
+      ko: "좁은 블록 정의에서 한국은 어느 쪽에도 속하지 않습니다. 따라서 연결국 산점도에서 제3국으로 분류됩니다. 이 페이지는 2017년과 2022년 미국 수입의 한국 비중과 한국 수입의 중국 비중을 산출합니다. 전체 상품과 집적회로 산점도에서 한국의 위치도 나타냅니다."
+    limits:
+      en: "Gross trade cannot tell reallocation from rerouting: a Vietnamese export to the US can carry Chinese inputs, which Schulze and Xin separate with value-added data and a synthetic control, and the BIS bulletin with firm-level supplier links. Gopinath et al. estimate a gravity model with fixed effects and Qiu, Xia and Yetman use volumes; our shares are descriptive, in current dollars, and use the narrow blocs only (the papers' blocs from UN votes are not in the data)."
+      ko: "총교역 자료로는 무역 재배치와 우회수출을 구분할 수 없습니다. 베트남의 대미 수출에는 중국산 투입재가 들어 있을 수 있습니다. 슐체와 신은 부가가치 자료와 합성통제법으로 이를 구분합니다. BIS 불레틴은 기업 단위 거래 관계를 씁니다. 고피나스 등은 고정효과 중력모형을, 추·샤·예트먼은 물량을 씁니다. 이 페이지의 비중은 경상 달러 기준의 기술통계이며 좁은 블록만 씁니다. 논문들이 쓴 유엔 표결 기반 블록은 이 자료에 없습니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: russian-gas
+    num: 4
+    events: ["6"]
+    title: {en: "Europe could replace most of its Russian gas", ko: "유럽은 러시아 가스 대부분을 대체할 수 있었다"}
+    question:
+      en: "Could Europe replace Russian gas, and who paid for it elsewhere?"
+      ko: "유럽은 러시아 가스를 대체할 수 있었는가, 그리고 그 대가는 다른 곳에서 누가 치렀는가?"
+    carries_over: []
+    papers:
+      - ref: "jejualps:67736"
+        authors: "Di Bella, Flanagan, Foda, Maslova, Pienkowski, Stuermer & Toscani"
+        year: 2022
+        series: "IMF Working Paper"
+        number: "WP/22/145"
+        title: "Natural Gas in Europe: The Potential Impact of Disruptions to Supply"
+        url: "https://www.elibrary.imf.org/view/journals/001/2022/145/001.2022.issue-145-en.xml"
+        date: 2022-07-19
+        finding:
+          en: "“Alternative sources could replace up to 70 percent of Russian gas”, enough to ride out a disruption of about six months; in a longer full shut-off, Hungary, the Slovak Republic and Czechia would in the short term “face a risk of shortages of as much as 40 percent of gas consumption”."
+          ko: "저자들은 “대체 공급원이 러시아 가스의 최대 70%를 대신할 수 있다”고 썼습니다. 6개월 내외의 일시 중단이라면 부족 없이 넘길 수 있는 규모입니다. 그러나 전면 차단이 길어지면 헝가리·슬로바키아·체코는 단기적으로 “가스 소비량의 최대 40%에 이르는 부족 위험에 처한다”고 썼습니다."
+        quote:
+          - "Alternative sources could replace up to 70 percent of Russian gas"
+          - "face a risk of shortages of as much as 40 percent of gas consumption"
+        verified: true
+      - ref: "jejualps:67738"
+        authors: "Albrizio, Bluedorn, Koch, Pescatori & Stuermer"
+        year: 2022
+        series: "IMF Working Paper"
+        number: "WP/22/143"
+        title: "Market Size and Supply Disruptions: Sharing the Pain of a Potential Russian Gas Shut-off to the European Union"
+        url: "https://www.elibrary.imf.org/view/journals/001/2022/143/001.2022.issue-143-en.xml"
+        date: 2022-07-19
+        finding:
+          en: "Counting the global LNG market, the adverse impact of a Russian gas cut-off on the EU “shrinks five-fold”, but “other LNG importers (such as Japan, South Korea, and Pakistan) see adverse effects from higher prices”."
+          ko: "세계 LNG 시장을 함께 고려하면 러시아 가스 차단이 유럽연합 경제에 주는 타격은 “5분의 1로 줄어든다”. 그러나 저자들은 “다른 LNG 수입국(일본, 한국, 파키스탄 등)은 가격 상승으로 불리한 영향을 받는다”고 썼다."
+        quote:
+          - "shrinks five-fold"
+          - "other LNG importers (such as Japan, South Korea, and Pakistan) see adverse effects from higher prices"
+        verified: true
+    network:
+      freq: A
+      products: ["C:fertiliser:gas"]
+      from: 2019
+      to: 2025
+      base: 2021
+      note: "Pipeline gas (2711.21) and LNG (2711.11) share the stage, so the measures below split it by code. EU27 as one importer means its members' imports from non-members, so gas resold inside the EU is not counted twice."
+      measures:
+        - kind: partner_shares
+          product: "C:fertiliser:gas"
+          each: {codes: [["271121"], ["271111"]]}
+          importer: EU27
+          partners: [RUS, NOR, USA, QAT, DZA, AZE]
+          from: 2019
+          to: 2025
+          en: "EU gas imports from outside the EU by supplier, pipeline and LNG apart"
+          ko: "유럽연합의 공급국별 역외 가스 수입(배관 가스·LNG 구분)"
+        - kind: share_change
+          product: "C:fertiliser:gas"
+          codes: ["271121"]
+          supplier: RUS
+          importer: EU27
+          periods: [2021, 2024]
+          en: "Russia's share of EU pipeline-gas imports, 2021 against 2024"
+          ko: "유럽연합 배관 가스 수입의 러시아 비중, 2021년과 2024년 비교"
+        - kind: share_change
+          product: "C:fertiliser:gas"
+          codes: ["271111"]
+          supplier: USA
+          importer: EU27
+          periods: [2021, 2024]
+          en: "The US share of EU LNG imports, 2021 against 2024"
+          ko: "유럽연합 LNG 수입의 미국 비중, 2021년과 2024년 비교"
+        - kind: top_exporters
+          product: "C:fertiliser:gas"
+          codes: ["271111"]
+          periods: [2021, 2024]
+          en: "Shares of world LNG exports"
+          ko: "세계 LNG 수출에서 각국이 차지한 비중"
+        - kind: partner_shares
+          product: "C:fertiliser:gas"
+          codes: ["271111"]
+          each: {importer: [JPN]}
+          partners: [AUS, QAT, USA, MYS, RUS, OMN]
+          from: 2019
+          to: 2025
+          en: "Japan's LNG suppliers"
+          ko: "일본의 LNG 공급국"
+        - kind: korea_exposure
+          product: "C:fertiliser:gas"
+          codes: ["271111"]
+          each: {supplier: [RUS, QAT, USA]}
+          periods: [2021, 2024]
+          en: "Russia's, Qatar's and the US share of Korea's LNG imports, 2021 and 2024"
+          ko: "한국 LNG 수입의 러시아·카타르·미국 비중, 2021년과 2024년"
+      plan_numbers: null
+    scenario:
+      kind: cut_supplier
+      product: "C:fertiliser:gas"
+      codes: ["271121"]
+      supplier: RUS
+      importers: EU27
+      cut: 1.0
+      period: 2021
+      down_stage: "C:fertiliser:ammonia"
+      en: "Cut Russian pipeline gas by 0–100% and see each EU importer's gap, and the LNG it would have to draw from the suppliers Asia buys from"
+      ko: "러시아 배관 가스 공급을 0~100% 줄입니다. 유럽연합 각 수입국의 부족분을 산출합니다. 그 부족을 메우려면 아시아의 수입선에서 끌어와야 할 LNG 규모도 산출합니다"
+    korea:
+      en: "Albrizio et al. name South Korea among the LNG importers hurt by higher prices. The page measures Korea's LNG suppliers from 2019 to 2025, Russia's share among them, and the share of Korea's LNG bought from the suppliers Europe turned to (the US, Qatar)."
+      ko: "알브리치오 등은 가격 상승으로 피해를 보는 LNG 수입국으로 한국을 꼽았습니다. 이 페이지는 2019~2025년 한국의 LNG 공급국과 그 가운데 러시아의 비중을 산출합니다. 유럽이 새로 의존한 공급국(미국, 카타르)에서 한국이 수입하는 LNG의 비중도 산출합니다."
+    limits:
+      en: "Trade shows flows, not balances: storage, demand cuts and fuel switching, which decided whether Europe ran short, are outside customs data, and so are the prices through which, in Albrizio et al.'s general-equilibrium model, other importers paid. Pipeline gas can be recorded against the transit country or the first EU buyer rather than Russia. Di Bella et al. go further with country gas balances and infrastructure bottlenecks."
+      ko: "무역 자료는 흐름만 담고 수급 균형은 담지 않습니다. 유럽의 부족 여부를 가른 저장, 수요 감축, 연료 전환은 통관자료에 없습니다. 가격도 마찬가지입니다. 알브리치오 등의 일반균형 모형에서 다른 수입국은 가격을 통해 대가를 치렀습니다. 배관 가스는 러시아가 아니라 경유국이나 첫 유럽연합 수입국 앞으로 기록될 수 있습니다. 디 벨라 등은 국가별 가스 수급과 기반시설 병목까지 분석했습니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: hormuz
+    num: 5
+    events: ["11", "12"]
+    title: {en: "Closing Hormuz cut Asia's crude from the Gulf", ko: "호르무즈 봉쇄로 아시아의 걸프산 원유가 줄었다"}
+    question:
+      en: "Who depends on goods that pass the Strait, and what did the 2026 closure change?"
+      ko: "누가 호르무즈 해협을 지나는 상품에 기대고 있으며, 2026년 봉쇄는 무엇을 바꿨는가?"
+    carries_over: []
+    papers:
+      - ref: "jejualps:121864"
+        authors: "Kharroubi"
+        year: 2026
+        series: "BIS Working Paper"
+        number: "1378"
+        title: "Maritime chokepoints and the global economy: evidence from the Strait of Hormuz"
+        url: "https://www.bis.org/publications/working-paper-1378-maritime-chokepoints-and-the-global-economy-evidence-strait-hormuz"
+        date: 2026-09-17
+        finding:
+          en: "Using IMF/Oxford PortWatch traffic data on what the paper calls “an unprecedented shock to the global economy”, supply-driven falls in Hormuz traffic push up fertiliser prices through inputs such as natural gas, while demand-driven ones have mixed effects."
+          ko: "저자는 호르무즈 사태를 “세계 경제에 대한 전례 없는 충격”이라 불렀습니다. IMF·옥스퍼드대 포트워치(PortWatch) 해상 통행 자료로 그 파급효과를 분석했습니다. 공급 요인으로 통행이 줄면 천연가스 등 투입재를 거쳐 비료 가격이 오릅니다. 수요 요인에 따른 통행 변동의 효과는 엇갈립니다."
+        quote: "an unprecedented shock to the global economy"
+        verified: true
+      - ref: "jejualps:122254"
+        authors: "Alshehri, Banerjee, Chui, Maddux, Munakata & Zampolli"
+        year: 2026
+        series: "BIS Bulletin"
+        number: "138"
+        title: "Chokepoint disruptions and their macroeconomic consequences"
+        url: "https://www.bis.org/publications/bulletin-138-chokepoint-disruptions-and-their-macroeconomic-consequences"
+        date: 2026-10-15
+        finding:
+          en: "A chokepoint is a node “for which substitutes are limited or cannot be activated quickly”; “fertiliser production in the Middle East” is among the nodes that “have become more central over time”."
+          ko: "저자들은 병목을 “대체재가 제한되거나 빨리 동원할 수 없는” 노드로 정의했습니다. “중동의 비료 생산”은 “시간이 지나며 더 중심적이 된” 노드 가운데 하나입니다."
+        quote:
+          - "for which substitutes are limited or cannot be activated quickly"
+          - "fertiliser production in the Middle East"
+          - "have become more central over time"
+        verified: true
+      - ref: "jejualps:47500"
+        authors: "Kilian, Plante & Richter"
+        year: 2026
+        series: "Federal Reserve Bank of Dallas Working Paper"
+        number: "2615"
+        title: "How Times Have Changed: The Impact of the 2026 Iran War on the U.S. Economy"
+        url: "https://www.dallasfed.org/research/papers/2026/wp2615"
+        date: 2026-06-23
+        finding:
+          en: "In a two-country model, the response of US real GDP growth to the 2026 oil disruption is “only one-twentieth of what it would have been in 1980” and “only one-sixth of the decline in the rest of the world”."
+          ko: "저자들은 2개국 모형으로 2026년 석유 공급 차질에 대한 미국 실질 GDP 성장률의 반응을 추정했습니다. 저자들은 이 반응이 “1980년이었다면 나타났을 반응의 20분의 1에 불과”하다고 썼습니다. 또 “나머지 세계 감소폭의 6분의 1에 불과하다”고 썼습니다."
+        quote:
+          - "only one-twentieth of what it would have been in 1980"
+          - "only one-sixth of the decline in the rest of the world"
+        verified: true
+      - ref: "jejualps:78106"
+        authors: "Fernández-Villaverde, Li, Xu & Zanetti"
+        year: 2025
+        series: "NBER Working Paper"
+        number: "w33486"
+        title: "Charting the Uncharted: The (Un)Intended Consequences of Oil Sanctions and Dark Shipping"
+        url: "https://www.nber.org/papers/w33486"
+        date: 2025-02-01
+        finding:
+          en: "Machine-learning ship tracking follows dark-shipped crude under sanctions on Iran and others: “These sanctioned flows offset recorded declines in global oil exports”, and customs records do not show them for what they are."
+          ko: "저자들은 기계학습 선박 군집 모형으로 이란 등 제재 대상국의 ‘다크 십핑’ 원유 흐름을 추적했습니다. 저자들은 “이 제재 대상 흐름이 기록된 세계 석유 수출 감소를 상쇄했다”고 썼습니다. 통관자료에는 이 흐름이 실제 성격대로 기록되지 않습니다."
+        quote: "These sanctioned flows offset recorded declines in global oil exports"
+        verified: true
+    network:
+      freq: M
+      products: ["B:crude_oil", "B:natural_gas", "C:fertiliser:nitrogen", "C:fertiliser:ammonia", "C:aluminium:al_unwrought"]
+      from: 201901
+      to: 202608
+      base: "Sep 2025 to Feb 2026, the six months before the war began on 28 Feb 2026"
+      note: "The Gulf is the eight economies of regions.gulf, by origin, not route. 2026 months use only the economies that have filed (Japan, India, the US, EU members, Australia, Brazil and others into mid-2026); China is missing in the current store; Korea's months from Jan 2026 come from its customs service. Extend `to` as reporters file."
+      measures:
+        - kind: partner_shares
+          product: "B:crude_oil"
+          importer: JPN
+          partners: *gulf
+          sum_partners: true
+          lens: S
+          from: 202509
+          to: 202608
+          en: "The Gulf's share of Japan's crude imports by month"
+          ko: "일본 원유 수입의 걸프 비중(월별)"
+        - kind: partner_shares
+          product: "B:crude_oil"
+          importer: IND
+          partners: *gulf
+          sum_partners: true
+          lens: S
+          from: 202509
+          to: 202608
+          en: "The Gulf's share of India's crude imports by month"
+          ko: "인도 원유 수입의 걸프 비중(월별)"
+        - kind: partner_shares
+          product: "B:natural_gas"
+          codes: ["271111"]
+          importer: JPN
+          partners: *gulf
+          sum_partners: true
+          lens: S
+          from: 202509
+          to: 202608
+          en: "The Gulf's share of Japan's LNG imports by month"
+          ko: "일본 LNG 수입의 걸프 비중(월별)"
+        - kind: korea_exposure
+          product: "B:crude_oil"
+          supplier: *gulf
+          periods: [2025]
+          en: "The Gulf's share of Korea's crude imports, 2025"
+          ko: "한국 원유 수입의 걸프 비중, 2025년"
+        - kind: korea_exposure
+          product: "B:natural_gas"
+          codes: ["271111"]
+          supplier: *gulf
+          periods: [2025]
+          en: "The Gulf's share of Korea's LNG imports, 2025"
+          ko: "한국 LNG 수입의 걸프 비중, 2025년"
+        - kind: top_exporters
+          each: {product: ["C:fertiliser:nitrogen", "C:fertiliser:ammonia", "C:aluminium:al_unwrought"]}
+          periods: [2025]
+          group: *gulf
+          en: "The Gulf's share of world exports of urea and ammonium nitrate, ammonia and unwrought aluminium, 2025"
+          ko: "세계 요소·질산암모늄, 암모니아, 알루미늄 괴 수출에서 걸프가 차지한 비중, 2025년"
+      plan_numbers:
+        en: "The Gulf's share of Japan's crude imports 91–95% (Sep 2025–Mar 2026) → 60–63% (Jun–Aug 2026); India's 38–58% (Sep 2025–Feb 2026) → 26% (Jul 2026); Japan's LNG from the Gulf 9–14% → 3–6%"
+        ko: "일본 원유 수입의 걸프 비중 91~95%(2025년 9월~2026년 3월) → 60~63%(2026년 6~8월). 인도 38~58%(2025년 9월~2026년 2월) → 26%(2026년 7월). 일본 LNG의 걸프 비중 9~14% → 3~6%"
+    scenario:
+      kind: close_route
+      route: "Strait of Hormuz"
+      product: "C:plastics:crude"
+      other_products: ["B:natural_gas", "C:fertiliser:nitrogen", "C:fertiliser:ammonia", "C:aluminium:al_unwrought"]
+      supplier: *gulf
+      bypass: [SAU, ARE]
+      cut: 1.0
+      period: 2025
+      down_stage: "C:plastics:naphtha"
+      note: "The bypass switch exempts Saudi Arabia's and the UAE's flows as if their pipelines to the Red Sea (Yanbu) and Fujairah carried everything; pipeline capacity is not in trade data, so the switch gives a lower bound on the share at risk."
+      en: "Close the Strait for Gulf exporters (a switch keeps Saudi Arabia's pipeline to the Red Sea and the UAE's to Fujairah open) and rank importers by the share of their crude, LNG, urea, ammonia or aluminium imports at risk"
+      ko: "걸프 수출국에 대해 해협을 봉쇄합니다. 스위치로 사우디아라비아의 홍해행 송유관과 아랍에미리트의 푸자이라행 송유관은 열어 둘 수 있습니다. 원유·LNG·요소·암모니아·알루미늄 수입 가운데 위험에 놓인 비중으로 수입국 순위를 매깁니다."
+    korea:
+      en: "In the Korea Customs Service's figures the Gulf supplied 69.3% of Korea's crude imports in 2025 ($52.2bn of $75.3bn) and 20.3% of its LNG ($5.3bn of $26.0bn). In Mar–May 2026, the first three months of the closure, its share fell to 55.5% of crude ($12.1bn of $21.8bn), from 66.1% a year earlier, and to 3.3% of LNG, from 21.2%. The network adds these customs months where Comtrade has no Korean file."
+      ko: "관세청 통계에 따르면 2025년 걸프는 한국 원유 수입의 69.3%(753억 달러 가운데 522억 달러)를 공급했습니다. LNG 수입에서는 20.3%(260억 달러 가운데 53억 달러)였습니다. 2026년 3~5월은 해협 봉쇄 뒤 첫 석 달입니다. 이 기간 원유 수입의 걸프 비중은 55.5%(218억 달러 가운데 121억 달러)로 전년동기(66.1%)보다 하락했습니다. LNG 수입의 걸프 비중은 21.2%에서 3.3%로 하락했습니다. 네트워크는 Comtrade에 한국 자료가 없는 달에 이 관세청 자료를 더합니다."
+    limits:
+      en: "Customs data record origin, not route: the Gulf list counts Oman, whose main crude terminal lies outside the Strait, and the UAE's exports from Fujairah alongside cargoes that cross it, and dark-shipped crude (Fernández-Villaverde et al.) is missed or recorded under other origins. Kharroubi measures traffic itself and its effect on prices, output and financial conditions, and Kilian, Plante and Richter model GDP; a trade network sees none of that, and its 2026 months cover only the economies that have filed."
+      ko: "통관자료는 경로가 아니라 원산지를 기록합니다. 걸프 목록에는 주요 원유 터미널이 해협 밖에 있는 오만이 포함됩니다. 아랍에미리트의 푸자이라 수출도 해협을 지나는 화물과 함께 들어 있습니다. 다크 십핑 원유(페르난데스비야베르데 등)는 누락되거나 다른 원산지로 기록됩니다. 카루비는 통행량 자체와 그것이 가격, 산출, 금융여건에 미치는 영향을 측정합니다. 킬리언·플랜티·리히터는 GDP를 모형으로 분석합니다. 무역 네트워크에는 그 어느 것도 담기지 않습니다. 2026년 월별 자료는 신고를 마친 경제만 포함합니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: rare-earth-magnets
+    num: 6
+    events: ["10"]
+    title: {en: "Rare-earth controls bite hard but briefly", ko: "희토류 수출통제, 충격은 크지만 오래가지 않는다"}
+    question:
+      en: "How exposed are magnet and motor makers to China's controls, and who could supply instead?"
+      ko: "영구자석·모터 제조업체는 중국의 수출통제에 얼마나 노출되어 있으며, 누가 대체 공급할 수 있는가?"
+    carries_over: []
+    papers:
+      - ref: "jejualps:66808"
+        authors: "Bogmans, Jerez-Osses, Miranda Pinto & Natal"
+        year: 2026
+        series: "IMF Working Paper"
+        number: "WP/26/073"
+        title: "Macroeconomic Effects of Rare Earths Supply Chain Disruptions"
+        url: "https://www.elibrary.imf.org/view/journals/001/2026/073/001.2026.issue-073-en.xml"
+        date: 2026-07-17
+        finding:
+          en: "After “China’s 2025 export licensing requirements on REEs and permanent magnets”, an “80% reduction in REEs supply” costs Japan, the US and Germany “1.8, 1.5, and 1.2 percent” of GDP at horizons under a year; at longer horizons “aggregate losses become negligible”."
+          ko: "저자들은 “중국의 2025년 희토류·영구자석 수출 허가 요건” 이후의 상황을 모형으로 분석했습니다. “희토류 공급 80% 감소”는 1년 미만 시계에서 일본·미국·독일의 GDP를 각각 “1.8%, 1.5%, 1.2%” 줄입니다. 저자들은 더 긴 시계에서는 “총손실이 무시할 만한 수준이 된다”고 썼습니다."
+        quote:
+          - "China’s 2025 export licensing requirements on REEs and permanent magnets"
+          - "80% reduction in REEs supply"
+          - "1.8, 1.5, and 1.2 percent"
+          - "aggregate losses become negligible"
+        verified: true
+      - ref: "jejualps:51442"
+        authors: "Aguilar, Darracq Pariès, Jouvanceau, Meunier & Spital"
+        year: 2026
+        series: "ECB Occasional Paper"
+        number: "384"
+        title: "Global implications of export controls on rare earths: a model-based assessment"
+        url: "https://www.ecb.europa.eu//pub/pdf/scpops/ecb.op384.en.pdf"
+        date: 2026-03-01
+        finding:
+          en: "The paper models “a hypothetical scenario of stringent but partial Chinese export restrictions on rare earths lasting for 18 months” and its spread through global value chains, with US output losses “between 0.3% and 0.6%”."
+          ko: "저자들은 “18개월 동안 이어지는 엄격하지만 부분적인 중국의 희토류 수출 제한이라는 가상 시나리오”를 모형으로 분석했습니다. 그 충격이 글로벌 가치사슬을 따라 파급되는 과정도 다뤘습니다. 미국의 산출 손실은 “0.3%에서 0.6% 사이”로 추정했습니다."
+        quote:
+          - "a hypothetical scenario of stringent but partial Chinese export restrictions on rare earths lasting for 18 months"
+          - "between 0.3% and 0.6%"
+        verified: true
+      - ref: "jejualps:67440"
+        authors: "Alvarez, Benatiya Andaloussi, Maggi, Sollaci, Stuermer & Topalova"
+        year: 2023
+        series: "IMF Working Paper"
+        number: "WP/23/201"
+        title: "Geoeconomic Fragmentation and Commodity Markets"
+        url: "https://www.elibrary.imf.org/view/journals/001/2023/201/001.2023.issue-201-en.xml"
+        date: 2023-10-03
+        finding:
+          en: "In a hypothetical split of the world into two geopolitical blocs, “Mineral markets critical for the clean energy transition”, with selected farm commodities, “appear among the most vulnerable”."
+          ko: "저자들은 세계가 두 지정학적 블록으로 갈라지는 가상 상황을 분석했습니다. 저자들은 “청정에너지 전환에 핵심적인 광물 시장”이 일부 농산물 시장과 함께 “가장 취약한 시장에 속하는 것으로 보인다”고 평가했습니다."
+        quote:
+          - "Mineral markets critical for the clean energy transition"
+          - "appear among the most vulnerable"
+        verified: true
+    network:
+      freq: A
+      products: ["C:magnets:ree_compounds", "C:magnets:ree_metals", "C:magnets:magnets", "C:magnets:motors", "C:magnets:wind"]
+      from: 2017
+      to: 2025
+      base: 2024
+      measures:
+        - kind: top_exporters
+          each: {product: ["C:magnets:ree_compounds", "C:magnets:ree_metals", "C:magnets:magnets"]}
+          periods: [2024]
+          en: "Shares of world exports of rare-earth compounds, metals and magnets, 2024"
+          ko: "세계 희토류 화합물·금속·영구자석 수출에서 각국이 차지한 비중, 2024년"
+        - kind: korea_exposure
+          each: {product: ["C:magnets:ree_compounds", "C:magnets:ree_metals", "C:magnets:magnets"]}
+          supplier: CHN
+          periods: [2024]
+          en: "China's share of Korea's imports of each stage, 2024"
+          ko: "단계별 한국 수입의 중국 비중, 2024년"
+          note: "Also Korea's share of world magnet imports (6.2% in the plan)."
+        - kind: partner_shares
+          product: "C:magnets:magnets"
+          exporter: CHN
+          partners: [USA, DEU, KOR, JPN, VNM, IND]
+          freq: M
+          lens: L
+          from: 202401
+          to: 202606
+          en: "China's magnet exports by destination, 12-month sums, around the April 2025 controls"
+          ko: "중국 영구자석 수출의 행선지별 비중, 12개월 합계, 2025년 4월 통제 전후"
+          note: "China's own monthly files end in Dec 2024 in the store; from 2025 its exports are its partners' imports (mirror), for the partners that have filed."
+      plan_numbers:
+        en: "China 64% of world magnet exports in 2024"
+        ko: "2024년 세계 영구자석 수출의 64%가 중국산"
+    scenario:
+      kind: cut_supplier
+      product: "C:magnets:magnets"
+      also_cut: ["C:magnets:ree_compounds", "C:magnets:ree_metals"]
+      supplier: CHN
+      cut: 0.8
+      period: 2024
+      down_stage: ["C:magnets:motors", "C:magnets:wind"]
+      en: "Cut China's rare-earth compounds, metals and magnets by 0–100% (80% by default, the shock in Bogmans et al.) and pass the shortfall to motor and wind-turbine makers"
+      ko: "중국의 희토류 화합물·금속·영구자석 수출을 0~100% 줄입니다(기본값은 보그만스 등의 충격인 80%). 그 부족분을 모터와 풍력 터빈 제조국으로 넘깁니다"
+    korea:
+      en: "Korea takes 6.2% of world magnet imports, 87% of them from China (2024; plan numbers, to be re-measured). The scenario turns that into the share of Korea's magnet supply at risk and the motor and turbine output one stage down that depends on it."
+      ko: "한국은 세계 영구자석 수입의 6.2%를 차지하고, 그 87%를 중국에서 수입합니다(2024년, 계획서 수치, 재산출 예정). 시나리오는 이를 한국의 영구자석 공급 가운데 위험에 놓인 비중으로 환산합니다. 이 공급에 의존하는 한 단계 아래 모터·풍력 터빈 생산도 산출합니다."
+    limits:
+      en: "Magnets are a small value in trade, so value shares understate what a shortfall stops; Bogmans et al. need an input-output table augmented with rare earths and substitution elasticities to reach GDP, and find the losses fade at longer horizons, which a first-round map cannot show. Rare-earth ore has no code of its own, most magnets travel inside motors and cars, and licences act on firms and grades that HS codes do not separate. The ECB paper adds inflation and the spread through global value chains."
+      ko: "영구자석은 교역액이 작습니다. 따라서 금액 비중은 부족으로 멈추는 생산을 과소평가합니다. 보그만스 등은 GDP 효과를 추정하려고 희토류를 반영한 산업연관표와 대체탄력성을 썼습니다. 이들은 긴 시계에서는 손실이 사라진다는 것을 보였습니다. 1차 효과 지도에는 이것이 나타나지 않습니다. 희토류 광석에는 고유 코드가 없습니다. 영구자석은 대부분 모터와 자동차에 내장되어 교역됩니다. 수출 허가는 HS 코드로 구분되지 않는 기업과 등급에 적용됩니다. 유럽중앙은행 논문은 물가와 글로벌 가치사슬을 통한 파급까지 다룹니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: chips
+    num: 7
+    events: ["5", "7"]
+    title: {en: "A chip shortage costs several times its size", ko: "반도체 부족의 피해는 그 크기의 몇 배다"}
+    question:
+      en: "Why does a chip shortage hurt more than its size, and how did controls reshape the trade?"
+      ko: "반도체 부족은 왜 그 크기보다 더 큰 피해를 주며, 수출통제는 교역을 어떻게 바꿨는가?"
+    carries_over: ["semiconductors"]
+    papers:
+      - ref: "jejualps:235"
+        authors: "Rungcharoenkitkul & Rees"
+        year: 2021
+        series: "BIS Bulletin"
+        number: "48"
+        title: "Bottlenecks: causes and macroeconomic implications"
+        url: "https://www.bis.org/publ/bisbull48.htm"
+        date: 2021-11-11
+        finding:
+          en: "The output loss from a constraint on energy or semiconductors is “on average 3.5 to 4.5 the size of the initial impact”; “a 10% contraction in world semiconductor production would reduce global GDP by about 0.2%”."
+          ko: "에너지나 반도체 공급 제약에 따른 산출 감소는 “평균적으로 최초 충격의 3.5~4.5배”입니다. 저자들은 “세계 반도체 생산이 10% 줄면 세계 GDP가 약 0.2% 감소한다”고 썼습니다."
+        quote:
+          - "on average 3.5 to 4.5 the size of the initial impact"
+          - "a 10% contraction in world semiconductor production would reduce global GDP by about 0.2%"
+        verified: true
+      - ref: "jejualps:49249"
+        authors: "Miki & Tamanyu"
+        year: 2024
+        series: "Bank of Japan Working Paper"
+        number: "24-E-6"
+        title: "On the Restructuring of Global Semiconductor Supply Chains"
+        url: "https://www.boj.or.jp/en/research/wps_rev/wps_2024/data/wp24e06.pdf"
+        date: 2024-06-26
+        finding:
+          en: "With the 2018–19 US tariffs on China as a natural experiment, the restructuring of chip supply chains is “not led solely by the direct consequences of the tariff hikes” but also by shifts in comparative advantage between the countries in the chain."
+          ko: "저자들은 2018~19년 미국의 대중 관세 인상을 자연실험으로 삼았습니다. 저자들은 반도체 공급망 재편이 “관세 인상의 직접적 결과만으로 이끌린 것이 아니”라고 썼습니다. 공급망 속 나라들 사이의 비교우위 변화도 재편을 이끌었습니다."
+        quote: "not led solely by the direct consequences of the tariff hikes"
+        verified: true
+    network:
+      freq: A
+      products: ["C:semiconductors:ics", "C:semiconductors:chip_tools", "C:semiconductors:phones", "C:semiconductors:computers", "B:cars"]
+      from: 2015
+      to: 2025
+      base: 2019
+      measures:
+        - kind: top_exporters
+          product: "C:semiconductors:ics"
+          periods: [2019, 2024]
+          en: "Shares of world chip exports"
+          ko: "세계 집적회로 수출에서 각국이 차지한 비중"
+          note: "The plan's Korea 17% (second) names no year; 2024, the last complete year, is assumed."
+        - kind: korea_exposure
+          product: "C:semiconductors:chip_tools"
+          supplier: NLD
+          periods: [2024]
+          en: "The Netherlands' share of Korea's imports of chip-making machines"
+          ko: "한국 반도체 제조장비 수입의 네덜란드 비중"
+          note: "Also Korea's share of world imports of chip-making machines (13.5% in the plan)."
+        - kind: partner_shares
+          product: "C:semiconductors:chip_tools"
+          importer: CHN
+          partners: [JPN, NLD, USA, KOR, SGP]
+          from: 2015
+          to: 2025
+          en: "China's purchases of chip-making machines by supplier, before and after the October 2022 controls"
+          ko: "중국의 공급국별 반도체 제조장비 수입, 2022년 10월 통제 전후"
+        - kind: partner_shares
+          product: "C:semiconductors:ics"
+          importer: USA
+          partners: [CHN, S19, MYS, VNM, KOR, MEX]
+          from: 2015
+          to: 2025
+          en: "US chip imports by supplier, around the 2018–19 tariffs"
+          ko: "미국의 공급국별 집적회로 수입, 2018~19년 관세 전후"
+        - kind: world_change
+          each: {product: ["B:cars", "C:semiconductors:ics"]}
+          importers: all
+          periods: [2021]
+          against: 2019
+          en: "World trade in cars and in chips, 2021 against 2019: cars falling while chips rose"
+          ko: "세계 승용차 교역과 집적회로 교역, 2021년과 2019년 비교(승용차 감소, 집적회로 증가)"
+      plan_numbers: null   # the plan's numbers for this case are Korea's, in the korea block
+    scenario:
+      kind: cut_output
+      product: "C:semiconductors:ics"
+      supplier: S19   # Asia, not elsewhere specified: most importers' records of Taiwan (Comtrade partner 490)
+      cut: 0.1
+      period: 2024
+      down_stage: ["C:semiconductors:phones", "C:semiconductors:computers"]
+      note: "chains.yaml feeds chips only to phones and computers; reaching cars (C:steel:cars) needs a cross-chain feed. An export cut stands in for the output cut."
+      en: "Cut one supplier's chip output by 10% (by default Asia, not elsewhere specified, most importers' records of Taiwan; China, Malaysia and others to choose) and follow the shortfall into phones, computers and cars"
+      ko: "한 공급국의 칩 생산을 10% 줄이고 그 부족분이 휴대전화·컴퓨터·자동차로 어떻게 번지는지 따라갑니다(기본값은 '아시아(달리 분류되지 않음)'입니다. 대부분 수입국이 대만과의 교역을 여기에 기록합니다. 중국·말레이시아 등도 고를 수 있습니다)"
+    korea:
+      en: "Korea is the second-largest chip exporter (17%) and buys 13.5% of the world's chip-making machines, a third of them from the Netherlands (plan numbers, to be re-measured). The scenario shows Korea both ways: as a buyer exposed to a cut elsewhere, and, with Korea selected, as the supplier whose cut others feel."
+      ko: "한국은 세계 2위 집적회로 수출국(17%)입니다. 세계 반도체 제조장비 수입의 13.5%를 차지하며, 그 3분의 1을 네덜란드에서 수입합니다(계획서 수치, 재산출 예정). 시나리오는 한국을 두 방향에서 다룹니다. 하나는 다른 나라의 감산에 노출된 수입국으로서의 한국입니다. 다른 하나는 한국을 선택했을 때 그 감산이 다른 나라에 영향을 주는 공급국으로서의 한국입니다."
+    limits:
+      en: "The multiplier in the BIS bulletin comes from a global input-output table, not from trade: a network shows who buys chips, not how much output stops without them. Export cuts stand in for output cuts, a chip crosses borders several times under the same code, and controls act on specific tools and grades that HS 8486 and 8542 do not separate. Miki and Tamanyu go further with upstreamness and wage gaps; Funke and Wende (further reading) model export bans in general equilibrium."
+      ko: "BIS 불레틴의 승수는 무역 자료가 아니라 세계 산업연관표에서 산출한 값입니다. 네트워크에는 누가 반도체를 수입하는지만 나타납니다. 반도체가 없을 때 산출이 얼마나 멈추는지는 알 수 없습니다. 수출 감소로 생산 감소를 대신합니다. 반도체 하나가 같은 코드로 여러 번 국경을 넘습니다. 수출통제는 HS 8486과 8542로 구분되지 않는 특정 장비와 등급에 적용됩니다. 미키와 다마뉴는 상류도와 임금 격차까지 분석했습니다. 풍케와 벤데(더 읽을거리)는 수출 금지를 일반균형 모형으로 다룹니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: tariffs-2025
+    num: 8
+    events: ["10"]
+    title: {en: "Chinese exports ran ahead of the tariffs, then around them", ko: "중국 수출은 관세를 앞질렀다가 비켜 갔다"}
+    question:
+      en: "How did Chinese exports and US imports move around the 2025 tariffs, month by month?"
+      ko: "2025년 관세를 전후해 중국의 수출과 미국의 수입은 달마다 어떻게 움직였는가?"
+    carries_over: []
+    papers:
+      - ref: "jejualps:66864"
+        authors: "Lu & Milkov"
+        year: 2026
+        series: "IMF Working Paper"
+        number: "WP/26/013"
+        title: "Understanding China’s 2024–25 Frontloading from the Lens of Product-Level Export Baskets"
+        url: "https://www.elibrary.imf.org/view/journals/001/2026/013/001.2026.issue-013-en.xml"
+        date: 2026-01-23
+        finding:
+          en: "China's shipments to the US “accelerated in the second half of 2024”; from January 2025 shipments of intermediate inputs to Vietnam and other ASEAN economies accelerated; as shipments to the US “fell sharply in April-May”, the decline “was offset by increased shipments to third destinations”."
+          ko: "저자들은 중국의 대미 선적이 “2024년 하반기에 가속했다”고 썼습니다. 2025년 1월부터는 베트남 등 아세안으로 가는 중간재 선적이 빨라졌습니다. 저자들은 대미 선적이 “4~5월에 급감”하자 그 감소가 “제3국으로의 선적 증가로 상쇄되었다”고 썼습니다."
+        quote:
+          - "accelerated in the second half of 2024"
+          - "fell sharply in April-May"
+          - "was offset by increased shipments to third destinations"
+        verified: true
+      - ref: "jejualps:45586"
+        authors: "Zhao"
+        year: 2025
+        series: "BIS Working Paper"
+        number: "1316"
+        title: "Assessing the macroeconomic impacts of the 2025 US tariffs"
+        url: "https://www.bis.org/publ/work1316.htm"
+        date: 2025-12-11
+        finding:
+          en: "The 2025 measures raised the average effective US tariff rate “from 2.4% at the end of 2024 to 17.4%”; in a multi-country model, “The US itself suffers a significant output drop of 0.9%” in the short run."
+          ko: "2025년 조치로 미국의 평균 실효관세율은 “2024년 말 2.4%에서 17.4%로” 올랐습니다. 저자는 다국가 모형에서 단기에 “미국 자신도 0.9%의 상당한 산출 감소를 겪는다”고 썼습니다."
+        quote:
+          - "from 2.4% at the end of 2024 to 17.4%"
+          - "The US itself suffers a significant output drop of 0.9%"
+        verified: true
+      - ref: "jejualps:66739"
+        authors: "Ahn, Rotunno & Ruta"
+        year: 2026
+        series: "IMF Working Paper"
+        number: "WP/26/149"
+        title: "Tariff Pass-Through and Import Reallocation"
+        url: "https://www.elibrary.imf.org/view/journals/001/2026/149/001.2026.issue-149-en.xml"
+        date: 2026-07-17
+        finding:
+          en: "Duty-exclusive import prices “at the variety (country-product) level do not adjust to tariffs, implying full pass-through to duty-inclusive prices at the border”; within products, imports reallocate toward lower-priced sources."
+          ko: "저자들은 관세를 제외한 수입가격을 분석했습니다. 저자들은 이 가격이 “품종(국가·품목) 수준에서 관세에 반응하지 않아, 국경에서 관세를 포함한 가격으로 완전히 전가된다”고 했습니다. 같은 품목 안에서는 수입이 더 싼 공급처로 재배치됩니다."
+        quote: "at the variety (country-product) level do not adjust to tariffs, implying full pass-through to duty-inclusive prices at the border"
+        verified: true
+    network:
+      freq: M
+      products: [TOTAL]
+      from: 202401
+      to: 202607
+      base: "same month a year earlier"
+      note: "Only reporters that have filed: the US to Jul 2026. China's own monthly files end in Dec 2024 in the store, so China's exports are read from its partners' imports."
+      measures:
+        - kind: partner_shares
+          product: TOTAL
+          importer: USA
+          partners: [CHN, MEX, CAN, VNM, S19, KOR]
+          lens: S
+          from: 202401
+          to: 202607
+          en: "Shares of US imports by partner, month by month"
+          ko: "미국 수입의 상대국별 비중(월별)"
+        - kind: world_change
+          product: TOTAL
+          importers: [USA]
+          partner: CHN
+          lens: S
+          periods: [202504, 202505]
+          against: same_month_year_before
+          en: "US imports from China, April and May 2025 against a year earlier"
+          ko: "미국의 대중 수입, 2025년 4월과 5월 전년동월대비"
+        - kind: partner_shares
+          product: TOTAL
+          exporter: CHN
+          partners: [USA, ASEAN, EU27]
+          lens: M
+          from: 202401
+          to: 202606
+          mirror: true
+          en: "China's exports by destination as its partners report them, 3-month sums"
+          ko: "상대국이 신고한 중국의 행선지별 수출, 3개월 합계"
+        - kind: world_change
+          product: TOTAL
+          importers: ASEAN
+          partner: CHN
+          lens: M
+          periods: [202503, 202506]
+          against: same_month_year_before
+          en: "ASEAN members' imports from China in 2025 against a year earlier, for the members that have filed"
+          ko: "신고를 마친 아세안 회원국의 대중 수입, 2025년 전년동기대비"
+        - kind: share_change
+          product: TOTAL
+          supplier: CHN
+          importer: USA
+          lens: L
+          periods: [202412, 202606]
+          en: "China's share of US imports, 12 months to Dec 2024 against 12 months to Jun 2026"
+          ko: "미국 수입의 중국 비중, 2024년 12월까지 12개월과 2026년 6월까지 12개월 비교"
+      plan_numbers: null
+    scenario:
+      kind: tariff
+      product: TOTAL
+      supplier: CHN
+      importer: USA
+      cut: 0.5
+      period: 2024
+      down_stage: null
+      en: "Set a tariff by partner and product, entered as the share of that partner's flow it removes, and see the shift in other suppliers' shares it would take to keep supply whole"
+      ko: "상대국·품목별로 관세를 정합니다. 관세는 그로 인해 사라지는 해당국 물량의 비중으로 입력합니다. 공급을 유지하려면 다른 공급국의 비중이 얼마나 바뀌어야 하는지 살펴봅니다."
+    korea:
+      en: "The plan gives no Korean number for this case. The page shows Korea's share of US imports month by month from 2024, read from US reports, which run to July 2026; Korea's own months from January 2026 come from the Korea Customs Service."
+      ko: "계획서에는 이 사례의 한국 수치가 없습니다. 페이지에는 2024년 이후 미국 수입의 한국 비중을 월별로 표시합니다. 이 수치는 미국의 신고 자료이며, 2026년 7월까지 있습니다. 한국 자체의 2026년 1월 이후 자료는 관세청 통계입니다."
+    limits:
+      en: "The network has values, not prices or tariffs: Ahn, Rotunno and Ruta need tariff lines and unit values to find full pass-through and the shift toward cheaper sources, and Zhao's output and price effects come from a multi-country model. Frontloading is a shift in timing that later months reverse, so a single month's change on a year earlier can mislead; reporters file late, and the 2026 months cover only the economies that have filed."
+      ko: "네트워크에는 금액만 있고 가격이나 관세는 없습니다. 안·로투노·루타는 관세 세번과 단가 자료로 완전 전가와 더 싼 공급처로의 이동을 확인했습니다. 자오의 산출·물가 효과는 다국가 모형에서 산출합니다. 앞당긴 수출은 이후 몇 달 동안 되돌려지는 시점 이동입니다. 따라서 한 달의 전년동월대비 변화는 오해를 낳을 수 있습니다. 신고는 늦게 들어오고, 2026년 월별 자료는 신고를 마친 경제만 포함합니다."
+
+  # ----------------------------------------------------------------------------------------------
+  - id: fragility-screen
+    num: 9
+    events: []            # all chains, no single event
+    title: {en: "Concentrated stages are where supply breaks first", ko: "공급은 집중된 단계에서 먼저 끊긴다"}
+    question:
+      en: "Which traded goods, and which economies' import baskets, are most fragile to a supply shock?"
+      ko: "어떤 교역재와 어느 경제의 수입 바스켓이 공급 충격에 가장 취약한가?"
+    carries_over: ["dependence", "minerals", "centrality"]
+    papers:
+      - ref: "jejualps:69197"
+        authors: "Korniyenko, Pinat & Dew"
+        year: 2017
+        series: "IMF Working Paper"
+        number: "WP/17/30"
+        title: "Assessing the Fragility of Global Trade: The Impact of Localized Supply Shocks Using Network Analysis"
+        url: "https://www.elibrary.imf.org/view/journals/001/2017/030/001.2017.issue-030-en.xml"
+        date: 2017-02-13
+        finding:
+          en: "A method for “evaluating and ranking the supply fragility of individual traded goods”, and a country measure of “supply shock vulnerability based on the composition of their individual import baskets”."
+          ko: "저자들은 “개별 교역재의 공급 취약성을 평가하고 순위를 매기는” 방법을 제시했습니다. “각국 수입 바스켓의 구성에 기초한 공급 충격 취약성”을 나타내는 국가 지표도 내놓았습니다."
+        quote:
+          - "evaluating and ranking the supply fragility of individual traded goods"
+          - "supply shock vulnerability based on the composition of their individual import baskets"
+        verified: true
+      - ref: "jejualps:122254"
+        authors: "Alshehri, Banerjee, Chui, Maddux, Munakata & Zampolli"
+        year: 2026
+        series: "BIS Bulletin"
+        number: "138"
+        title: "Chokepoint disruptions and their macroeconomic consequences"
+        url: "https://www.bis.org/publications/bulletin-138-chokepoint-disruptions-and-their-macroeconomic-consequences"
+        date: 2026-10-15
+        finding:
+          en: "Chokepoints measured by “production network centrality”: nodes that lie on many production paths, such as “fertiliser production in the Middle East”."
+          ko: "저자들은 병목을 “생산 네트워크 중심성”으로 측정했습니다. 병목은 많은 생산 경로 위에 놓인 노드이며, “중동의 비료 생산”이 그 예입니다."
+        quote:
+          - "production network centrality"
+          - "fertiliser production in the Middle East"
+        verified: true
+      - ref: "jejualps:70551"
+        authors: "Massara & Errico"
+        year: 2011
+        series: "IMF Working Paper"
+        number: "WP/11/214"
+        title: "Assessing Systemic Trade Interconnectedness: An Empirical Approach"
+        url: "https://www.elibrary.imf.org/view/journals/001/2011/214/001.2011.issue-214-en.xml"
+        date: 2011-09-01
+        finding:
+          en: "Ranks systemically important economies in the trade network with “a framework for ranking jurisdictions based on trade size and trade interconnectedness indicators”, using IMF Direction of Trade Statistics for 2000 and 2010."
+          ko: "저자들은 IMF 무역방향통계(DOTS)의 2000년과 2010년 자료를 썼습니다. 이를 바탕으로 “무역 규모와 무역 연결성 지표에 기초해 국가·지역의 순위를 매기는 틀”을 만들었습니다. 이 틀로 무역 네트워크에서 시스템적으로 중요한 경제를 가려냈습니다."
+        quote: "a framework for ranking jurisdictions based on trade size and trade interconnectedness indicators"
+        verified: true
+      - ref: "jejualps:76770"
+        authors: "Rosenow & Mealy"
+        year: 2024
+        series: "World Bank Policy Research Working Paper"
+        number: "WPS10696"
+        title: "Turning Risks into Rewards : Diversifying the Global Value Chains of Decarbonization Technologies"
+        url: "http://documents.worldbank.org/curated/en/099936402072438837/IDU127b390ef1155014bd91aea9110575d799ce6"
+        date: 2024-02-07
+        finding:
+          en: "A dataset of the traded products, components and materials of solar PV, wind turbines and EVs that flags “products with supply risks due to high market concentration levels”."
+          ko: "저자들은 태양광·풍력 터빈·전기차의 교역 제품·부품·소재 데이터셋을 구축했습니다. “높은 시장 집중도로 공급 위험이 있는 제품”도 식별했습니다."
+        quote: "products with supply risks due to high market concentration levels"
+        verified: true
+    network:
+      freq: A
+      products: ["C:*"]
+      from: 2015
+      to: 2024
+      base: 2019
+      measures:
+        - kind: fragility_rank
+          from: 2015
+          to: 2024
+          en: "All chain stages ranked each year by exporter concentration and supplier HHI"
+          ko: "모든 사슬 단계를 해마다 수출국 집중도와 공급국 HHI로 순위를 매깁니다"
+        - kind: fragility_rank
+          importer: KOR
+          from: 2015
+          to: 2024
+          en: "Korea's import basket scored the same way: each stage's fragility weighted by its share of Korea's imports"
+          ko: "한국의 수입 바스켓을 같은 방식으로 채점합니다. 각 단계의 취약성을 한국 수입에서 그 단계가 차지하는 비중으로 가중합니다."
+      plan_numbers:
+        en: "All 78 chain stages ranked by fragility each year; Korea's import basket scored the same way"
+        ko: "78개 사슬 단계 전부를 해마다 취약성 기준으로 순위를 매깁니다. 한국의 수입 바스켓도 같은 방식으로 채점합니다"
+    scenario:
+      kind: none
+      product: null
+      supplier: null
+      cut: null
+      period: null
+      down_stage: null
+      en: "None: this case is the map the other scenarios start from"
+      ko: "시나리오는 없습니다. 이 사례는 다른 시나리오들이 출발하는 지도입니다."
+    korea:
+      en: "The plan gives no Korean number for this case. Korea's import basket is scored the same way each year, so the stages where Korea buys most from the most concentrated sellers come first."
+      ko: "계획서에는 이 사례의 한국 수치가 없습니다. 한국의 수입 바스켓도 해마다 같은 방식으로 채점합니다. 한국이 가장 집중된 공급국에서 가장 많이 수입하는 단계가 맨 앞에 옵니다."
+    limits:
+      en: "Concentration is not the same as irreplaceability: the BIS bulletin weighs centrality against trade elasticities, and some concentrated goods are easy to source elsewhere. Codes mix products (see each stage's caveat), production that never trades is invisible, and indirect exposure through inputs is larger than direct trade shows (Baldwin, Freeman and Theodorakopoulos, further reading). Korniyenko, Pinat and Dew build their ranking on a product-level network of their own, and Massara and Errico rank economies, not goods."
+      ko: "집중도가 높다고 대체가 불가능한 것은 아닙니다. BIS 불레틴은 중심성을 무역탄력성과 함께 고려합니다. 집중된 상품 가운데 일부는 다른 공급처에서 쉽게 조달할 수 있습니다. 코드에는 여러 제품이 섞여 있습니다(각 단계의 주의 사항 참조). 교역되지 않는 생산은 자료에 나타나지 않습니다. 투입재를 거친 간접 노출은 직접 교역에 나타나는 것보다 큽니다(볼드윈·프리먼·테오도라코풀로스, 더 읽을거리). 코르니옌코·피나트·듀는 자체 품목 단위 네트워크로 순위를 매겼습니다. 마사라와 에리코는 상품이 아니라 경제의 순위를 매깁니다."
+
+further_reading:
+  - {ref: "jejualps:68153", authors: "Cerdeiro & Komáromi", year: 2020, series: "IMF Working Paper", number: "WP/20/284",
+     title: "Supply Spillovers During the Pandemic: Evidence from High-Frequency Shipping Data",
+     url: "https://www.elibrary.imf.org/view/journals/001/2020/284/001.2020.issue-284-en.xml", date: 2020-12-18,
+     case: lockdowns-2020}
+  - {ref: "jejualps:63076", authors: "Boehm, Flaaen & Pandalai-Nayar", year: 2015,
+     series: "Federal Reserve Board Finance and Economics Discussion Series", number: "2015-094",
+     title: "Input Linkages and the Transmission of Shocks: Firm-Level Evidence from the 2011 Tohoku Earthquake",
+     url: "http://www.federalreserve.gov/econresdata/feds/2015/files/2015094pap.pdf", date: 2015-10-01,
+     case: japan-2011}
+  - {ref: "jejualps:78790", authors: "Fajgelbaum, Goldberg, Kennedy, Khandelwal & Taglioni", year: 2022,
+     series: "World Bank Policy Research Working Paper", number: "WPS9894",
+     title: "The US-China Trade War and Global Reallocations",
+     url: "http://documents.worldbank.org/curated/en/735611641482672239/The-US-China-Trade-War-and-Global-Reallocations",
+     date: 2022-01-06, case: blocs-connectors}
+  - {ref: "jejualps:49055", authors: "Baldwin, Freeman & Theodorakopoulos", year: 2023,
+     series: "Bank of England Staff Working Paper", number: "1052",
+     title: "Hidden exposure: measuring US supply chain reliance",
+     url: "https://www.bankofengland.co.uk/-/media/boe/files/working-paper/2023/hidden-exposure-measuring-us-supply-chain-reliance.pdf",
+     date: 2023-11-17, case: fragility-screen}
+  - {ref: "jejualps:76419", authors: "Arvis, Rastogi, Rodrigue & Ulybina", year: 2024,
+     series: "World Bank Policy Research Working Paper", number: "WPS10839",
+     title: "A Metric of Global Maritime Supply Chain Disruptions: The Global Supply Chain Stress Index (GSCSI)",
+     url: "http://documents.worldbank.org/curated/en/099746107032431443/IDU19447dab513757140b1193cd19643f0ab7c10",
+     date: 2024-07-03, case: hormuz}
+  - {ref: "jejualps:80842", authors: "Funke & Wende", year: 2023, series: "SUERF Policy Brief", number: null,
+     title: "Modeling Semiconductor Export Restrictions and the US-China Trade Conflict",
+     url: "https://www.suerf.org/publications/suerf-policy-notes-and-briefs/modeling-semiconductor-export-restrictions-and-the-us-china-trade-conflict/",
+     date: 2023-12-23, case: chips}
+  - {ref: "jejualps:66809", authors: "Bogmans, Cuadros-Bloch, Natal & Paloschi", year: 2026,
+     series: "IMF Working Paper", number: "WP/26/072",
+     title: "Industrial Policy and Supply Chain Bottlenecks in Commodity Markets: Evidence from Rare Earth Elements",
+     url: "https://www.elibrary.imf.org/view/journals/001/2026/072/001.2026.issue-072-en.xml",
+     date: 2026-07-17, case: rare-earth-magnets}
+
+gaps:
+  en: "No paper in jejualps covers Japan's 2019 export controls on Korea, the Red Sea attacks of 2023–24 on their own, or Korea's place in chip supply chains; the archive holds no Bank of Korea or KIEP working papers. Those events get event pages without a case study, and the Korea sections rest on our own numbers. Adding Bank of Korea, KIEP and KDI papers to jejualps would close the gap."
+  ko: "jejualps에는 2019년 일본의 대한국 수출규제, 2023~24년 홍해 공격 자체, 반도체 공급망 속 한국의 위치를 다룬 논문이 없습니다. 한국은행이나 대외경제정책연구원(KIEP)의 연구 보고서도 없습니다. 따라서 그 사건들은 사례 연구 없이 사건 페이지만 있습니다. 한국 부분은 이 사이트가 산출한 수치에 근거합니다. 한국은행, KIEP, 한국개발연구원(KDI)의 논문을 jejualps에 추가하면 이 공백을 메울 수 있습니다."

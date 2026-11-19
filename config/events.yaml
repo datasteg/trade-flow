@@ -1,0 +1,1106 @@
+# Economic events for trade-flow: the curated catalogue behind the
+# diamonds on every time strip, the event cards in the drawer and the event pages. In date order.
+#
+# Fields: `num` is the event's number; `start`/`end` ISO dates (end null while `ongoing`); `kind` one of
+# crisis, disaster, tariff, export-control, ban, pandemic, logistics, war, sanctions. `timeline` items
+# point to `sources` by `n`; an item dated after the latest source that could be opened carries
+# `reported: true`. `products` are site product ids (TOTAL, HS:<chapter>, B:<basket in
+# trade-collector/config/network.yaml>, C:<chain>:<stage in chains.yaml>), the most relevant first.
+# `economies` are ISO3 node codes. `view` is the default network view: `f` A (years) or M (YYYYMM),
+# product `p`, `base` and `t`, and the monthly `lens` (L 12-month sum, M 3-month sum against a year
+# earlier; null for annual views). Lens S, the single month, was dropped on 31 Oct 2026 (the
+# monthly explorer's windows): no event view uses it and no single-month value is published. Monthly
+# data: TOTAL from 2006, baskets and stages from 2014; chapters are annual only and monthly stages
+# have lens L only. `watch` says what the
+# network should show; it carries no numbers of our own. Sources were opened on 24 Oct 2026; a
+# source without a date of its own has `date: null` and `accessed`.
+
+events:
+  - id: gfc-2008
+    num: "A1"
+    start: 2008-09-15
+    end: 2009-06-30          # NBER: the US recession's trough was June 2009 (a month; its last day used)
+    ongoing: false
+    kind: crisis
+    title: {en: "Lehman Brothers fails and world trade collapses", ko: "리먼 파산과 세계 무역 급감"}
+    dek:
+      en: "Lehman Brothers filed for bankruptcy on 15 September 2008. The volume of world trade fell 12.2% in 2009, the largest decline since the Second World War, the WTO reported."
+      ko: "리먼 브라더스가 2008년 9월 15일 파산을 신청했습니다. WTO에 따르면 2009년 세계 무역량은 12.2% 줄어 제2차 세계대전 이후 가장 크게 감소했습니다."
+    timeline:
+      - {date: 2008-09-15, en: "Lehman Brothers files for Chapter 11 bankruptcy", ko: "리먼 브라더스, 파산보호 신청", source: 1}
+      - {date: 2009-04-02, en: "G20 in London commits at least $250bn to trade finance", ko: "G20 런던 회의, 무역금융에 2,500억 달러 이상 지원 약속", source: 2}
+      - {date: 2010-03-26, en: "WTO: world trade volume fell 12.2% in 2009", ko: "WTO, 2009년 세계 무역량 12.2% 감소 발표", source: 3}
+      - {date: 2010-09-20, en: "NBER dates the end of the US recession to June 2009", ko: "NBER, 미국 경기침체 종료 시점을 2009년 6월로 판정", source: 4}
+    products: ["TOTAL", "B:cars", "C:steel:flat"]
+    economies: [USA]
+    view: {f: M, p: "TOTAL", base: 200805, t: 200905, lens: M}
+    watch:
+      en: "The 2009 trough in annual and monthly views, and how fast each chain and each economy climbed back to its 2008 level."
+      ko: "연간·월간 화면에서 2009년의 바닥을 표시합니다. 공급망과 경제마다 2008년 수준을 얼마나 빨리 회복했는지도 확인할 수 있습니다."
+    reading:
+      window:
+        en: "Mar–May 2008 is the last spring before Lehman; Mar–May 2009 is the trough (the WTO has world trade in manufactures −29.8% on a year earlier in Q2 2009, and the NBER dates the end of the US recession to June 2009). Only 37 and 41 economies filed monthly data for these months (Korea through its customs service), about a quarter of 2024 world exports; from January 2010 the monthly data have over 100 reporters."
+        ko: "2008년 3~5월은 리먼 파산 전 마지막 봄이고, 2009년 3~5월은 바닥입니다. WTO 집계로 2009년 2분기 세계 공산품 교역은 전년동기대비 29.8% 감소했습니다. NBER는 미국 경기침체 종료를 2009년 6월로 판정했습니다. 이 기간 월간 자료를 신고한 경제는 각각 37개국과 41개국입니다(한국은 관세청 자료). 이 경제들의 수출은 2024년 세계 수출의 4분의 1 정도입니다. 2010년 1월부터는 신고국이 100개국을 넘습니다."
+      items:
+        - kind: definition
+          number:
+            en: "World exports of All goods −32.4% between May 2008 and May 2009 ($2.0tn → $1.4tn, Mar–May windows), against the 12.2% fall in the volume of world trade in 2009 in the dek."
+            ko: "세계 전체 상품 수출은 2008년 5월부터 2009년 5월까지 −32.4% 변했습니다($2.0tn → $1.4tn, 3~5월 창 기준). 머리글에 나온 2009년 세계 교역량 감소율 12.2%와 비교되는 수치입니다."
+          en: "The 12.2% is the WTO's volume measure for the whole of 2009; in current dollars world merchandise exports fell 23% to $12.15 trillion, largely on lower oil and commodity prices. The WTO's quarterly table has world trade in manufactures −27.6% on a year earlier in Q1 2009 and −29.8% in Q2; and the world measured here is only the economies that filed monthly data."
+          ko: "12.2%는 WTO가 2009년 한 해를 물량 기준으로 집계한 수치입니다. 달러 금액 기준으로 2009년 세계 상품 수출은 23% 감소한 12조 1,500억 달러였습니다. WTO는 그 차이가 주로 석유 등 1차 산품 가격 하락 때문이라고 분석했습니다. WTO 분기표에서 세계 공산품 교역은 2009년 1분기에 전년동기대비 27.6%, 2분기에 29.8% 감소했습니다. 여기서 집계한 세계 합계는 월간 자료를 신고한 경제만 더한 값입니다."
+          sources: [3]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "United States · imports −30.6% ($100.8bn → $70.0bn) and exports −25.2% ($74.6bn → $55.8bn), both grey."
+            ko: "미국의 수입은 −30.6%($100.8bn → $70.0bn), 수출은 −25.2%($74.6bn → $55.8bn) 변했으며 둘 다 회색으로 표시합니다."
+          en: "UNSD began collecting monthly data in 2010 (49 countries by 2 July 2010). For these months the monthly data behind this page have 37 and 41 reporters, about a quarter of 2024 world exports, so the US figures are its trade with those economies, Germany, Korea, France and Italy among them. The US's own May 2009 release: exports −21.3%, imports −31.3% on May 2008 (goods and services)."
+          ko: "UNSD는 2010년에야 월간 자료 수집을 시작했습니다(2010년 7월 2일 기준 49개국). 이 기간 이 페이지의 월간 자료에는 37개국과 41개국만 있습니다. 2024년 세계 수출의 4분의 1 정도입니다. 따라서 여기 미국 수치는 독일·한국·프랑스·이탈리아 등 이들 경제와의 교역입니다. 미국 자체 발표로는 2009년 5월 수출이 2008년 5월보다 21.3%, 수입이 31.3% 줄었습니다(상품·서비스 합계)."
+          sources: [5, 6]
+          checked: 2026-10-25
+        - kind: price
+          number:
+            en: "Russia 2.4% → 1.8%, Norway 2.2% → 1.9% and Angola 0.96% → 0.57% of world All goods exports (May 2008 → May 2009)."
+            ko: "세계 전체 상품 수출에서 차지하는 비중은 러시아 2.4% → 1.8%, 노르웨이 2.2% → 1.9%, 앙골라 0.96% → 0.57%였습니다(2008년 5월 → 2009년 5월)."
+          en: "Values are in dollars and oil halved: Brent averaged $122.80 a barrel in May 2008 and $57.30 in May 2009. The WTO has the dollar value of exports from the Middle East, Africa and the CIS down 33%, 32% and 36% in 2009 against 23% for the world, due to the sharp drop in oil prices between 2008 and 2009."
+          ko: "금액은 달러 기준이며, 이 기간에 유가는 절반으로 하락했습니다. 브렌트유 월평균 가격은 2008년 5월 배럴당 122.80달러에서 2009년 5월 57.30달러로 하락했습니다. WTO에 따르면 2009년 중동·아프리카·CIS의 수출액은 각각 33%, 32%, 36% 감소했습니다. 세계 전체(23%)보다 큰 감소폭입니다. WTO는 2008~09년의 유가 급락을 그 원인으로 들었습니다."
+          sources: [3, 7]
+          checked: 2026-10-25
+        - kind: overlap
+          number:
+            en: "Passenger cars: Germany 39.9% → 36.4% and France 10.1% → 8.2% of world exports; Romania 0.23% → 0.98% and Italy 3.6% → 4.1% (May 2008 → May 2009)."
+            ko: "승용차 세계 수출 비중은 독일이 39.9% → 36.4%, 프랑스가 10.1% → 8.2%로 낮아졌습니다. 루마니아는 0.23% → 0.98%, 이탈리아는 3.6% → 4.1%로 높아졌습니다(2008년 5월 → 2009년 5월)."
+          en: "Eleven euro-area countries ran car scrapping schemes from December 2008, most to the end of 2009. The ECB says they shifted sales towards smaller and cheaper cars; German car imports rose 11.5% between January and May 2009, in particular small and less expensive cars from France, Italy, Slovakia and Romania, while euro-area motor-vehicle output was down 31.1% on a year earlier in Q2 2009."
+          ko: "유로 지역 11개국이 2008년 12월부터 노후차 폐차 보조금을 시행했습니다. 대부분 2009년 말까지 이어졌습니다. ECB는 이 제도로 판매가 더 작고 싼 차로 옮겨 갔다고 분석했습니다. ECB에 따르면 2009년 1~5월 독일의 승용차 수입은 11.5% 증가했습니다. 특히 프랑스·이탈리아·슬로바키아·루마니아산 소형 저가차 수입이 늘었습니다. 유로 지역 자동차 생산은 2009년 2분기에 전년동기대비 31.1% 감소했습니다."
+          sources: [8]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Lehman Brothers Holdings Inc., Form 8-K, Item 1.03 Bankruptcy or Receivership", publisher: "US Securities and Exchange Commission (EDGAR)", date: 2008-09-19, url: "https://www.sec.gov/Archives/edgar/data/806085/000110465908059632/a08-22764_48k.htm"}
+      - {n: 2, title: "Global Plan for Recovery and Reform: statement issued by the G20 leaders, London", publisher: "G20 (text at the G20 Information Centre, University of Toronto)", date: 2009-04-02, url: "https://g20.utoronto.ca/2009/2009communique0402.html"}
+      - {n: 3, title: "Trade to expand by 9.5% in 2010 after a dismal 2009, WTO reports (PRESS/598)", publisher: "World Trade Organization", date: 2010-03-26, url: "https://www.wto.org/english/news_e/pres10_e/pr598_e.htm"}
+      - {n: 4, title: "Business Cycle Dating Committee Announcement September 20, 2010", publisher: "National Bureau of Economic Research", date: 2010-09-20, url: "https://www.nber.org/news/business-cycle-dating-committee-announcement-september-20-2010"}
+      - {n: 5, title: "International Trade Statistics Newsletter, Number 21, June 2010: UN Comtrade monthly and quarterly data", publisher: "United Nations Statistics Division, International Merchandise Trade Statistics Section", date: null, accessed: 2026-10-25, url: "https://unstats.un.org/unsd/trade/ITSB-newsletter%20June%202010%20final.pdf"}
+      - {n: 6, title: "U.S. International Trade in Goods and Services, May 2009 (CB09-101, BEA09-32, FT-900 (09-05))", publisher: "US Census Bureau and Bureau of Economic Analysis", date: 2009-07-10, url: "https://www.bea.gov/news/2009/us-international-trade-goods-and-services-may-2009"}
+      - {n: 7, title: "Crude Oil Prices: Brent - Europe, monthly (MCOILBRENTEU; source U.S. Energy Information Administration)", publisher: "FRED, Federal Reserve Bank of St. Louis", date: null, accessed: 2026-10-25, url: "https://fred.stlouisfed.org/data/MCOILBRENTEU"}
+      - {n: 8, title: "The effects of vehicle scrapping schemes across euro area countries (Box 4, Monthly Bulletin, October 2009)", publisher: "European Central Bank", date: null, accessed: 2026-10-25, url: "https://www.ecb.europa.eu/pub/pdf/other/mb200910_focus04.en.pdf"}
+
+  - id: japan-thailand-2011
+    num: "A2"
+    start: 2011-03-11
+    end: 2011-12-31          # World Bank: the Thai floods lasted from July through December 2011 (month end used)
+    ongoing: false
+    kind: disaster
+    title: {en: "Japan's earthquake and Thailand's floods cut parts supply", ko: "동일본 대지진과 태국 홍수로 부품 공급 차질"}
+    dek:
+      en: "A magnitude 9.0 earthquake and tsunami struck north-east Japan on 11 March 2011, and Japan's exports in April were 12.5% lower than a year earlier. From mid-October floods inundated six industrial estates in Thailand's Ayutthaya and Pathum Thani, and Western Digital's main hard-drive plant was flooded."
+      ko: "2011년 3월 11일 규모 9.0의 지진과 쓰나미가 일본 동북부를 덮쳤습니다. 4월 일본 수출은 전년동월대비 12.5% 감소했습니다. 10월 중순부터는 태국 아유타야와 빠툼타니의 공업단지 여섯 곳이 침수됐습니다. 웨스턴디지털의 주력 하드디스크 공장도 물에 잠겼습니다."
+    timeline:
+      - {date: 2011-03-11, en: "Magnitude 9.0 earthquake and tsunami off the Pacific coast of Tohoku", ko: "도호쿠 태평양 앞바다 규모 9.0 지진·쓰나미", source: 1}
+      - {date: 2011-05-25, en: "Japan's April exports 12.5% below a year earlier; cars down 67%", ko: "일본 4월 수출 전년동월대비 12.5% 감소, 자동차 67% 감소", source: 2}
+      - {date: 2011-10-12, en: "Western Digital suspends hard-drive production near Bangkok", ko: "웨스턴디지털, 방콕 인근 하드디스크 생산 중단", source: 3}
+      - {date: 2011-10-17, en: "Western Digital: floods inundate its main plant, at Bang Pa-in", ko: "웨스턴디지털, 방파인 주력 공장 침수 발표", source: 4}
+    products: ["B:car_parts", "B:computers", "B:chips_ic"]
+    economies: [JPN, THA]
+    view: {f: A, p: "B:car_parts", base: 2010, t: 2011, lens: null}
+    watch:
+      en: "Japan's and Thailand's exports of car parts, computer parts (hard drives sit in 8471) and chips in 2011 against 2010, and which suppliers filled in."
+      ko: "2011년 일본과 태국의 자동차 부품, 컴퓨터 부품(하드디스크는 8471), 반도체 수출을 2010년과 비교합니다. 어느 공급국이 그 감소분을 대체했는지도 살펴봅니다."
+    reading:
+      window:
+        en: "An annual view: 2011 holds the quake's March–May trough in Japanese vehicle output (292,044 in April against 706,107 in January, 742,531 by June) and the floods' October–December stop in Thailand, beside the months in between; the base year 2010 was itself a rebound (world car-parts trade +29.4%). In the series on this page Japan's car-parts exports rose a further 6.8% in 2012 and Thailand's 28.8%."
+        ko: "연간 보기입니다. 2011년에는 지진 뒤 일본 자동차 생산이 바닥을 친 3~5월이 들어 있습니다. 생산은 1월 706,107대에서 4월 292,044대로 줄었다가 6월 742,531대로 회복했습니다. 홍수로 태국 공장이 멈춘 10~12월과 그 사이의 달들도 함께 들어 있습니다. 기준 연도인 2010년은 그 자체가 반등의 해였습니다(세계 자동차 부품 교역 +29.4%). 이 페이지의 시계열에서 2012년 자동차 부품 수출은 일본이 6.8%, 태국이 28.8% 더 늘었습니다."
+      items:
+        - kind: price
+          number:
+            en: "Japan's car-parts exports +12.0% ($37.3bn → $41.8bn, 2010 → 2011)."
+            ko: "일본의 자동차 부품 수출 +12.0%(373억 달러 → 418억 달러, 2010년 → 2011년)."
+          en: "The dollar figures carry the yen's rise: the yen averaged 87.78 per dollar in 2010 and 79.70 in 2011. In yen, Japan's customs statistics show exports of parts of motor vehicles falling 2.8% in 2011 to ¥2,997bn after a 33.5% rise in 2010, with shipments to the US down 2.9%, to China 4.2% and to ASEAN 5.3%."
+          ko: "달러 수치에는 엔화 강세가 반영되어 있습니다. 엔화는 달러당 연평균 2010년 87.78엔에서 2011년 79.70엔이 되었습니다. 엔화 기준 일본 통관통계의 자동차 부품 수출은 2010년 33.5% 증가했습니다. 2011년에는 2.8% 감소한 2조 9,971억 엔이었습니다. 미국행은 2.9%, 중국행은 4.2%, 아세안행은 5.3% 줄었습니다."
+          sources: [6, 7, 8]
+          checked: 2026-10-25
+        - kind: cycle
+          number:
+            en: "Japan: 13.3% → 12.6% of world car-parts exports (−0.7 pp), the largest fall among the movers."
+            ko: "일본: 세계 자동차 부품 수출의 13.3% → 12.6%(−0.7%p), 변동 순위에서 가장 큰 감소."
+          en: "Vehicle production in Japan fell to 8,398,654 in 2011 from 9,628,920 in 2010. The fall was concentrated in spring: transport-equipment output in March was 46.7% below February (seasonally adjusted), and monthly vehicle output was 403,937 in March and 292,044 in April against 706,107 in January, then 883,602 in September and 904,254 in October."
+          ko: "일본의 자동차 생산은 2010년 9,628,920대에서 2011년 8,398,654대로 감소했습니다. 감소는 봄에 집중됐습니다. 3월 수송기계 생산은 전월대비 46.7% 낮았습니다(계절조정). 월별 자동차 생산은 1월 706,107대에서 3월 403,937대, 4월 292,044대로 떨어졌습니다. 이후 9월 883,602대, 10월 904,254대로 회복했습니다."
+          sources: [9, 10]
+          checked: 2026-10-25
+        - kind: definition
+          number:
+            en: "Thailand's car-parts exports +7.8% ($3.9bn → $4.2bn)."
+            ko: "태국의 자동차 부품 수출 +7.8%(39억 달러 → 42억 달러)."
+          en: "Thailand's 2011 fall was in finished vehicles: production 1,457,798 against 1,645,304 in 2010 and vehicle exports 735,627 units against 895,831; the Commerce Ministry's heading for motor cars, parts and accessories together fell from €14.0bn to €12.7bn. Output fell 27.8% in April on parts shortages from Japan, and Honda's Ayutthaya plant was shut from 4 October 2011 to 26 March 2012."
+          ko: "2011년 태국에서 줄어든 것은 완성차였습니다. 생산은 2010년 1,645,304대에서 1,457,798대로 감소했습니다. 완성차 수출은 895,831대에서 735,627대로 줄었습니다. 상무부 분류의 승용차·부품·부속품 수출도 140억 유로에서 127억 유로로 줄었습니다. 4월에는 일본발 부품 부족으로 생산이 27.8% 감소했습니다. 혼다의 아유타야 공장은 2011년 10월 4일부터 2012년 3월 26일까지 가동을 멈췄습니다."
+          sources: [11, 13, 14]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "China → Japan: 28.8% → 32.7% of Japan's car-parts imports (+3.9 pp); Thailand → Japan 10.3% → 9.6%."
+            ko: "중국 → 일본: 일본 자동차 부품 수입의 28.8% → 32.7%(+3.9%p), 태국 → 일본 10.3% → 9.6%."
+          en: "In yen, Japan's imports of parts of motor vehicles fell 3.3% in 2011; imports from China rose 9.9% while imports from ASEAN fell 14.8% and from the EU 10.8%. The floods closed six industrial estates in Ayutthaya and Pathum Thani from mid-October to November 2011, and Thai output fell 10¾% quarter on quarter in the fourth quarter, the largest fall on record."
+          ko: "엔화 기준으로 일본의 자동차 부품 수입은 2011년 3.3% 감소했습니다. 중국산 수입은 9.9% 늘었고, 아세안산은 14.8%, EU산은 10.8% 줄었습니다. 홍수로 2011년 10월 중순부터 11월까지 아유타야와 빠툼타니의 공업단지 여섯 곳이 침수됐습니다. 태국의 4분기 생산은 전분기대비 10¾% 감소해 통계 집계 이후 가장 큰 감소폭을 기록했습니다."
+          sources: [5, 6, 12]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "The 2011 Great East Japan Earthquake: portal (earthquake summary)", publisher: "Japan Meteorological Agency", date: null, accessed: 2026-10-24, url: "https://www.jma.go.jp/jma/en/2011_Earthquake/2011_Earthquake.html"}
+      - {n: 2, title: "Japan exports sag in April after tsunami", publisher: "Associated Press (via News Tribune)", date: 2011-05-25, url: "https://www.newstribune.com/news/2011/may/25/japan-exports-sag-april-after-tsunami/"}
+      - {n: 3, title: "WD reports impact on HDD production due to severe flooding in Thailand (Form 8-K, Exhibit 99.1)", publisher: "Western Digital Corp. (SEC EDGAR)", date: 2011-10-12, url: "https://www.sec.gov/Archives/edgar/data/106040/000129993311002993/exhibit1.htm"}
+      - {n: 4, title: "WD provides update on effect of Thailand floods: primary manufacturing site flooded, second site at risk (Form 8-K, Exhibit 99.1)", publisher: "Western Digital Corp. (SEC EDGAR)", date: 2011-10-17, url: "https://www.sec.gov/Archives/edgar/data/106040/000129993311003037/exhibit1.htm"}
+      - {n: 5, title: "Thai Flood 2011: Rapid Assessment for Resilient Recovery and Reconstruction Planning, Overview", publisher: "World Bank", date: 2012-01-01, url: "https://documents.worldbank.org/curated/en/677841468335414861/pdf/698220WP0v10P106011020120Box370022B.pdf"}   # the World Bank lists the document date as 2012-01-01 (year of publication)
+      - {n: 6, title: "Trade Statistics of Japan: Value of Exports and Imports 2011 (Calendar Year, January–December), Fixed Annual", publisher: "Ministry of Finance, Customs and Tariff Bureau", date: 2012-03-13, url: "https://www.customs.go.jp/toukei/shinbun/trade-st_e/2011/2011_117e.pdf"}
+      - {n: 7, title: "Trade Statistics of Japan: Value of Exports and Imports 2010 (Calendar Year, January–December), Fixed Annual", publisher: "Ministry of Finance, Customs and Tariff Bureau", date: 2011-03-14, url: "https://www.customs.go.jp/toukei/shinbun/trade-st_e/2010/2010_117e.pdf"}
+      - {n: 8, title: "G.5A Foreign Exchange Rates (Annual), 2011", publisher: "Board of Governors of the Federal Reserve System", date: 2012-01-03, url: "https://www.federalreserve.gov/releases/g5a/20120103/"}
+      - {n: 9, title: "自動車統計月報 (Motor Vehicle Statistics monthly report), Vol. 45 No. 10, January 2012 issue: four-wheel vehicle production", publisher: "Japan Automobile Manufacturers Association (JAMA)", date: null, accessed: 2026-10-25, url: "https://www.jama.or.jp/statistics/m_report/pdf/2012_01.pdf"}
+      - {n: 10, title: "Indices of Industrial Production, Revised Report for March 2011 (生産・出荷・在庫指数確報 平成23年3月分)", publisher: "Ministry of Economy, Trade and Industry (METI)", date: 2011-05-19, url: "https://www.meti.go.jp/statistics/tyo/iip/result/pdf/press/b2005_201103kj.pdf"}
+      - {n: 11, title: "Honda Resumes Production at Automobile Plant in Thailand", publisher: "Honda Motor Co., Ltd.", date: 2012-03-26, url: "https://global.honda/en/newsroom/news/2012/c120326eng.html"}
+      - {n: 12, title: "Public Information Notice No. 12/48: IMF Executive Board Concludes 2012 Article IV Consultation with Thailand", publisher: "International Monetary Fund", date: 2012-05-10, url: "https://www.imf.org/en/News/Articles/2015/09/28/04/53/pn1248"}
+      - {n: 13, title: "Thailand: Automotive Hub of Asia (presentation; Thailand Automotive Institute and Ministry of Commerce data)", publisher: "Thailand Board of Investment", date: 2012-09-21, url: "https://www.boi.go.th/upload/content/DSG_Duangjai_Automotive_Campus_Netherlands_Sept%202012_77093.pdf"}
+      - {n: 14, title: "April Economic Indicators: Sluggish Production and Domestic Spending (Business Brief No. 3118)", publisher: "KASIKORN Research Center", date: 2011-05-31, url: "https://www.kasikornresearch.com/en/analysis/k-econ/economy/Pages/26957.aspx"}
+
+  - id: us-china-tariffs-2018
+    num: "1"
+    start: 2018-07-06        # USTR: duties collected from 6 July 2018
+    end: 2020-01-15          # the Phase One agreement signed
+    ongoing: false
+    kind: tariff
+    title: {en: "US Section 301 tariffs on China start a trade war", ko: "미국, 301조 대중 관세로 무역전쟁 시작"}
+    dek:
+      en: "The US put a 25% tariff on about $34bn of imports from China on 6 July 2018 and widened the tariffs in rounds through 2019. The two countries signed a Phase One trade agreement on 15 January 2020."
+      ko: "미국은 2018년 7월 6일 중국산 수입품 약 340억 달러어치에 25% 관세를 부과했습니다. 이후 2019년까지 여러 차례 대상을 넓혔습니다. 두 나라는 2020년 1월 15일 1단계 무역합의에 서명했습니다."
+    timeline:
+      - {date: 2018-06-15, en: "USTR lists about $50bn of Chinese goods for a 25% tariff", ko: "USTR, 중국산 약 500억 달러어치 25% 관세 목록 발표", source: 1}
+      - {date: 2018-07-06, en: "25% tariff on about $34bn of imports from China takes effect", ko: "중국산 약 340억 달러어치에 25% 관세 발효", source: 1}
+      - {date: 2018-07-06, en: "China's retaliatory 25% tariffs on more than 500 US farm products, including soybeans, take effect", ko: "중국, 대두 등 미국산 농산물 500여 개 품목에 25% 보복관세 시행", source: 14}
+      - {date: 2018-08-23, en: "Second tranche: 25% on about $16bn more", ko: "2차: 약 160억 달러어치에 25% 관세", source: 2}
+      - {date: 2018-09-24, en: "Third tranche: 10% on about $200bn", ko: "3차: 약 2,000억 달러어치에 10% 관세", source: 3}
+      - {date: 2019-05-10, en: "Rate on the September 2018 tranche raised from 10% to 25%", ko: "2018년 9월분 관세율 10%에서 25%로 인상", source: 4}
+      - {date: 2019-09-01, en: "Duties reach the first part (List 4A) of a further $300bn list", ko: "추가 3,000억 달러 목록 중 첫 부분(4A)에 관세 부과", source: 5}
+      - {date: 2020-01-15, en: "US and China sign the Phase One agreement", ko: "미·중 1단계 무역합의 서명", source: 6}
+      - {date: 2020-02-14, en: "Phase One enters into force; List 4A rate cut from 15% to 7.5%", ko: "1단계 합의 발효, 4A 관세율 15%에서 7.5%로 인하", source: 6}
+    products: ["TOTAL", "B:chips_ic", "C:steel:flat"]
+    economies: [USA, CHN, VNM, MEX, S19]   # S19: Asia, not elsewhere specified, most importers' records of Taiwan
+    view: {f: M, p: "TOTAL", base: 201806, t: 201906, lens: M}
+    watch:
+      en: "China's share of US imports falling while Vietnam, Mexico and Asia, not elsewhere specified (most importers' records of Taiwan) gain (the dashboard case \"US–China\")."
+      ko: "미국 수입에서 중국 비중이 낮아지는 사이 베트남, 멕시코, 기타 아시아(대부분 수입국 기록상 대만)의 비중이 높아지는지 지켜봅니다(대시보드 사례 \"미국–중국\")."
+    reading:
+      window:
+        en: "Apr–Jun 2018 is the quarter before the first tariff (6 July 2018); Apr–Jun 2019 has the first three lists in force (the September 2018 list at 25% only from 10 May 2019) and precedes List 4A (1 September 2019). It also sits in the 2019 slowdown: the WTO puts 2019 world merchandise trade volume at −0.1% and its dollar value at −3%."
+        ko: "2018년 4~6월은 첫 관세(2018년 7월 6일) 직전 분기입니다. 2019년 4~6월에는 1~3차 목록이 시행 중이었습니다(2018년 9월 목록의 25% 관세는 2019년 5월 10일부터 적용). 4A 목록(2019년 9월 1일)은 아직 시행 전입니다. 이 분기는 2019년 세계 교역 둔화기이기도 합니다. WTO 집계로 2019년 세계 상품 교역량은 0.1%, 달러 금액은 3% 감소했습니다."
+      items:
+        - kind: front-loading
+          number:
+            en: "China → United States: 20.4% → 18.1% of US imports of all goods, $132.7bn → $118.2bn (−10.9%) (Apr–Jun 2018 → Apr–Jun 2019)."
+            ko: "중국 → 미국 수출은 미국 전체 상품 수입 가운데 비중이 20.4% → 18.1%로, 금액이 $132.7bn → $118.2bn(−10.9%)으로 줄었습니다(2018년 4~6월 → 2019년 4~6월)."
+          en: "The 10% tariff on about $200bn of imports from China, in force from 24 September 2018, was due to rise to 25% on 1 January 2019; USTR postponed it twice, to 10 May 2019. Census data show US imports from China peaking at $52.1bn in October 2018 and falling to $31.1bn in March 2019; China's share of US imports here was 22.8% in Sep–Nov 2018 and 16.8% in Mar–May 2019."
+          ko: "미국은 2018년 9월 24일부터 중국산 수입품 약 $200bn에 10% 관세를 매겼고, 이 관세는 2019년 1월 1일 25%로 오를 예정이었습니다. 미국 무역대표부(USTR)는 인상을 두 차례 미뤄 2019년 5월 10일로 늦췄습니다. 미국 센서스국 자료를 보면 중국산 수입은 2018년 10월 $52.1bn으로 정점을 찍은 뒤 2019년 3월 $31.1bn으로 줄었습니다. 이 화면에서 미국 수입 가운데 중국 비중은 2018년 9~11월 22.8%, 2019년 3~5월 16.8%였습니다."
+          sources: [7, 4, 8]
+          checked: 2026-10-25
+        - kind: scope
+          number:
+            en: "United States imports of all goods +0.5% ($651.4bn → $654.5bn) while China → United States fell $14.4bn; Mexico → United States +$5.4bn, Vietnam → United States +$3.2bn, Asia, not elsewhere specified (most importers' records of Taiwan) → United States +$2.2bn."
+            ko: "미국의 전체 상품 수입은 +0.5%($651.4bn → $654.5bn) 변했지만 중국 → 미국 수출은 $14.4bn 줄었습니다. 멕시코 → 미국은 +$5.4bn, 베트남 → 미국은 +$3.2bn, 기타 아시아(대부분 수입국 기록상 대만) → 미국은 +$2.2bn입니다."
+          en: "By late September 2018 the tariffs covered 44.7% of US imports from China, up from 0.8% in early July, and the lists in force mostly targeted intermediate inputs. Over 2019 US imports from China fell $87.4bn to $452.2bn, while imports from Mexico rose $12.0bn to $358.1bn and from Vietnam from $49.1bn to $66.4bn."
+          ko: "2018년 9월말 관세 대상은 미국 중국산 수입의 44.7%로, 7월초 0.8%에서 늘었습니다. 시행 중이던 목록은 주로 중간재를 겨냥했습니다. 2019년 한 해 미국의 중국산 수입은 874억 달러 감소한 4,522억 달러였습니다. 멕시코산은 120억 달러 늘어 3,581억 달러였습니다. 베트남산은 491억 달러에서 664억 달러로 늘었습니다."
+          sources: [9, 10, 11]
+          checked: 2026-10-25
+        - kind: rerouting
+          number:
+            en: "Vietnam → United States: 17.6% → 20.3% of Vietnam's exports, $11.9bn → $15.1bn (+26.5%); China → Vietnam: 28.9% → 31.1% of Vietnam's imports, $16.5bn → $19.5bn (+17.8%)."
+            ko: "베트남 → 미국 수출은 베트남 수출 가운데 비중이 17.6% → 20.3%, 금액이 $11.9bn → $15.1bn(+26.5%)입니다. 중국 → 베트남 수출은 베트남 수입 가운데 비중이 28.9% → 31.1%, 금액이 $16.5bn → $19.5bn(+17.8%)입니다."
+          en: "Vietnam's share of US imports (1.8% → 2.3%) and of China's exports (2.5% → 3.0%) rose together. A Federal Reserve note finds Vietnam's rising exports to the US came with a disproportionate rise in its imports from China, with Chinese-owned firms' share of those exports up from 11% in 2018–19 to 25% in 2020–23; Iyoha et al. put rerouting in 2018–19 at 16.5% of Vietnam's US exports by product, 1.7% by firm."
+          ko: "미국 수입 중 베트남 비중(1.8% → 2.3%)과 중국 수출 중 베트남 비중(2.5% → 3.0%)이 함께 상승했습니다. 미국 연준 보고서는 베트남의 대미 수출 증가에 중국산 수입의 과도한 증가가 뒤따랐다고 분석했습니다. 중국계 기업이 그 수출에서 차지하는 비중은 2018~19년 11%에서 2020~23년 25%로 높아졌습니다. Iyoha 등은 2018~19년 베트남 대미 수출 중 우회수출을 품목 기준 16.5%, 기업 기준 1.7%로 추산했습니다."
+          sources: [12, 13]
+          checked: 2026-10-25
+        - kind: overlap
+          number:
+            en: "United States → China: 10.2% → 7.6% of US exports, $42.5bn → $31.0bn (−27.2%), a steeper fall than China → United States (−10.9%)."
+            ko: "미국 → 중국 수출은 미국 수출 가운데 비중이 10.2% → 7.6%, 금액이 $42.5bn → $31.0bn(−27.2%)으로 중국 → 미국(−10.9%)보다 더 크게 줄었습니다."
+          en: "From 6 July 2018 China levied 25% on more than 500 US food and agricultural products, including soybeans, and through 2019 56–58% of its imports from the US carried retaliatory tariffs. US soybean exports to China in January–October 2018 were 63% below 2017, and USDA estimates China's tariffs cut US farm exports by nearly $26bn, soybeans 71% of the losses."
+          ko: "중국은 2018년 7월 6일부터 대두를 포함한 미국산 식품·농산물 500여 개 품목에 25% 관세를 부과했습니다. 2019년 내내 미국산 수입의 56~58%가 보복관세 대상이었습니다. 2018년 1~10월 미국의 대중 대두 수출은 2017년 같은 기간보다 63% 적었습니다. 미국 농무부는 중국의 관세로 미국 농산물 수출이 260억 달러 가까이 줄었다고 추산했습니다. 그 손실의 71%가 대두였습니다."
+          sources: [14, 15, 9]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "USTR issues tariffs on Chinese products in response to unfair trade practices", publisher: "Office of the United States Trade Representative", date: 2018-06-15, url: "https://ustr.gov/about-us/policy-offices/press-office/press-releases/2018/june/ustr-issues-tariffs-chinese-products"}
+      - {n: 2, title: "USTR finalizes second tranche of tariffs on Chinese products in response to China's unfair trade practices", publisher: "Office of the United States Trade Representative", date: 2018-08-07, url: "https://ustr.gov/about-us/policy-offices/press-office/press-releases/2018/august/ustr-finalizes-second-tranche"}
+      - {n: 3, title: "USTR finalizes tariffs on $200 billion of Chinese imports in response to China's unfair trade practices", publisher: "Office of the United States Trade Representative", date: 2018-09-18, url: "https://ustr.gov/about-us/policy-offices/press-office/press-releases/2018/september/ustr-finalizes-tariffs-200"}
+      - {n: 4, title: "Notice of modification of Section 301 action: China's acts, policies, and practices related to technology transfer, intellectual property, and innovation (84 FR 20459)", publisher: "Federal Register (USTR)", date: 2019-05-09, url: "https://www.federalregister.gov/documents/2019/05/09/2019-09681/notice-of-modification-of-section-301-action-chinas-acts-policies-and-practices-related-to"}
+      - {n: 5, title: "Notice of modification of Section 301 action: China's acts, policies, and practices related to technology transfer, intellectual property, and innovation (84 FR 43304)", publisher: "Federal Register (USTR)", date: 2019-08-20, url: "https://www.federalregister.gov/documents/2019/08/20/2019-17865/notice-of-modification-of-section-301-action-chinas-acts-policies-and-practices-related-to"}
+      - {n: 6, title: "Notice of modification of Section 301 action: China's acts, policies, and practices related to technology transfer, intellectual property, and innovation (85 FR 3741)", publisher: "Federal Register (USTR)", date: 2020-01-22, url: "https://www.federalregister.gov/documents/2020/01/22/2020-00904/notice-of-modification-of-section-301-action-chinas-acts-policies-and-practices-related-to"}
+      - {n: 7, title: "Notice of modification of Section 301 action: China's acts, policies, and practices related to technology transfer, intellectual property, and innovation (83 FR 47974)", publisher: "Federal Register (USTR)", date: 2018-09-21, url: "https://www.federalregister.gov/documents/2018/09/21/2018-20610/notice-of-modification-of-section-301-action-chinas-acts-policies-and-practices-related-to"}
+      - {n: 8, title: "Trade in Goods with China (customs basis, monthly)", publisher: "US Census Bureau, Foreign Trade", date: null, accessed: 2026-10-25, url: "https://www.census.gov/foreign-trade/balance/c5700.html"}
+      - {n: 9, title: "Phase One China Deal: Steep Tariffs Are the New Normal", publisher: "Peterson Institute for International Economics (Chad P. Bown)", date: 2019-12-19, url: "https://www.piie.com/blogs/trade-and-investment-policy-watch/2019/phase-one-china-deal-steep-tariffs-are-new-normal"}
+      - {n: 10, title: "U.S. International Trade in Goods and Services, December 2019", publisher: "US Bureau of Economic Analysis and US Census Bureau", date: 2020-02-05, url: "https://www.bea.gov/news/2020/us-international-trade-goods-and-services-december-2019"}
+      - {n: 11, title: "Trade in Goods with Vietnam (customs basis, monthly)", publisher: "US Census Bureau, Foreign Trade", date: null, accessed: 2026-10-25, url: "https://www.census.gov/foreign-trade/balance/c5520.html"}
+      - {n: 12, title: "Vietnam's Export Boom to the U.S.: The Role of Chinese Firms (FEDS Notes)", publisher: "Board of Governors of the Federal Reserve System (Avalos, Hoang and Van Leemput)", date: 2026-07-17, url: "https://www.federalreserve.gov/econres/notes/feds-notes/vietnams-export-boom-to-the-u-s-the-role-of-chinese-firms-20260717.html"}
+      - {n: 13, title: "Exports in Disguise: Trade Rerouting during the US-China Trade War?", publisher: "Harvard Kennedy School, Center for International Development (Iyoha, Malesky, Wen, Wu and Feng)", date: 2025-01-22, url: "https://www.hks.harvard.edu/centers/cid/publications/exports-disguise-trade-rerouting-during-us-china-trade-war"}
+      - {n: 14, title: "China's Retaliatory Tariffs on U.S. Agricultural Products (IF11085)", publisher: "Congressional Research Service (copy at EveryCRSReport)", date: 2019-01-29, url: "https://www.everycrsreport.com/reports/IF11085.html"}
+      - {n: 15, title: "Retaliatory Tariffs Reduced U.S. States' Exports of Agricultural Commodities", publisher: "USDA Economic Research Service, Amber Waves (Stephen Morgan)", date: 2022-03-07, url: "https://www.ers.usda.gov/amber-waves/2022/march/retaliatory-tariffs-reduced-u-s-states-exports-of-agricultural-commodities"}
+      - {n: 16, title: "Trade set to plunge as COVID-19 pandemic upends global economy (PRESS/855)", publisher: "World Trade Organization", date: 2020-04-08, url: "https://www.wto.org/english/news_e/pres20_e/pr855_e.htm"}
+
+  - id: japan-korea-controls-2019
+    num: "2"
+    start: 2019-07-04        # METI: announced 1 July, individual licences from 4 July 2019
+    end: 2023-03-23          # METI returns the three items to bulk licensing; Korea withdraws its WTO complaint
+    ongoing: false
+    kind: export-control
+    title: {en: "Japan tightens chip-material exports to Korea", ko: "일본, 한국행 반도체 소재 수출규제"}
+    dek:
+      en: "From 4 July 2019 Japan required individual licences for exports of fluorinated polyimide, resist and hydrogen fluoride to Korea, and from 28 August it dropped Korea from its \"white countries\". The three items returned to bulk licensing on 23 March 2023."
+      ko: "일본은 2019년 7월 4일부터 한국으로 수출되는 불화폴리이미드, 레지스트, 불화수소에 개별 허가를 요구했습니다. 8월 28일부터는 한국을 '화이트 국가'에서 제외했습니다. 세 품목은 2023년 3월 23일 포괄허가 대상으로 돌아갔습니다."
+    timeline:
+      - {date: 2019-07-01, en: "METI announces individual licences for three items and moves to drop Korea from its white countries", ko: "일본 경제산업성, 3개 품목 개별허가와 화이트국가 제외 절차 발표", source: 1}
+      - {date: 2019-07-04, en: "Individual licences required for fluorinated polyimide, resist and hydrogen fluoride", ko: "불화폴리이미드·레지스트·불화수소 개별허가 시행", source: 1}
+      - {date: 2019-08-02, en: "Cabinet approves removing Korea from the white countries", ko: "일본 각의, 한국 화이트국가 제외 의결", source: 2}
+      - {date: 2019-08-28, en: "Korea's removal from the white countries takes effect", ko: "한국 화이트국가 제외 시행", source: 2}
+      - {date: 2019-09-11, en: "Korea requests WTO consultations (DS590)", ko: "한국, WTO에 협의 요청(DS590)", source: 3}
+      - {date: 2023-03-16, en: "After a policy dialogue, METI decides to revise the controls on the three items", ko: "정책대화 뒤 경제산업성, 3개 품목 규제 운용 변경 결정", source: 4}
+      - {date: 2023-03-23, en: "The three items return to bulk export licences", ko: "3개 품목 포괄수출허가 복귀", source: 5}
+      - {date: 2023-03-23, en: "Korea withdraws its WTO complaint", ko: "한국, WTO 제소 철회", source: 3}
+    products: ["HS:37", "HS:28", "HS:39", "C:semiconductors:ics"]
+    economies: [JPN, KOR]
+    view: {f: A, p: "HS:37", base: 2018, t: 2020, lens: null}
+    watch:
+      en: "Korea's imports of hydrogen fluoride (2811.11), photoresist (3707.90) and polyimide film by supplier: Japan's share against the others'. The site has these only as whole chapters (28, 37, 39) and annually until the six-digit codes join the monthly watch list."
+      ko: "한국의 불화수소(2811.11), 포토레지스트(3707.90), 폴리이미드 필름 수입을 공급국별로 살펴봅니다. 일본 비중이 다른 나라에 비해 어떻게 변했는지 확인합니다. 여섯 자리 코드가 월간 관찰 목록에 들어가기 전까지는 28·37·39류 연간 자료로만 볼 수 있습니다."
+    reading:
+      window:
+        en: "2018 is the year before the licences; 2020 is their first full year and the COVID year (world trade in the chapter −11.3%); the licences ran to 23 March 2023. In the series on this page Japan's share of Korea's photographic and film goods imports was 67.9% (2018), 66.2% (2019), 68.2% (2020) and 65.7% (2021)."
+        ko: "2018년은 일본의 수출 허가 규제 직전 해입니다. 2020년은 규제가 1년 내내 적용된 첫해이자 코로나19가 확산한 해입니다(이 품목군의 세계 교역 −11.3%). 규제는 2023년 3월 23일까지 이어졌습니다. 이 페이지 계열에서 한국의 사진·영화용 재료 수입 중 일본 비중은 67.9%(2018년), 66.2%(2019년), 68.2%(2020년), 65.7%(2021년)였습니다."
+      items:
+        - kind: scope
+          number:
+            en: "Japan → Korea: 67.9% → 68.2% of Korea's photographic and film goods imports, $648m → $704m (+8.6%) (2018 → 2020)."
+            ko: "일본 → 한국: 한국의 사진·영화용 재료 수입 중 일본 비중은 67.9% → 68.2%, 금액은 $648m → $704m(+8.6%)입니다(2018년 → 2020년)."
+          en: "Chapter 37 is all photographic chemicals and film; photoresist is one heading, 3707. The licence requirement reached only the high-specification part of \"resist\", such as EUV photoresist, and from 20 December 2019 METI moved EUV photoresist for Korea to specific bulk licences. KITA: Korea's photoresist imports from Japan were $150.81m in January–May 2020, up 33.8% on a year earlier."
+          ko: "37류는 사진용 화학제품과 필름 전체이고, 포토레지스트는 그중 한 호(3707)입니다. 허가 대상은 '레지스트' 가운데 EUV용 같은 고사양 일부에 그쳤습니다. 경제산업성은 2019년 12월 20일 한국행 EUV용 포토레지스트를 특정포괄허가로 돌렸습니다. 무역협회 집계로 2020년 1~5월 일본산 포토레지스트 수입은 1억 5,081만 달러였습니다. 전년동기대비 33.8% 증가했습니다."
+          sources: [1, 6, 7, 8, 13]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "Belgium → Korea: 1.2% → 3.8% of Korea's photographic and film goods imports (2018 → 2020); 6.8% in 2021."
+            ko: "벨기에 → 한국: 한국 사진용·영화용 재료 수입에서 벨기에가 차지하는 비중은 1.2% → 3.8%(2018년 → 2020년), 2021년에는 6.8%입니다."
+          en: "JSR has a plant in Belgium whose photoresists were not under the Japanese licence requirement. KITA's count shows Korea's photoresist imports diversifying to Belgium (RMQC), the United States (DuPont) and Germany (Merck), with Japan's share down from 92% in January–June 2019 to 85% in July–November; the government said imports of EUV photoresist from Belgium grew twelve-fold in two years."
+          ko: "JSR은 벨기에에 공장을 두고 있고, 이 공장에서 만든 포토레지스트는 일본의 허가 요건에 해당하지 않았습니다. 무역협회 집계로 한국의 포토레지스트 수입선은 벨기에(RMQC)·미국(듀폰)·독일(머크)로 다변화됐습니다. 일본 비중은 2019년 1~6월 92%에서 7~11월 85%로 하락했습니다. 정부는 벨기에산 EUV 포토레지스트 수입이 2년 사이 12배로 늘었다고 밝혔습니다."
+          sources: [10, 11, 15]
+          checked: 2026-10-25
+        - kind: definition
+          number:
+            en: "Korea's inorganic chemicals imports (HS 28): Japan's share 13.0% → 9.2% (−3.8 pp, 2018 → 2020); Korea's imports −8.0% in 2020."
+            ko: "한국의 무기화학품 수입(HS 28)에서 일본 비중은 13.0% → 9.2%로 낮아졌습니다(−3.8%p, 2018년 → 2020년). 2020년 한국의 수입은 −8.0%입니다."
+          en: "Chapter 28 runs from rare gases to precious-metal compounds and radioactive isotopes; hydrogen fluoride is one line, 2811.11. KITA and the semiconductor-display society: Korea's hydrogen fluoride imports from Japan were $4.03m in January–May 2020, −85.8% on a year earlier, Japan's share 43.9% → 12.3%, after Soulbrain and others began mass-producing liquid hydrogen fluoride matching the Japanese product in early 2020."
+          ko: "28류는 희가스부터 귀금속 화합물, 방사성 동위원소까지 아우릅니다. 불화수소는 그중 여섯 자리 품목 하나(2811.11)입니다. 무역협회와 반도체디스플레이기술학회 집계로 2020년 1~5월 일본산 불화수소 수입은 403만 달러였습니다. 전년동기대비 85.8% 감소했습니다. 일본 비중은 43.9%에서 12.3%로 하락했습니다. 2020년 초 솔브레인 등이 일본산과 대등한 액체 불화수소 양산에 성공한 뒤의 일입니다."
+          sources: [9, 14]
+          checked: 2026-10-25
+        - kind: cycle
+          number:
+            en: "World trade in photographic and film goods −11.3% in 2020 ($13.7bn); Japan's exports −6.5%, Korea's imports +8.4%."
+            ko: "2020년 세계 사진용·영화용 재료 교역 −11.3%(137억 달러), 일본의 수출 −6.5%, 한국의 수입 +8.4%."
+          en: "2020 is the COVID year: Japan's photographic-goods exports fell to France (−39.2%), the UK (−40.7%) and the United States (−10.5%), while Korea's chip industry kept growing. MOTIE's annual figures: Korea's semiconductor exports were $99.18bn in 2020, +5.6% and the second-highest on record, while total exports fell 5.4%."
+          ko: "2020년은 코로나19의 해입니다. 일본의 사진용·영화용 재료 수출은 프랑스(−39.2%), 영국(−40.7%), 미국(−10.5%)행이 줄었습니다. 한국의 반도체 산업은 계속 성장했습니다. 산업통상자원부 연간 집계로 2020년 한국의 반도체 수출은 991억 8,000만 달러로 5.6% 증가했습니다. 역대 2위 규모였고, 전체 수출은 5.4% 감소했습니다."
+          sources: [12]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Update of METI's licensing policies and procedures on exports of controlled items to the Republic of Korea", publisher: "Ministry of Economy, Trade and Industry, Japan (archived copy)", date: 2019-07-01, url: "http://web.archive.org/web/20190718094739/https://www.meti.go.jp/english/press/2019/0701_001.html"}
+      - {n: 2, title: "The Cabinet approved partial amendment to the Export Trade Control Order", publisher: "Ministry of Economy, Trade and Industry, Japan (archived copy)", date: 2019-08-02, url: "http://web.archive.org/web/20190802033048/https://www.meti.go.jp/english/press/2019/0802_001.html"}
+      - {n: 3, title: "DS590: Japan — Measures related to the exportation of products and technology to Korea", publisher: "World Trade Organization", date: null, accessed: 2026-10-24, url: "https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds590_e.htm"}
+      - {n: 4, title: "Japan-Korea Export Control Policy Dialogue held", publisher: "Ministry of Economy, Trade and Industry, Japan (archived copy)", date: 2023-03-16, url: "http://web.archive.org/web/20230320040254/https://www.meti.go.jp/english/press/2023/0316_001.html"}
+      - {n: 5, title: "Circular notice on partial amendment to the circular notice on the operation of the Cabinet Order on Export Trade Control (review of export control to South Korea)", publisher: "Ministry of Economy, Trade and Industry, Japan (archived copy)", date: 2023-03-23, url: "http://web.archive.org/web/20230927105335/https://www.meti.go.jp/english/press/2023/0323_001.html"}
+      - {n: 6, title: "韓国向け輸出管理の運用の見直しに関連する日本の制度運用についての基礎的解説", publisher: "安全保障貿易情報センター (CISTEC)", date: 2019-08-02, url: "https://www.cistec.or.jp/service/kankoku/190802kankokumuke_kaisetu.pdf"}
+      - {n: 7, title: "日, 수출규제 5개월 만에 '찔끔' 완화…\"불확실성 우려 여전\"", publisher: "서울신문", date: 2019-12-20, url: "https://www.seoul.co.kr/news/2019/12/20/20191220500200"}
+      - {n: 8, title: "[日 수출 규제 1년]소·부·장 경쟁력 향상됐지만…'100% 탈일본'은 아직 요원", publisher: "뉴시스 (한국무역협회 집계)", date: 2020-07-01, url: "https://www.newsis.com/view/NISX20200630_0001078853"}
+      - {n: 9, title: "[日 수출규제 1년-중] 반·디 절반의 성공...국산화 일부 성과에도 갈길 멀어", publisher: "데일리안 (한국무역협회·한국반도체디스플레이기술학회 집계)", date: 2020-07-22, url: "https://www.dailian.co.kr/news/view/906715/"}
+      - {n: 10, title: "동진쎄미켐, 日규제에도 '국산화' 포토레지스트 공장 증설", publisher: "아시아경제 (한국무역협회 집계)", date: 2020-01-15, url: "https://view.asiae.co.kr/article/2020011514080854433"}
+      - {n: 11, title: "Korea significantly reduces dependence on Japan", publisher: "Korea JoongAng Daily", date: 2021-07-01, url: "https://www.koreajoongangdaily.com/business/korea-significantly-reduces-dependence-on-japan/10333435"}
+      - {n: 12, title: "코로나에도 선방한 韓 수출…반도체 수출액 '역대 2위'(종합)", publisher: "뉴시스 (산업통상자원부 연간 수출입 동향)", date: 2021-01-01, url: "https://www.newsis.com/view/NISX20210101_0001290966"}
+      - {n: 13, title: "Japan's Tariff Schedule (April 2020), Chapter 37: Photographic or cinematographic goods", publisher: "Japan Customs", date: 2020-04-01, url: "https://www.customs.go.jp/english/tariff/2020_4/data/e_37.htm"}
+      - {n: 14, title: "Japan's Tariff Schedule (April 2020), Chapter 28: Inorganic chemicals; organic or inorganic compounds of precious metals, of rare-earth metals, of radioactive elements or of isotopes", publisher: "Japan Customs", date: 2020-04-01, url: "https://www.customs.go.jp/english/tariff/2020_4/data/e_28.htm"}
+      - {n: 15, title: "'Samsung's foundry expansion faces hurdle on Japan's export controls'", publisher: "The Korea Times", date: 2019-07-09, url: "https://www.koreatimes.co.kr/business/tech-science/20190709/samsungs-foundry-expansion-faces-hurdle-on-japans-export-controls"}
+
+  - id: indonesia-nickel-ban-2020
+    num: "3"
+    start: 2020-01-01        # the ban took effect on 1 January 2020
+    end: null                # still in force (IEA policy database, status "In force", updated 19 Mar 2024)
+    ongoing: true
+    kind: ban
+    title: {en: "Indonesia bans nickel-ore exports", ko: "인도네시아, 니켈 원광 수출금지"}
+    dek:
+      en: "Indonesia stopped all nickel-ore exports from 1 January 2020, two years earlier than first planned, so that the ore would be processed at home. A WTO panel found the ban inconsistent with the GATT in November 2022, and Indonesia appealed."
+      ko: "인도네시아는 원광을 국내에서 가공하려고 2020년 1월 1일부터 니켈 원광 수출을 전면 금지했습니다. 애초 계획보다 2년 앞당긴 조치였습니다. WTO 패널은 2022년 11월 이 조치가 GATT에 어긋난다고 판정했고, 인도네시아는 상소했습니다."
+    timeline:
+      - {date: 2014-01-11, en: "First ban on nickel-ore exports (ESDM Regulation 1/2014)", ko: "첫 니켈 원광 수출금지(에너지광물자원부 규정 1/2014)", source: 2}
+      - {date: 2019-09-02, en: "Mining ministry announces a ban on all grades from 1 January 2020", ko: "광업 당국, 2020년 1월 1일부터 전 등급 수출금지 발표", source: 1}
+      - {date: 2019-11-22, en: "EU requests WTO consultations (DS592)", ko: "EU, WTO에 협의 요청(DS592)", source: 3}
+      - {date: 2020-01-01, en: "Ban on nickel-ore exports takes effect", ko: "니켈 원광 수출금지 시행", source: 1}
+      - {date: 2022-11-30, en: "WTO panel finds the ban inconsistent with GATT Article XI:1", ko: "WTO 패널, 수출금지가 GATT 제11조 1항 위반이라고 판정", source: 3}
+      - {date: 2022-12-08, en: "Indonesia appeals the panel report", ko: "인도네시아, 패널 판정에 상소", source: 3}
+    products: ["C:batteries:nickel_ore", "C:batteries:nickel_int", "C:steel:ferroalloys"]
+    economies: [IDN]
+    view: {f: A, p: "C:batteries:nickel_ore", base: 2019, t: 2020, lens: null}
+    watch:
+      en: "Indonesia leaving the nickel-ore trade, and its rise as an exporter of nickel intermediates (mattes, MHP, nickel sulphate) and ferro-alloys."
+      ko: "인도네시아가 니켈 원광 교역에서 빠지고 니켈 중간재(매트, MHP, 황산니켈)와 합금철 수출국으로 올라서는지 살펴봅니다."
+    reading:
+      window:
+        en: "2020 against 2019 sets the ban's first year against the pre-ban rush: the ministry announced the ban on 2 September 2019 with exports allowed to the end of December, and in the series on this page Indonesia's ore exports rose 82.4% in 2019 and fell a further 77.4% in 2021. Against 2018 ($1.0bn) the 2020 level is −79%."
+        ko: "2020년을 2019년과 비교하면 금지 첫해를 금지 직전의 밀어내기 수출과 비교하는 셈입니다. 광업 당국은 2019년 9월 2일 금지를 발표하면서 12월말까지 수출을 허용했습니다. 이 페이지의 시계열에서 인도네시아의 광석 수출은 2019년에 82.4% 늘었다가 2021년에 다시 77.4% 줄었습니다. 2018년(10억 달러)과 비교하면 2020년 수준은 79% 낮습니다."
+      items:
+        - kind: front-loading
+          number:
+            en: "World nickel-ore trade: +25.3% in 2019 ($5.0bn), then −20.4% in 2020 ($4.0bn); Indonesia's exports $1.9bn (2019) → $217m (2020), −88.3%."
+            ko: "세계 니켈 광석 교역은 2019년 25.3% 증가해 50억 달러, 2020년 20.4% 감소해 40억 달러였습니다. 인도네시아의 수출은 19억 달러(2019년)에서 2억 1,700만 달러(2020년)로 88.3% 감소했습니다."
+          en: "The 2019 base is the pre-ban rush. On 2 September 2019 the energy ministry announced that ore below 1.7% nickel could not be exported from 1 January 2020, with a four-month transition to December. China's imports of Indonesian ore rose 72% to 23.9 million tonnes in 2019, 2.47 million tonnes in December alone, as traders stepped up purchases before the ban."
+          ko: "2019년 기준치는 금지 직전의 밀어내기 수출이 반영된 값입니다. 에너지광물자원부는 2019년 9월 2일 니켈 함량 1.7% 미만 광석의 수출금지를 발표했습니다. 시행일은 2020년 1월 1일이었고, 12월까지 넉 달의 유예를 두었습니다. 중국의 인도네시아산 광석 수입은 2019년에 72% 늘어 2,390만 톤이었습니다. 상인들이 금지 전에 매입을 서두르면서 12월 한 달에만 247만 톤이 수입됐습니다."
+          sources: [4, 5]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Indonesia → China: $1.8bn → $193m (−89.3%), still 89.2% of Indonesia's nickel-ore exports in 2020."
+            ko: "인도네시아 → 중국: 18억 달러 → 1억 9,300만 달러(−89.3%). 2020년에도 인도네시아 니켈 광석 수출의 89.2%."
+          en: "This flow is China's report. Chinese customs recorded 3.4 million tonnes of Indonesian ore in 2020 (−85.8%), 1.98 million tonnes of it in January and February: the last cargoes loaded before the 1 January ban. Indonesian data show zero nickel-ore exports to China for January to November 2020; analysts say some later cargoes left declared as iron ore."
+          ko: "이 흐름은 중국 쪽 신고 기준입니다. 중국 세관은 2020년 인도네시아산 광석 340만 톤(−85.8%)을 집계했습니다. 그중 198만 톤은 1월 1일 금지 전에 선적돼 1~2월에 도착한 마지막 화물입니다. 인도네시아 통계에서 2020년 1~11월 대중 니켈 광석 수출은 0입니다. 분석가들은 그 뒤 일부 화물이 철광석으로 신고돼 수출됐다고 봅니다."
+          sources: [6, 7]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "Philippines: 30.7% → 45.3% of world nickel-ore exports (+14.6 pp); Philippines → China $1.4bn → $1.8bn (+21.6%). New Caledonia 9.8% → 14.9%."
+            ko: "필리핀: 세계 니켈 광석 수출의 30.7% → 45.3%(+14.6%p). 필리핀 → 중국 14억 달러 → 18억 달러(+21.6%). 뉴칼레도니아 9.8% → 14.9%."
+          en: "China's nickel-ore imports fell 34.4% to 38.7 million tonnes in 2020, while those from the Philippines held at 31.8 million tonnes (+0.7%): the rise in value is more per tonne, not more ore, and the flow is China's report, 1.68 times what the Philippines reports. New Caledonia's SLN exported 2.5 million wet tonnes of ore in 2020, +55%."
+          ko: "중국의 니켈 광석 수입은 2020년에 34.4% 줄어 3,870만 톤이었습니다. 필리핀산은 3,180만 톤(+0.7%)으로 유지됐습니다. 금액 증가는 물량이 아니라 톤당 단가가 오른 결과입니다. 이 흐름은 중국 쪽 신고 기준이며, 필리핀 쪽 신고의 1.68배입니다. 뉴칼레도니아의 SLN은 2020년에 광석 250만 습식톤을 수출해 55% 늘었습니다."
+          sources: [8, 10]
+          checked: 2026-10-25
+        - kind: scope
+          number:
+            en: "Indonesia: 37.4% → 5.5% of world nickel-ore exports (−31.9 pp), but 16.7% → 16.3% of world nickel mattes and intermediates exports."
+            ko: "인도네시아: 세계 니켈 광석 수출의 37.4% → 5.5%(−31.9%p). 그러나 세계 니켈 매트·중간재 수출에서는 16.7% → 16.3%."
+          en: "The ban covers ore only. China's imports of nickel pig iron from Indonesia rose 100.9% to 2.73 million tonnes in 2020, and USGS records the continued ramp-up of nickel pig iron and stainless-steel projects in Indonesia while its mine output fell from 853,000 to 760,000 tonnes of nickel content. Ferronickel is HS 7202, the ferro-alloys stage, not the intermediates charted here."
+          ko: "금지 대상은 광석뿐입니다. 중국의 인도네시아산 니켈 선철 수입은 2020년에 100.9% 늘어 273만 톤이었습니다. USGS에 따르면 인도네시아의 광산 생산은 니켈 함량 기준 85만 3,000톤에서 76만 톤으로 줄었습니다. 그동안 니켈 선철·스테인리스강 사업의 증설은 이어졌습니다. 페로니켈은 HS 7202로, 여기 그린 중간재가 아니라 페로알로이 단계에 속합니다."
+          sources: [7, 9]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "World's biggest nickel ore maker bans exports from January 2020", publisher: "Reuters (via Al Jazeera)", date: 2019-09-02, url: "https://www.aljazeera.com/economy/2019/9/2/worlds-biggest-nickel-ore-maker-bans-exports-from-january-2020"}
+      - {n: 2, title: "Prohibition of the export of nickel ore", publisher: "International Energy Agency, policies database", date: 2024-03-19, url: "https://www.iea.org/policies/16084-prohibition-of-the-export-of-nickel-ore"}   # "last updated" date
+      - {n: 3, title: "DS592: Indonesia — Measures relating to raw materials", publisher: "World Trade Organization", date: null, accessed: 2026-10-24, url: "https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds592_e.htm"}
+      - {n: 4, title: "Bijih Nikel Tidak Boleh Diekspor Lagi per Januari 2020 (Siaran Pers 549.Pers/04/SJI/2019)", publisher: "Kementerian ESDM (Ministry of Energy and Mineral Resources, Indonesia)", date: 2019-09-02, url: "https://www.esdm.go.id/id/media-center/arsip-berita/bijih-nikel-tidak-boleh-diekspor-lagi-per-januari-2020"}
+      - {n: 5, title: "China's imports of Indonesian nickel ore rose 72% in 2019", publisher: "Shanghai Metals Market (SMM), from China customs data", date: 2020-02-03, url: "https://news.metal.com/newscontent/101022234-chinas-imports-of-indonesian-nickel-ore-rose-72-in-2019"}
+      - {n: 6, title: "China's nickel ore imports dropped 38% in January as Indonesia banned exports", publisher: "Shanghai Metals Market (SMM), from China customs data", date: 2020-02-27, url: "https://news.metal.com/newscontent/101033457-chinas-nickel-ore-imports-dropped-38-in-january-as-indonesia-banned-exports"}
+      - {n: 7, title: "Indonesia stays China's second-biggest nickel ore supplier despite export ban", publisher: "Reuters (via The Jakarta Post)", date: 2021-01-20, url: "https://www.thejakartapost.com/news/2021/01/20/indonesia-stays-chinas-second-biggest-nickel-ore-supplier-despite-export-ban"}
+      - {n: 8, title: "Imports of nickel ore and ferronickel declined significantly in December 2020", publisher: "Shanghai Metals Market (SMM), from China customs data", date: 2021-01-26, url: "https://news.metal.com/newscontent/101382010-imports-of-nickel-ore-and-ferronickel-declined-significantly-in-december-2020"}
+      - {n: 9, title: "Mineral Commodity Summaries 2021: Nickel (January 2021)", publisher: "U.S. Geological Survey", date: 2021-01-29, url: "https://pubs.usgs.gov/periodicals/mcs2021/mcs2021-nickel.pdf"}
+      - {n: 10, title: "Eramet: 2020 full-year results", publisher: "Eramet", date: 2021-02-16, url: "https://www.eramet.com/en/news/eramet-2020-full-year-results/"}
+
+  - id: covid-2020
+    num: "4"
+    start: 2020-03-11
+    end: 2023-05-05          # WHO: COVID-19 no longer a public health emergency of international concern
+    ongoing: false
+    kind: pandemic
+    title: {en: "WHO declares COVID-19 a pandemic", ko: "WHO, 코로나19 팬데믹 선언"}
+    dek:
+      en: "WHO characterized COVID-19 as a pandemic on 11 March 2020. World merchandise trade fell 14.3% from the first to the second quarter, the largest drop on record, and its volume ended 2020 down 5.3%, the WTO estimated."
+      ko: "WHO는 2020년 3월 11일 코로나19를 팬데믹으로 규정했습니다. WTO 추산으로 세계 상품 무역은 2분기에 전분기대비 14.3% 감소해 통계 집계 이후 최대 낙폭을 기록했습니다. 2020년 한 해 무역량은 5.3% 줄었습니다."
+    timeline:
+      - {date: 2020-01-30, en: "WHO declares a public health emergency of international concern", ko: "WHO, 국제적 공중보건 비상사태 선포", source: 2}
+      - {date: 2020-03-11, en: "WHO characterizes COVID-19 as a pandemic", ko: "WHO, 코로나19 팬데믹 규정", source: 1}
+      - {date: 2020-04-08, en: "WTO: world merchandise trade set to fall by 13% to 32% in 2020", ko: "WTO, 2020년 세계 상품 무역 13%에서 32% 감소 전망", source: 3}
+      - {date: 2020-10-06, en: "WTO: second-quarter fall of 14.3% is the largest on record", ko: "WTO, 2분기 14.3% 감소는 통계 집계 이후 최대", source: 4}
+      - {date: 2021-03-31, en: "WTO: trade volume fell 5.3% in 2020", ko: "WTO, 2020년 무역량 5.3% 감소 집계", source: 5}
+      - {date: 2023-05-05, en: "WHO ends the public health emergency", ko: "WHO, 국제적 공중보건 비상사태 해제", source: 6}
+    products: ["TOTAL", "B:masks", "B:ventilators"]
+    economies: [CHN]
+    view: {f: M, p: "TOTAL", base: 201905, t: 202005, lens: M}
+    watch:
+      en: "Imports of the economies that filed every month dropping in April and May 2020 against a year earlier and how fast they recovered; masks and ventilators moving against the fall."
+      ko: "매달 신고한 경제의 수입이 2020년 4~5월 전년동월대비 줄었다가 얼마나 빨리 회복했는지 살펴봅니다. 마스크·인공호흡기 교역이 전체 흐름과 반대로 움직였는지도 확인합니다."
+    reading:
+      window:
+        en: "Mar–May 2020 is the quarter of the Western lockdowns and of China's restart after its January–February shutdown (exports −17.2% in January–February at China's customs); the base, Mar–May 2019, sits inside the US–China tariff war, with world trade already −1.8% on a year earlier. In the series on this page China's exports were +6.6% and imports +8.1% on a year earlier by November 2020."
+        ko: "2020년 3~5월은 서방의 봉쇄와 중국의 재가동이 겹친 분기입니다. 중국은 1~2월 가동을 멈췄다가 재가동했습니다(중국 세관 집계로 1~2월 수출 −17.2%). 기준 기간인 2019년 3~5월은 미중 관세전쟁 기간입니다. 당시 세계 교역은 이미 전년동기대비 1.8% 감소했습니다. 이 페이지의 시계열에서 2020년 11월 중국의 수출은 전년동월대비 6.6%, 수입은 8.1% 많았습니다."
+      items:
+        - kind: reporting
+          number:
+            en: "China's All goods exports −9.1% ($642.3bn → $583.7bn), Mar–May 2019 → Mar–May 2020."
+            ko: "중국의 전체 상품 수출은 −9.1%($642.3bn → $583.7bn)입니다(2019년 3~5월 → 2020년 3~5월)."
+          en: "China's customs put exports at −6.6% in March, +3% in April and −3% in May 2020 on a year earlier in dollars. This page draws each flow from the importer's report for every month it filed (else the exporter's report spliced to the importer's level), so China's exports here are mostly partners' import figures: China → United States is the US report, $110.1bn → $91.6bn (−16.8%)."
+          ko: "중국 해관은 2020년 수출을 달러 기준 전년동월대비 3월 −6.6%, 4월 +3%, 5월 −3%로 집계했습니다. 이 페이지는 수입국이 보고한 달에는 수입국 보고를 쓰고, 그렇지 않은 달에는 수출국 보고를 수입국 수준에 맞춰 이어 붙입니다. 따라서 여기서 중국의 수출은 대부분 상대국의 수입 통계입니다. 중국 → 미국은 미국 보고로 $110.1bn → $91.6bn(−16.8%)입니다."
+          sources: [7, 8, 9]
+          checked: 2026-10-25
+        - kind: denominator
+          number:
+            en: "China 13.5% → 15.3% of world All goods exports (+1.8 pp) while its exports fell 9.1% and world trade 19.9%; masks: 56.3% → 88.1% of world exports, +1382%."
+            ko: "세계 전체 상품 수출에서 중국 비중은 13.5% → 15.3%(+1.8%p)로 높아졌습니다. 같은 기간 중국 수출은 9.1%, 세계 교역은 19.9% 줄었습니다. 마스크는 세계 수출에서 중국 비중이 56.3% → 88.1%, 수출액은 +1382%입니다."
+          en: "The WTO counts world trade −14% in the first half of 2020 and medical goods +16%: China supplied 56% of world face-mask exports, and its exports of COVID-19-critical products tripled from $18bn to $55bn, 12% to 29% of the world total. China's white paper counts 70.6 billion masks and 96,700 ventilators exported from 1 March to 31 May 2020."
+          ko: "WTO 집계로 2020년 상반기 세계 교역은 14% 줄고 의료용품 교역은 16% 늘었습니다. 중국은 세계 마스크 수출의 56%를 공급했습니다. 중국의 코로나19 필수 품목 수출은 180억 달러에서 550억 달러로 세 배가 됐습니다. 세계 비중은 12%에서 29%로 상승했습니다. 중국 백서는 2020년 3월 1일~5월 31일 마스크 706억 장과 인공호흡기 9만 6,700대를 수출했다고 밝혔습니다."
+          sources: [11, 12]
+          checked: 2026-10-25
+        - kind: price
+          number:
+            en: "China's All goods imports −10.9% ($487.0bn → $433.9bn); UAE 1.2% → 0.80% and Saudi Arabia 1.4% → 1.0% of world exports."
+            ko: "중국의 전체 상품 수입은 −10.9%($487.0bn → $433.9bn)입니다. 세계 수출에서 UAE 비중은 1.2% → 0.80%, 사우디아라비아 비중은 1.4% → 1.0%입니다."
+          en: "Brent averaged $18.38 a barrel in April 2020, against $71.23 a year earlier. BOFIT attributes about 5 points of China's 14% import fall in April to crude oil alone; in May China imported a record volume of crude for about $15bn less than it would have cost in May 2019. The WTO counts fuels and mining trade −38% in the second quarter as prices collapsed."
+          ko: "브렌트유는 2020년 4월 배럴당 평균 18.38달러로, 전년동월 71.23달러에서 하락했습니다. BOFIT는 4월 중국 수입 감소 14% 가운데 약 5%p를 원유 하나로 설명했습니다. 5월 중국은 통계 집계 이후 최대 물량의 원유를 수입하면서도 2019년 5월보다 약 150억 달러 적게 지불했습니다. WTO 집계로 2분기 연료·광물 교역은 가격 급락으로 38% 감소했습니다."
+          sources: [4, 8, 9, 10]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Asia, not elsewhere specified (most importers' records of Taiwan) → China: 8.5% → 10.4% of China's imports (+2.0 pp); Asia, not elsewhere specified 2.4% → 3.1% of world All goods exports."
+            ko: "기타 아시아(대부분 수입국의 대만 기록) → 중국: 중국 수입에서 비중은 8.5% → 10.4%(+2.0%p)입니다. 세계 전체 상품 수출에서 기타 아시아 비중은 2.4% → 3.1%입니다."
+          en: "Taiwan does not report to UN Comtrade, and most importers book their trade with Taiwan under \"Other Asia, nes\" (code 490), which this site shows as Asia, not elsewhere specified, never as Taiwan: every flow here is the partner's report, and Asia, not elsewhere specified → China is China's import record. Taiwan's finance ministry put May 2020 exports at −2.0% ($27bn), with telecommunications products and tech gadgets up nearly 11% on telecommuting demand and exports to the mainland and Hong Kong up 10.3% to $12.12bn."
+          ko: "대만은 UN Comtrade에 보고하지 않습니다. 대부분의 수입국은 대만과의 교역을 \"Other Asia, nes\"(코드 490)로 기록합니다. 이 사이트는 이를 대만이 아닌 '기타 아시아'로 표시합니다. 여기서 모든 흐름은 상대국 보고이므로 기타 아시아 → 중국은 중국의 수입 기록입니다. 대만 재정부는 2020년 5월 수출을 −2.0%($27bn)로 집계했습니다. 재택근무 수요로 통신제품과 IT 기기는 11% 가까이 늘었습니다. 중국 본토·홍콩으로의 수출은 10.3% 늘어난 $12.12bn이었습니다."
+          sources: [13, 14, 15]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "WHO Director-General's opening remarks at the media briefing on COVID-19 - 11 March 2020", publisher: "World Health Organization", date: 2020-03-11, url: "https://www.who.int/news-room/speeches/item/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020"}
+      - {n: 2, title: "Statement on the second meeting of the International Health Regulations (2005) Emergency Committee regarding the outbreak of novel coronavirus (2019-nCoV)", publisher: "World Health Organization", date: 2020-01-30, url: "https://www.who.int/news/item/30-01-2020-statement-on-the-second-meeting-of-the-international-health-regulations-(2005)-emergency-committee-regarding-the-outbreak-of-novel-coronavirus-(2019-ncov)"}
+      - {n: 3, title: "Trade set to plunge as COVID-19 pandemic upends global economy (PRESS/855)", publisher: "World Trade Organization", date: 2020-04-08, url: "https://www.wto.org/english/news_e/pres20_e/pr855_e.htm"}
+      - {n: 4, title: "Trade shows signs of rebound from COVID-19, recovery still uncertain (PRESS/862)", publisher: "World Trade Organization", date: 2020-10-06, url: "https://www.wto.org/english/news_e/pres20_e/pr862_e.htm"}
+      - {n: 5, title: "World trade primed for strong but uneven recovery after COVID-19 pandemic shock (PRESS/876)", publisher: "World Trade Organization", date: 2021-03-31, url: "https://www.wto.org/english/news_e/pres21_e/pr876_e.htm"}
+      - {n: 6, title: "Statement on the fifteenth meeting of the IHR (2005) Emergency Committee on the COVID-19 pandemic", publisher: "World Health Organization", date: 2023-05-05, url: "https://www.who.int/news/item/05-05-2023-statement-on-the-fifteenth-meeting-of-the-international-health-regulations-(2005)-emergency-committee-regarding-the-coronavirus-disease-(covid-19)-pandemic"}
+      - {n: 7, title: "China March exports slump slows to 6.6% year-on-year, imports down 0.9%", publisher: "Reuters (Gabriel Crossley, Lusha Zhang), via WHBL", date: 2020-04-13, url: "https://whbl.com/2020/04/13/china-march-exports-slump-slows-to-6-6-year-on-year-imports-down-0-9/"}
+      - {n: 8, title: "Chinese goods exports performed surprisingly well in April, while imports from the US contracted sharply (BOFIT Weekly Review 20/2020)", publisher: "Bank of Finland Institute for Emerging Economies (BOFIT)", date: 2020-05-15, url: "https://www.bofit.fi/en/monitoring/weekly/2020/vw202020_3/"}
+      - {n: 9, title: "Lower commodity prices reduce value of Chinese imports in May; exports down just slightly (BOFIT Weekly Review 24/2020)", publisher: "Bank of Finland Institute for Emerging Economies (BOFIT)", date: 2020-06-12, url: "https://www.bofit.fi/en/monitoring/weekly/2020/vw202024_3"}
+      - {n: 10, title: "Europe Brent Spot Price FOB, monthly (dollars per barrel)", publisher: "U.S. Energy Information Administration", date: 2026-10-21, url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M"}
+      - {n: 11, title: "Trade in medical goods in the context of tackling COVID-19: developments in the first half of 2020 (information note)", publisher: "World Trade Organization", date: 2020-12-22, url: "https://www.wto.org/english/tratop_e/covid19_e/medical_goods_update_e.pdf"}
+      - {n: 12, title: "Fighting COVID-19: China in Action (white paper, full text)", publisher: "State Council Information Office of the People's Republic of China, via China Daily Global", date: 2020-06-08, url: "https://epaper.chinadaily.com.cn/a/202006/08/WS5edd76f5a3107831ec752924.html"}
+      - {n: 13, title: "Taiwan cautious on trade outlook as May exports fall again", publisher: "Reuters (Yimou Lee, Liang-sa Loh), via WHBL", date: 2020-06-08, url: "https://whbl.com/2020/06/08/taiwan-cautious-on-trade-outlook-as-may-exports-fall-again/"}
+      - {n: 14, title: "Taiwan's exports keep shrinking", publisher: "Xinhua, via China Services Info", date: 2020-06-10, url: "https://www.chinaservicesinfo.com/s/202006/10/WS5f30af39498ed1e2f34086ae/taiwans-exports-keep-shrinking.html"}
+      - {n: 15, title: "Reporters reference table (Reporters.json)", publisher: "UN Comtrade", date: 2026-10-01, url: "https://comtradeapi.un.org/files/v1/app/reference/Reporters.json"}
+
+  - id: suez-chips-2021
+    num: "5"
+    start: 2021-03-23
+    end: 2021-03-29          # the Ever Given refloated and canal traffic resumed; the chip shortage ran on through 2021
+    ongoing: false
+    kind: logistics
+    title: {en: "Ever Given blocks Suez as a chip shortage hits carmakers", ko: "에버기븐호 수에즈 봉쇄, 차량용 반도체 부족"}
+    dek:
+      en: "The container ship Ever Given ran aground across the Suez Canal on 23 March 2021 and was refloated on 29 March. A shortage of chips held back US vehicle production through 2021; buyers' median chip inventories fell from 40 days in 2019 to less than five in 2021, the US Commerce Department found."
+      ko: "컨테이너선 에버기븐호가 2021년 3월 23일 수에즈 운하를 가로막고 좌초했다가 29일 다시 떠올랐습니다. 2021년 내내 반도체 부족이 미국 차량 생산을 제약했습니다. 미국 상무부 조사에서 구매 기업의 반도체 재고 중앙값은 2019년 40일에서 2021년 5일 미만으로 줄었습니다."
+    timeline:
+      - {date: 2021-03-19, en: "Fire halts Renesas's 300mm chip line at Naka, Japan", ko: "르네사스 나카 공장 화재로 300mm 라인 가동 중단", source: 3}
+      - {date: 2021-03-23, en: "Ever Given runs aground and blocks the Suez Canal", ko: "에버기븐호 좌초, 수에즈 운하 봉쇄", source: 1}
+      - {date: 2021-03-29, en: "Ship refloated; canal traffic resumes", ko: "선박 부양, 운하 통항 재개", source: 2}
+      - {date: 2021-04-03, en: "Suez Canal Authority: the queue of 422 ships has cleared", ko: "수에즈운하청, 대기 선박 422척 통과 완료", source: 6}
+      - {date: 2021-07-08, en: "Cleveland Fed: chip shortage constrains US vehicle production", ko: "클리블랜드 연준, 반도체 부족이 미국 차량 생산 제약", source: 4}
+      - {date: 2022-01-25, en: "US Commerce: median chip inventory down from 40 days in 2019 to under 5 in 2021", ko: "미국 상무부, 반도체 재고 중앙값 2019년 40일에서 2021년 5일 미만으로 감소", source: 5}
+    products: ["B:cars", "B:chips_ic", "B:car_parts"]
+    economies: [EGY, JPN, USA]
+    view: {f: M, p: "B:cars", base: 202009, t: 202109, lens: M}
+    watch:
+      en: "World car trade falling while chip trade rose in 2021: the chain's mismatch, and which suppliers filled the gaps."
+      ko: "2021년 반도체 교역은 늘었는데 세계 자동차 교역은 줄어든 공급망의 엇박자를 살펴봅니다. 어느 공급국이 그 감소분을 대체했는지도 확인합니다."
+    reading:
+      window:
+        en: "Jul–Sep 2021 starts three months after the canal reopened on 29 March 2021 and holds the chip shortage near its worst: in the series on this page world trade was −16.6% on a year earlier in November 2021 and Japan's exports −33.0%. The base, Jul–Sep 2020, was itself 10.7% below a year earlier."
+        ko: "2021년 7~9월은 운하가 2021년 3월 29일 다시 열린 지 석 달 뒤에 시작하며, 반도체 부족이 가장 심하던 때와 겹칩니다. 이 페이지 계열에서 2021년 11월 세계 교역은 전년동월대비 −16.6%, 일본 수출은 −33.0%였습니다. 기준 기간인 2020년 7~9월도 1년 전보다 10.7% 낮았습니다."
+      items:
+        - kind: cycle
+          number:
+            en: "World passenger-car trade: −2.7% on a year earlier in Jul–Sep 2021 ($161.7bn → $157.2bn), after −10.7% in Jul–Sep 2020; −16.6% in Nov 2021, the lowest since the base."
+            ko: "세계 승용차 교역은 2021년 7~9월 전년동기대비 −2.7%($161.7bn → $157.2bn)를 기록했습니다. 2020년 7~9월 −10.7%에 이은 감소입니다. 2021년 11월에는 −16.6%로 기준 시점 이후 가장 낮았습니다."
+          en: "The window holds the chip shortage, not the canal: the 422-ship backlog cleared by 3 April 2021, and canal transits rose 10% in 2021 to 20,694. Statistics Canada: since early 2021 a shortage of semiconductor chips forced carmakers worldwide to slow or halt production, and the stoppages intensified in North America in September, when US output of motor vehicles and parts fell 7.2%."
+          ko: "이 기간에 담긴 것은 운하가 아니라 반도체 부족입니다. 대기 선박 422척은 2021년 4월 3일까지 모두 통과했습니다. 2021년 운하 통항 선박은 10% 늘어 20,694척이었습니다. 캐나다 통계청에 따르면 2021년 초부터 반도체 부족으로 세계 자동차 업체들이 생산을 늦추거나 멈췄습니다. 북미의 생산 중단은 9월에 더 심해졌습니다. 그달 미국의 자동차·부품 생산은 7.2% 감소했습니다."
+          sources: [6, 7, 8, 9]
+          checked: 2026-10-25
+        - kind: denominator
+          number:
+            en: "United States imports −11.8% ($37.8bn → $33.3bn): Canada → United States −$3.3bn (−37.4%), Mexico → United States −$1.9bn (−23.0%); Japan's share of US imports 21.3% → 25.7%, Korea's 11.0% → 13.7%."
+            ko: "미국 수입은 −11.8%($37.8bn → $33.3bn)입니다. 캐나다 → 미국은 −$3.3bn(−37.4%), 멕시코 → 미국은 −$1.9bn(−23.0%)입니다. 미국 수입에서 일본 비중은 21.3% → 25.7%, 한국 비중은 11.0% → 13.7%로 높아졌습니다."
+          en: "The fall is North American assembly: Canada's motor-vehicle and parts exports were 40.2% below September 2020, passenger cars and light trucks down 25.8% from August on production stoppages, and Mexico exported 195,294 light vehicles that month, 24.2% fewer than a year earlier. Japan → United States rose only $505m (+6.3%): most of Japan's share gain is the shrinking denominator."
+          ko: "감소는 북미 자동차 조립에서 비롯됐습니다. 캐나다의 자동차·부품 수출은 2020년 9월보다 40.2% 적었습니다. 승용차·경트럭 수출은 생산 중단으로 8월보다 25.8% 줄었습니다. 멕시코는 같은 달 소형차량 195,294대를 수출해 1년 전보다 24.2% 적었습니다. 일본 → 미국은 $505m(+6.3%) 늘어나는 데 그쳤습니다. 일본의 점유율 상승은 대부분 분모가 줄어든 결과입니다."
+          sources: [8, 10]
+          checked: 2026-10-25
+        - kind: cycle
+          number:
+            en: "Japan exports +9.7% ($21.1bn → $23.2bn) in Jul–Sep 2021, then −20.6% (Oct), −33.0% (Nov) and −29.1% (Dec 2021) on a year earlier."
+            ko: "일본 수출은 2021년 7~9월 +9.7%($21.1bn → $23.2bn) 늘었습니다. 이후 전년동월대비 10월 −20.6%, 11월 −33.0%, 2021년 12월 −29.1%를 기록했습니다."
+          en: "Jul–Sep 2020 was itself 25.5% below a year earlier, and the fall came at the window's end: Japan's car exports in September 2021 were 46.6% below September 2020 by value (258,857 units, −40.1%). Toyota cut its September plan by about 70,000 vehicles and October's by about 330,000 for a parts shortage caused by COVID-19 in Southeast Asia and tighter semiconductor supplies."
+          ko: "2020년 7~9월 자체가 전년동기대비 25.5% 낮았고, 감소는 창의 끝에서 나타났습니다. 2021년 9월 일본의 승용차 수출은 금액 기준으로 2020년 9월보다 46.6% 적었습니다(258,857대, −40.1%). 도요타는 동남아시아의 코로나19 확산에 따른 부품 부족과 반도체 공급 제약으로 9월 생산 계획을 약 7만 대 줄였습니다. 10월 계획은 약 33만 대 줄였습니다."
+          sources: [11, 12]
+          checked: 2026-10-25
+        - kind: denominator
+          number:
+            en: "Egypt's passenger-car exports: no flow is positive in every month of either window, so no Egypt export bar is drawn; Egypt's imports +20.9% ($667m → $806m), China's share 6.8% → 13.9%."
+            ko: "이집트 승용차 수출은 어느 창에서도 모든 달에 양(+)인 흐름이 없어 이집트 수출 막대를 그리지 않습니다. 이집트 수입은 +20.9%($667m → $806m)이고, 중국 비중은 6.8% → 13.9%입니다."
+          en: "Egypt exports almost no passenger cars, and its few flows skip months, so under the monthly rule none enters either window and the page draws no Egypt export bar. Its imports grew with its market: AMIC counted almost 291,000 new vehicles sold in 2021 (+26%), passenger cars +28% to 215,000, and 42,392 Chinese cars sold in January–October 2021, up from 21,585."
+          ko: "이집트는 승용차를 거의 수출하지 않습니다. 몇 안 되는 흐름도 빠지는 달이 있습니다. 그래서 월별 기준으로는 어느 창에도 포함되지 않아 이 페이지에는 이집트 수출 막대가 없습니다. 이집트 수입은 시장과 함께 늘었습니다. AMIC 집계로 2021년 신차 판매는 약 291,000대(+26%)였고, 승용차는 28% 늘어 215,000대였습니다. 2021년 1~10월 중국산 차 판매는 42,392대로 21,585대에서 늘었습니다."
+          sources: [13, 14]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Egypt's Suez Canal blocked by huge container ship", publisher: "BBC News", date: 2021-03-24, url: "https://www.bbc.com/news/world-middle-east-56505413"}
+      - {n: 2, title: "Suez Canal says traffic in channel resumes after stranded ship refloated", publisher: "Reuters (via CNBC Africa)", date: 2021-03-29, url: "https://cnbcafrica.com/2021/suez-canal-says-traffic-in-channel-resumes-after-stranded-ship-refloated"}
+      - {n: 3, title: "Notice regarding the semiconductor manufacturing factory (Naka Factory) fire", publisher: "Renesas Electronics", date: 2021-03-19, url: "https://www.renesas.com/en/about/press-room/notice-regarding-semiconductor-manufacturing-factory-naka-factory-fire"}
+      - {n: 4, title: "Semiconductor shortages and vehicle production and prices (Economic Commentary 2021-17)", publisher: "Federal Reserve Bank of Cleveland", date: 2021-07-08, url: "https://www.clevelandfed.org/publications/economic-commentary/2021/ec-202117-semiconductor-shortages-vehicle-production-prices"}
+      - {n: 5, title: "Results from semiconductor supply chain request for information", publisher: "US Department of Commerce", date: 2022-01-25, url: "https://www.commerce.gov/news/blog/2022/01/results-semiconductor-supply-chain-request-information"}
+      - {n: 6, title: "Suez Canal shipping backlog cleared", publisher: "Al Jazeera (Reuters reporting)", date: 2021-04-03, url: "https://www.aljazeera.com/news/2021/4/3/suez-canal-shipping-backlog-to-end-on-saturday"}
+      - {n: 7, title: "Suez Canal Authority Reports Record $6.3B in Revenues in 2021", publisher: "The Maritime Executive", date: 2022-01-03, url: "https://maritime-executive.com/article/suez-canal-authority-reports-record-6-3b-in-revenues-in-2021"}
+      - {n: 8, title: "Canadian international merchandise trade, September 2021", publisher: "Statistics Canada, The Daily", date: 2021-11-04, url: "https://www150.statcan.gc.ca/n1/daily-quotidien/211104/dq211104a-eng.htm"}
+      - {n: 9, title: "Industrial Production and Capacity Utilization – G.17 (September 2021)", publisher: "Board of Governors of the Federal Reserve System", date: 2021-10-18, url: "https://www.federalreserve.gov/releases/g17/20211018/default.htm"}
+      - {n: 10, title: "Resultados del Registro Administrativo de la Industria Automotriz de Vehículos Ligeros correspondiente a septiembre de 2021 (Comunicado de prensa 562/21)", publisher: "INEGI", date: 2021-10-06, url: "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2021/rm_raiavl/rm_raiavl2021_10.pdf"}
+      - {n: 11, title: "Changes to Production Plans for September and October 2021", publisher: "Toyota Motor Corporation", date: 2021-09-10, url: "https://global.toyota/en/newsroom/corporate/36003677.html"}
+      - {n: 12, title: "Trade Statistics: Value of Exports and Imports, September 2021 (Fixed Annual)", publisher: "Ministry of Finance, Japan (Customs and Tariff Bureau)", date: 2022-11-11, url: "https://www.customs.go.jp/toukei/shinbun/trade-st_e/2021/2021097e.pdf"}
+      - {n: 13, title: "Car sales up 26% in 2021", publisher: "Enterprise (EnterpriseAM Egypt), citing AMIC", date: 2022-02-02, url: "https://enterpriseam.com/egypt/2022/02/02/car-sales-up-26-in-2021/"}
+      - {n: 14, title: "Rising sales of Chinese cars in Egypt reflect consumers' trust: experts", publisher: "Xinhua (via People's Daily Online), citing AMIC", date: 2021-12-16, url: "https://en.people.cn/n3/2021/1216/c90000-9933406.html"}
+
+  - id: russia-ukraine-2022
+    num: "6"
+    start: 2022-02-24
+    end: null
+    ongoing: true
+    kind: war
+    title: {en: "Russia invades Ukraine; oil and potash sanctions follow", ko: "러시아의 우크라이나 침공과 원유·칼리 제재"}
+    dek:
+      en: "Russia invaded Ukraine on 24 February 2022, and the war goes on in October 2026. EU sanctions on Belarus reached all potash in March–April 2022, and the EU barred seaborne Russian crude from 5 December 2022 and Russian oil products from 5 February 2023, the days the G7 price caps took effect."
+      ko: "러시아는 2022년 2월 24일 우크라이나를 침공했고, 전쟁은 2026년 10월에도 이어지고 있습니다. EU는 2022년 3~4월 벨라루스 제재를 칼리 전체로 넓혔습니다. 2022년 12월 5일부터는 러시아산 해상 원유를, 2023년 2월 5일부터는 러시아산 석유제품 수입을 금지했습니다. G7 가격상한제도 같은 날 시행됐습니다."
+    timeline:
+      - {date: 2022-02-24, en: "Russia invades Ukraine", ko: "러시아, 우크라이나 침공", source: 1}
+      - {date: 2022-03-02, en: "EU Belarus sanctions of 2 March to 8 April cover all potash", ko: "EU, 3월 2일~4월 8일 벨라루스 제재로 칼리 전체 금지", source: 2}
+      - {date: 2022-03-08, en: "US bans imports of Russian crude oil, petroleum products, LNG and coal", ko: "미국, 러시아산 원유·석유제품·LNG·석탄 수입 금지", source: 16}
+      - {date: 2022-07-22, en: "Black Sea Grain Initiative signed in Istanbul", ko: "흑해 곡물 협정 체결(이스탄불)", source: 3}
+      - {date: 2022-12-02, en: "G7 and Australia cap Russian crude at $60 a barrel", ko: "G7·호주, 러시아산 원유 배럴당 60달러 상한 합의", source: 4}
+      - {date: 2022-12-05, en: "EU ban on seaborne Russian crude takes effect", ko: "EU, 러시아산 해상 원유 수입 금지 발효", source: 5}
+      - {date: 2023-02-05, en: "EU ban on Russian oil products takes effect", ko: "EU, 러시아산 석유제품 수입 금지 발효", source: 5}
+      - {date: 2023-07-17, en: "Black Sea Grain Initiative expires", ko: "흑해 곡물 협정 만료", source: 3}
+      - {date: 2026-10-22, en: "Strikes go on; Russia ready to resume talks in November", ko: "공습 계속, 러시아 '11월 협상 재개 용의'", source: 6}
+    products: ["B:crude_oil", "B:refined_oil", "B:natural_gas"]
+    economies: [RUS, UKR, BLR, USA]
+    view: {f: M, p: "B:crude_oil", base: 202202, t: 202302, lens: M}
+    watch:
+      en: "Russia's crude and oil products moving from EU buyers to others after the bans of December 2022 and February 2023; Belarus's potash leaving EU markets; EU gas imports turning from Russian pipeline gas to LNG, the US among the suppliers; Ukraine's grain exports during the Black Sea deal."
+      ko: "2022년 12월과 2023년 2월 금지 이후 러시아산 원유·석유제품의 행선지가 EU 밖으로 옮겨 가는지 살펴봅니다. 벨라루스산 칼리가 EU 시장에서 빠지는지도 살펴봅니다. EU 가스 수입이 러시아 파이프라인 가스에서 미국 등지의 LNG로 바뀌는지 확인합니다. 흑해 곡물 협정 기간의 우크라이나 곡물 수출도 살펴봅니다."
+    reading:
+      window:
+        en: "Dec 2021–Feb 2022 is the last quarter before the invasion; Dec 2022–Feb 2023 is the first quarter of the EU seaborne crude ban and the G7 price cap (5 December 2022) and ends three weeks after the products ban. In the series on this page India's share of Russia's crude exports had reached 31.2% by December 2022 and held at 40–45% from March to August 2023."
+        ko: "2021년 12월~2022년 2월은 침공 전 마지막 분기입니다. 2022년 12월~2023년 2월은 EU의 해상 원유 수입 금지와 G7 가격 상한제(2022년 12월 5일) 시행 후 첫 분기이며, 석유제품 수입 금지 3주 뒤에 끝납니다. 이 페이지의 시계열에서 러시아 원유 수출 중 인도 비중은 2022년 12월 31.2%에 이르렀습니다. 2023년 3~8월에는 40~45%를 유지했습니다."
+      items:
+        - kind: substitution
+          number:
+            en: "Russia → India: none → 39.0% of Russia's crude exports ($10.3bn at t); Russia → China 36.0% → 47.4% (Dec 2021–Feb 2022 → Dec 2022–Feb 2023)."
+            ko: "러시아 → 인도는 없던 흐름이 러시아 원유 수출의 39.0%(t 시점 $10.3bn)가 됐습니다. 러시아 → 중국은 36.0%에서 47.4%로 높아졌습니다(2021년 12월~2022년 2월 → 2022년 12월~2023년 2월)."
+          en: "The EU agreed its ban on seaborne Russian crude on 3 June 2022 with a six-month phase-out to 5 December. The IEA counted India and China taking over 70% of Russia's crude exports in February 2023, Russia supplying about 40% of India's and 20% of China's crude imports; China's customs put Russia ahead of Saudi Arabia in January–February 2023."
+          ko: "EU는 2022년 6월 3일 러시아산 해상 원유 금수를 결정했고, 6개월 유예 뒤 12월 5일 발효됐습니다. IEA 집계로 2023년 2월 러시아 원유 수출의 70% 이상이 인도와 중국으로 향했습니다. 러시아산은 인도 원유 수입의 약 40%, 중국의 약 20%를 차지했습니다. 중국 세관 통계에서는 2023년 1~2월 러시아가 사우디아라비아를 제치고 최대 공급국이 됐습니다."
+          sources: [8, 9, 13]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Russia · crude exports −20.7% ($33.5bn → $26.5bn) and · crude imports −100.0%, both drawn grey."
+            ko: "러시아 · 원유 수출은 −20.7%($33.5bn → $26.5bn), 러시아 · 원유 수입은 −100.0%이며, 둘 다 회색으로 표시합니다."
+          en: "Russia's Federal Customs Service stopped publishing foreign trade statistics in April 2022. Russia's own monthly filings end in December 2021 in the series here, so every Russian figure in both windows is its partners' report; Russia → India is India's filing. Belarus, whose crude came from Russia in this series, stops filing after March 2022, so its crude charts are empty."
+          ko: "러시아 연방관세청은 2022년 4월 대외무역 통계 공표를 중단했습니다. 이 시계열에서 러시아의 월별 신고는 2021년 12월에 끝납니다. 따라서 두 기간의 러시아 수치는 모두 교역상대국의 신고이며, 러시아 → 인도는 인도의 신고입니다. 원유를 러시아에서 수입하던 벨라루스는 2022년 3월 이후 신고가 없어 원유 그림이 비어 있습니다."
+          sources: [7]
+          checked: 2026-10-25
+        - kind: price
+          number:
+            en: "Russia · crude exports −20.7% in USD while world crude trade rose 7.2% ($298.5bn → $320.2bn)."
+            ko: "러시아 · 원유 수출은 달러 기준 −20.7%였습니다. 같은 기간 세계 원유 교역은 7.2%($298.5bn → $320.2bn) 늘었습니다."
+          en: "Russia's Finance Ministry put the average Urals export price at $49.48 a barrel in January 2023 against $85.64 a year earlier, and at $49.56 in February, while Brent averaged $83 in December 2022–February 2023 against $85 a year earlier. The IEA put Russia's February 2023 oil export revenues at $11.6bn, down 42% on a year earlier, on exports of 7.5 mb/d."
+          ko: "러시아 재무부가 집계한 우랄유 평균 수출 가격은 2023년 1월 배럴당 49.48달러였습니다. 1년 전 85.64달러에서 하락했고, 2월은 49.56달러였습니다. 같은 기간 브렌트유는 2022년 12월~2023년 2월 평균 83달러로, 전년동기평균 85달러와 비슷했습니다. IEA는 2023년 2월 러시아의 석유 수출 수익을 116억 달러로 집계했습니다. 전년동월대비 42% 감소한 수치이며, 수출량은 하루 750만 배럴이었습니다."
+          sources: [9, 10, 11, 15]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "United States · crude exports +41.4% ($22.2bn → $31.5bn); United States → India 14.5% → 11.2% of US exports, United States → Netherlands 6.1% → 8.5%."
+            ko: "미국의 원유 수출은 41.4% 늘었습니다($22.2bn → $31.5bn). 미국 수출 가운데 인도 비중은 14.5%에서 11.2%로 낮아졌고, 네덜란드 비중은 6.1%에서 8.5%로 높아졌습니다."
+          en: "The EIA records 2022 US crude exports at a record 3.6 million b/d, 22% above 2021: less went to India and China, which imported more discounted Russian crude, and the drop was more than offset by demand in Europe; South Korea and the Netherlands each took over 10% of US exports and the UK 9.6%."
+          ko: "EIA 집계로 2022년 미국 원유 수출은 하루 360만 배럴로 통계 집계 이후 최대였습니다. 2021년보다 22% 많았습니다. 인도와 중국은 할인된 러시아산 원유 수입을 늘리고 미국산 수입을 줄였습니다. 유럽의 수요 증가가 그 감소분보다 컸습니다. 한국과 네덜란드는 각각 미국 수출의 10% 이상을, 영국은 9.6%를 수입했습니다."
+          sources: [14]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Sanctions adopted following Russia's military aggression against Ukraine", publisher: "European Commission, DG FISMA", date: 2026-10-12, url: "https://finance.ec.europa.eu/eu-and-world/sanctions-restrictive-measures/sanctions-adopted-following-russias-military-aggression-against-ukraine_en"}
+      - {n: 2, title: "Russia's war on Ukraine: Sanctions targeting Belarus", publisher: "European Parliamentary Research Service", date: 2022-05-19, url: "https://epthinktank.eu/2022/05/19/russias-war-on-ukraine-sanctions-targeting-belarus/"}
+      - {n: 3, title: "Black Sea Grain Initiative", publisher: "United Nations", date: null, accessed: 2026-10-24, url: "https://www.un.org/en/black-sea-grain-initiative"}
+      - {n: 4, title: "Statement of the G7 and Australia on a Price Cap for Seaborne Russian-Origin Crude Oil", publisher: "G7 (G7 Information Centre, University of Toronto)", date: 2022-12-02, url: "https://www.g7.utoronto.ca/summit/2022elmau/221202-oil-price-cap.html"}
+      - {n: 5, title: "Notice to operators: Imports of Russian crude oil or petroleum products into the Union (2022/C 296/05)", publisher: "Official Journal of the European Union (copy hosted by Skadden)", date: 2022-08-03, url: "https://www.skadden.com/-/media/files/publications/2022/12/eu-and-uk-price-cap-on-russian-crude-oil/celex52022xc080301entxt.pdf"}
+      - {n: 6, title: "Russia pounds Kyiv with missiles and drones, hours after agreeing to peace talks", publisher: "Reuters (via NBC News)", date: 2026-10-22, url: "https://nbcnews.com/world/ukraine/russia-pounds-kyiv-missiles-drones-hours-agreeing-peace-talks-rcna604949"}
+      - {n: 7, title: "Secret Economy: What Hiding the Stats Does for Russia", publisher: "Carnegie Politika (Carnegie Russia Eurasia Center), Yulia Starostina", date: 2022-07-01, url: "https://carnegieendowment.org/russia-eurasia/politika/2022/07/secret-economy-what-hiding-the-stats-does-for-russia"}
+      - {n: 8, title: "Russia's war on Ukraine: EU adopts sixth package of sanctions against Russia", publisher: "European Commission, DG FISMA", date: 2022-06-03, url: "https://finance.ec.europa.eu/news/russias-war-ukraine-eu-adopts-sixth-package-sanctions-against-russia-2022-06-03_en"}
+      - {n: 9, title: "Oil Market Report – March 2023", publisher: "International Energy Agency", date: 2023-03-15, url: "https://www.iea.org/reports/oil-market-report-march-2023"}
+      - {n: 10, title: "Urals crude averages at $49.48/bbl in Jan, spread widens vs. Dec but growth slows by end-Jan – MinFin", publisher: "Interfax", date: 2023-02-01, url: "https://interfax.com/newsroom/top-stories/87504/"}
+      - {n: 11, title: "UPDATE 1-Russian Urals crude price at $47.85 in March, says finance ministry", publisher: "Reuters (via Kitco News)", date: 2023-04-03, url: "https://www.kitco.com/news/off-the-wire/2023-04-03/update-1-russian-urals-crude-price-4785-march-says-finance-ministry"}
+      - {n: 12, title: "The Price Cap on Russian Oil: A Progress Report", publisher: "US Department of the Treasury (E. Rosenberg, E. Van Nostrand)", date: 2023-05-18, url: "https://home.treasury.gov/news/featured-stories/the-price-cap-on-russian-oil-a-progress-report"}
+      - {n: 13, title: "Russia overtakes Saudi Arabia as China's top oil supplier", publisher: "Reuters (via Al Jazeera)", date: 2023-03-20, url: "https://www.aljazeera.com/economy/2023/3/20/russia-overtakes-saudi-arabia-as-chinas-top-oil-supplier"}
+      - {n: 14, title: "In 2022, U.S. crude oil exports increased to a new record, 3.6 million barrels a day", publisher: "US Energy Information Administration, Today in Energy", date: 2023-03-30, url: "https://www.eia.gov/todayinenergy/detail.php?id=56020"}
+      - {n: 15, title: "Global price of Brent Crude (POILBREUSDM, IMF Primary Commodity Prices)", publisher: "FRED, Federal Reserve Bank of St. Louis", date: null, accessed: 2026-10-25, url: "https://fred.stlouisfed.org/series/POILBREUSDM"}
+      - {n: 16, title: "Executive Order 14066 – Prohibiting Certain Imports and New Investments With Respect to Continued Russian Federation Efforts to Undermine the Sovereignty and Territorial Integrity of Ukraine", publisher: "GovInfo, Daily Compilation of Presidential Documents (87 FR 13625)", date: 2022-03-08, url: "https://www.govinfo.gov/content/pkg/DCPD-202200148/html/DCPD-202200148.htm"}
+
+  - id: us-chip-controls-2022
+    num: "7"
+    start: 2022-10-07
+    end: null
+    ongoing: true
+    kind: export-control
+    title: {en: "US curbs exports of advanced chips and chip tools to China", ko: "미국, 대중 첨단 반도체·장비 수출통제"}
+    dek:
+      en: "On 7 October 2022 the US Commerce Department restricted China's access to advanced chips and to the equipment that makes them, and tightened the rules in October 2023 and December 2024. Japan's controls on 23 types of chip-making equipment took effect on 23 July 2023 and the Netherlands' on 1 September 2023."
+      ko: "미국 상무부는 2022년 10월 7일 중국의 첨단 반도체와 그 제조장비 확보를 제한했습니다. 2023년 10월과 2024년 12월에는 규정을 강화했습니다. 일본의 반도체 제조장비 23개 품목 통제는 2023년 7월 23일, 네덜란드의 통제는 2023년 9월 1일 시행됐습니다."
+    timeline:
+      - {date: 2022-10-07, en: "US restricts advanced chips and chip tools for China", ko: "미국, 대중 첨단 반도체·장비 수출통제", source: 1}
+      - {date: 2023-07-23, en: "Japan's controls on 23 types of chip tools take effect", ko: "일본, 반도체 장비 23개 품목 수출통제 시행", source: 3}
+      - {date: 2023-09-01, en: "Dutch licence requirement for advanced chip tools starts", ko: "네덜란드, 첨단 반도체 장비 수출 허가제 시행", source: 4}
+      - {date: 2023-10-17, en: "US tightens and widens the 2022 rules", ko: "미국, 2022년 규정 강화·확대", source: 2}
+      - {date: 2024-09-07, en: "Netherlands extends licences to more DUV lithography tools", ko: "네덜란드, 허가 대상 DUV 노광장비 확대", source: 4}
+      - {date: 2024-12-02, en: "US adds controls on more chip tools and on HBM memory", ko: "미국, 장비 통제 확대·고대역폭메모리(HBM) 통제", source: 5}
+      - {date: 2026-01-15, en: "US moves Nvidia H200 sales to China to case-by-case review", ko: "미국, 엔비디아 H200 대중 수출 개별 심사로 전환", source: 6}
+    products: ["B:chip_equipment", "C:semiconductors:ics"]
+    economies: [USA, CHN, JPN, NLD]
+    view: {f: M, p: "B:chip_equipment", base: 202209, t: 202309, lens: M}
+    watch:
+      en: "China's imports of chip-making machines before and after each round of controls, and the shares of Japan, the Netherlands and the US among its suppliers; China's chip trade alongside."
+      ko: "통제가 강화될 때마다 중국의 반도체 제조장비 수입이 어떻게 변하는지 살펴봅니다. 공급국 가운데 일본·네덜란드·미국의 비중 변화도 중국의 반도체 교역과 함께 확인합니다."
+    reading:
+      window:
+        en: "Jul–Sep 2023 ends on the day the Dutch rule took effect (1 September 2023) and precedes the US tightening of 17 October 2023. In the series on this page the Dutch share going to China held at 42–48% through March 2024, and China's imports were still +69% on a year earlier."
+        ko: "2023년 7~9월은 네덜란드 규제가 시행된 날(2023년 9월 1일)에 끝나며, 미국이 규제를 강화한 2023년 10월 17일보다 앞섭니다. 이 페이지의 계열에서 네덜란드 수출 가운데 중국 비중은 2024년 3월까지 42~48%를 유지했습니다. 중국의 수입도 여전히 전년보다 69% 많았습니다."
+      items:
+        - kind: scope
+          number:
+            en: "Netherlands → China: 11.0% → 47.5% of Dutch chip-making equipment exports, $513m → $2.7bn (Jul–Sep 2022 → Jul–Sep 2023)."
+            ko: "네덜란드의 반도체 제조장비 수출 가운데 중국 비중은 11.0%에서 47.5%로 높아졌고, 금액은 513m달러에서 2.7bn달러로 늘었습니다(2022년 7~9월 → 2023년 7~9월)."
+          en: "The Dutch licence rule in force from 1 September 2023 covers only ASML's most advanced immersion DUV systems (NXT:2000i and later). ASML says Chinese customers had received far fewer systems than ordered in 2021–22, and other customers' 2023 delays let it backfill those orders for mature and mid-critical nodes; its net sales to China rose from €2.9bn (2022) to €7.3bn (2023)."
+          ko: "2023년 9월 1일 시행된 네덜란드 허가제의 대상은 ASML의 최첨단 액침 DUV 장비뿐입니다(NXT:2000i 이후 기종). ASML에 따르면 중국 고객은 2021~22년에 주문한 것보다 훨씬 적은 장비를 받았습니다. 2023년 다른 고객의 납품 연기로 ASML은 그 주문을 성숙·중간 공정용으로 채울 수 있었습니다. ASML의 중국 매출은 29억 유로(2022년)에서 73억 유로(2023년)로 늘었습니다."
+          sources: [7, 8]
+          checked: 2026-10-25
+        - kind: cycle
+          number:
+            en: "China's chip-making equipment imports +30.7% ($9.2bn → $12.0bn) while world trade fell 8.6%."
+            ko: "중국의 반도체 제조장비 수입은 30.7% 늘었습니다($9.2bn → $12.0bn). 같은 기간 세계 교역은 8.6% 줄었습니다."
+          en: "SEMI's industry figures for 2023 show the same split: equipment billings in China rose 29% to $36.6bn, the largest market, while worldwide billings fell 1.3% to $106.3bn; Korea fell 7% on softer demand and the memory inventory correction, and Taiwan 27%."
+          ko: "SEMI의 2023년 업계 집계에서도 같은 차이가 나타납니다. 중국의 장비 매출은 29% 늘어 366억 달러로 가장 큰 시장이었습니다. 세계 전체는 1.3% 줄어 1,063억 달러였습니다. 한국은 수요 둔화와 메모리 재고 조정으로 7%, 대만은 27% 줄었습니다."
+          sources: [9]
+          checked: 2026-10-25
+        - kind: denominator
+          number:
+            en: "Japan → China: 35.6% → 51.8% of Japan's chip-making equipment exports, but only +$205m (+7%)."
+            ko: "일본의 반도체 제조장비 수출 가운데 중국 비중은 35.6%에서 51.8%로 높아졌습니다. 금액은 $205m(+7%) 늘어나는 데 그쳤습니다."
+          en: "Japan's exports fell 26.5% overall ($8.4bn → $6.2bn): Japan → Asia, not elsewhere specified (most importers' records of Taiwan) lost $1.1bn (−63.1%) and Japan → United States $437m, in the year SEMI records a 27% fall in Taiwan's equipment purchases. Most of the share gain is the denominator shrinking, not more tools going to China."
+          ko: "일본의 수출은 전체로 26.5% 줄었습니다($8.4bn → $6.2bn). 기타 아시아(대부분 수입국이 대만을 이렇게 기록합니다)로 가는 수출이 $1.1bn(−63.1%), 미국으로 가는 수출이 $437m 줄었습니다. 이 해는 SEMI 집계로 대만의 장비 구매가 27% 줄어든 해입니다. 중국 비중이 높아진 것은 대부분 분모가 줄었기 때문이며, 중국으로 간 장비가 늘어서가 아닙니다."
+          sources: [9]
+          checked: 2026-10-25
+        - kind: scope
+          number:
+            en: "United States chip-making equipment exports −33.8% ($7.0bn → $4.6bn)."
+            ko: "미국의 반도체 제조장비 수출은 33.8% 줄었습니다($7.0bn → $4.6bn)."
+          en: "US → China fell only $184m (−12%); the fall is in Asia, not elsewhere specified (most importers' records of Taiwan, −$879m), Korea (−$592m) and Singapore (−$527m), which the controls do not touch. The October 2022 rule's equipment licence requirement applies to fabs making logic at 16/14 nm or below, DRAM at 18 nm half-pitch or below and NAND with 128 layers or more."
+          ko: "미국의 중국 수출은 $184m(−12%) 줄어드는 데 그쳤습니다. 감소는 규제 대상이 아닌 기타 아시아(대부분 수입국이 대만을 이렇게 기록합니다, −$879m), 한국(−$592m), 싱가포르(−$527m)에서 나왔습니다. 2022년 10월 규제의 장비 수출 허가 요건은 16/14nm 이하 로직, 하프피치 18nm 이하 DRAM, 128단 이상 NAND를 생산하는 공장에 적용됩니다."
+          sources: [1, 10]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Commerce Implements New Export Controls on Advanced Computing and Semiconductor Manufacturing Items to the People's Republic of China (PRC)", publisher: "US Department of Commerce, Bureau of Industry and Security", date: 2022-10-07, url: "https://www.bis.gov/press-release/commerce-implements-new-export-controls-advanced-computing-semiconductor-manufacturing-items-peoples"}
+      - {n: 2, title: "Commerce Strengthens Restrictions on Advanced Computing Semiconductors, Semiconductor Manufacturing Equipment, and Supercomputing Items to Countries of Concern", publisher: "US Department of Commerce, Bureau of Industry and Security", date: 2023-10-17, url: "https://www.bis.gov/press-release/commerce-strengthens-restrictions-advanced-computing-semiconductors-semiconductor-manufacturing-equipment"}
+      - {n: 3, title: "Japan announces amendment of export control regulations on additional semiconductor-related items", publisher: "Baker McKenzie (Tokyo), client alert", date: 2023-05-30, url: "https://www.bakermckenzie.co.jp/wp/wp-content/uploads/20230530_ClientAlert_ITC.Japan_.pdf"}
+      - {n: 4, title: "The Netherlands expands export control measure for advanced semiconductor manufacturing equipment", publisher: "Government of the Netherlands", date: 2024-09-06, url: "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment"}
+      - {n: 5, title: "Foreign-Produced Direct Product Rule Additions, and Refinements to Controls for Advanced Computing and Semiconductor Manufacturing Items (89 FR 96790)", publisher: "Federal Register (Bureau of Industry and Security)", date: 2024-12-05, url: "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing"}
+      - {n: 6, title: "Revision to License Review Policy for Advanced Computing Commodities", publisher: "Federal Register (Bureau of Industry and Security)", date: 2026-01-15, url: "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"}
+      - {n: 7, title: "Kabinet publiceert aanvullende exportmaatregelen geavanceerde productieapparatuur voor halfgeleiders", publisher: "Rijksoverheid (Ministerie van Buitenlandse Zaken)", date: 2023-06-30, url: "https://www.rijksoverheid.nl/actueel/nieuws/2023/06/30/aanvullende-exportmaatregelen-kabinet-voor-geavanceerde-productieapparatuur-halfgeleiders"}
+      - {n: 8, title: "2023 Annual Report based on US GAAP (Form 6-K)", publisher: "ASML Holding N.V., via SEC EDGAR", date: 2024-02-14, url: "https://www.sec.gov/Archives/edgar/data/937966/000093796624000010/a2023annualreportbasedon.htm"}
+      - {n: 9, title: "Global Semiconductor Equipment Billings Slip to $106.3 Billion in 2023, SEMI Reports", publisher: "SEMI", date: 2024-04-10, url: "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-equipment-billings-slip-to-$106.3-billion-in-2023-semi-reports"}
+      - {n: 10, title: "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification (87 FR 62186)", publisher: "Federal Register (Bureau of Industry and Security)", date: 2022-10-13, url: "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor-manufacturing-items"}
+
+  - id: china-gallium-germanium-2023
+    num: "8"
+    start: 2023-08-01
+    end: null
+    ongoing: true
+    kind: export-control
+    title: {en: "China licenses exports of gallium, germanium and graphite", ko: "중국, 갈륨·게르마늄·흑연 수출 허가제"}
+    dek:
+      en: "China made exports of gallium and germanium subject to licences from 1 August 2023, and exports of some graphite from 1 December 2023. On 3 December 2024 it barred exports of gallium, germanium and antimony to the US in principle, and on 9 November 2025 it suspended that ban until 27 November 2026."
+      ko: "중국은 2023년 8월 1일부터 갈륨·게르마늄, 2023년 12월 1일부터 일부 흑연 수출에 허가를 받게 했습니다. 2024년 12월 3일에는 갈륨·게르마늄·안티모니의 대미 수출을 원칙적으로 불허했습니다. 2025년 11월 9일에는 이 금지를 2026년 11월 27일까지 유예했습니다."
+    timeline:
+      - {date: 2023-07-03, en: "China announces licensing of gallium and germanium exports", ko: "중국, 갈륨·게르마늄 수출 허가제 발표", source: 1}
+      - {date: 2023-08-01, en: "Gallium and germanium licensing takes effect", ko: "갈륨·게르마늄 수출 허가제 시행", source: 1}
+      - {date: 2023-10-20, en: "China announces licensing of some graphite exports", ko: "중국, 일부 흑연 수출 허가제 발표", source: 2}
+      - {date: 2023-12-01, en: "Graphite licensing takes effect", ko: "흑연 수출 허가제 시행", source: 2}
+      - {date: 2024-12-03, en: "China bars gallium, germanium and antimony exports to the US", ko: "중국, 갈륨·게르마늄·안티모니 대미 수출 불허", source: 3}
+      - {date: 2025-11-09, en: "Ban on exports to the US suspended until 27 Nov 2026", ko: "대미 수출금지, 2026년 11월 27일까지 유예", source: 4}
+    products: ["C:semiconductors:minor_metals", "C:batteries:graphite_nat", "C:batteries:anode"]
+    economies: [CHN, USA]
+    view: {f: M, p: "C:semiconductors:minor_metals", base: 202307, t: 202407, lens: L}
+    watch:
+      en: "China's exports of gallium and germanium metal before and after August 2023, and of graphite after December 2023, by destination; whether importers turn to other suppliers."
+      ko: "2023년 8월 전후 중국의 갈륨·게르마늄 수출과 12월 이후 흑연 수출이 행선지별로 어떻게 바뀌는지 살펴봅니다. 수입국이 다른 수입선으로 옮겨 가는지도 확인합니다."
+    reading:
+      window:
+        en: "Aug 2022–Jul 2023 ends with the July 2023 rush (8.78 tons of germanium and 7.58 of gallium shipped; none in August). Aug 2023–Jul 2024 holds the two empty months, October's trickle (0.65 and 0.25 tons), the recovery as licences were granted and eight months of the graphite licence; the US ban of 3 December 2024 lies outside both."
+        ko: "2022년 8월~2023년 7월은 2023년 7월의 선적 몰림으로 끝납니다. 그달 게르마늄 8.78톤, 갈륨 7.58톤이 수출됐고 8월은 0이었습니다. 2023년 8월~2024년 7월에는 수출이 끊긴 두 달과 10월의 소량 재개(0.65톤과 0.25톤)가 들어 있습니다. 허가가 나오며 회복한 기간과 흑연 허가제 8개월도 포함됩니다. 2024년 12월 3일의 대미 수출금지는 두 기간 모두의 밖에 있습니다."
+      items:
+        - kind: definition
+          number:
+            en: "China · exports of Gallium, germanium, indium (unwrought) +10.9% ($144m → $160m), Aug 2022–Jul 2023 → Aug 2023–Jul 2024."
+            ko: "중국의 갈륨·게르마늄·인듐(비가공) 수출은 10.9% 늘었습니다($144m → $160m, 2022년 8월~2023년 7월 → 2023년 8월~2024년 7월)."
+          en: "HS 8112.92, the code behind this page, holds unwrought gallium and germanium alongside indium and niobium, which no licence covers; the announcement's gallium compounds, germanium dioxide and tetrachloride fall under other headings. China shipped 347 tons of indium in January–September 2024, 74% to Korea, against 94 tons of gallium and 44 tons of germanium in all of 2022."
+          ko: "이 페이지의 코드 HS 8112.92에는 미가공 갈륨·게르마늄과 함께 허가 대상이 아닌 인듐·니오븀이 들어 있습니다. 공고가 열거한 갈륨 화합물과 이산화게르마늄·사염화게르마늄은 다른 호에 속합니다. 중국은 2024년 1~9월 인듐 347톤을 수출했고, 그중 74%가 한국으로 향했습니다. 2022년 한 해 중국의 갈륨 수출은 94톤, 게르마늄은 44톤이었습니다."
+          sources: [1, 7, 8, 9]
+          checked: 2026-10-25
+        - kind: price
+          number:
+            en: "World trade in Gallium, germanium, indium (unwrought) +6.8% ($433m → $463m, 12-month sums)."
+            ko: "갈륨·게르마늄·인듐(비가공)의 세계 교역은 6.8% 늘었습니다($433m → $463m, 12개월 합계)."
+          en: "Values here are dollars, and all three metals got dearer: USGS puts primary gallium in China at $380 a kilogram in June 2024, 58% above June 2023; germanium metal in Europe at $1,550 → $2,950 over January–September 2024; US indium at $340 in 2024, 42% above 2023. By weight, China's germanium metal exports in January–August 2024 were 55% below a year earlier."
+          ko: "이 페이지의 값은 달러 금액이며 세 금속 모두 가격이 올랐습니다. USGS에 따르면 중국의 1차 갈륨은 2024년 6월 kg당 380달러로 2023년 6월보다 58% 높았습니다. 유럽의 게르마늄 금속은 2024년 1~9월에 1,550달러에서 2,950달러로 올랐습니다. 미국 인듐은 2024년 340달러로 2023년보다 42% 높았습니다. 물량 기준으로는 중국의 2024년 1~8월 게르마늄 금속 수출이 전년동기대비 55% 감소했습니다."
+          sources: [5, 6, 7]
+          checked: 2026-10-25
+        - kind: scope
+          number:
+            en: "China → United States: $30.1m → $38.7m (+28.5%); 19.5% → 19.5% of US imports."
+            ko: "중국 → 미국 수출은 $30.1m에서 $38.7m로 늘었습니다(+28.5%). 미국 수입에서 중국이 차지하는 비중은 19.5%에서 19.5%로 같습니다."
+          en: "The 2023 measure requires a licence; the ban on exports to the United States came on 3 December 2024, after this window. USGS puts China at 19% of US gallium metal imports and 51% of germanium metal imports in 2020–23, and at 25% of US indium imports as of September 2024, against an 8% average over the previous four years."
+          ko: "2023년 조치는 허가제이고, 대미 수출금지는 이 기간 뒤인 2024년 12월 3일에 나왔습니다. USGS 집계로 2020~23년 미국의 갈륨 금속 수입의 19%, 게르마늄 금속 수입의 51%가 중국산이었습니다. 2024년 9월 기준 미국 인듐 수입의 25%가 중국산으로, 지난 4년 평균 8%보다 높았습니다."
+          sources: [1, 3, 5, 6, 7]
+          checked: 2026-10-25
+        - kind: front-loading
+          number:
+            en: "China's share of world Natural graphite exports 61.4% → 63.2%, world −35.0% (Jul 2023 → Jul 2024, 12-month sums)."
+            ko: "세계 천연흑연 수출에서 중국이 차지하는 비중은 61.4%에서 63.2%로 높아졌습니다. 세계 수출 증감률은 −35.0%입니다(2023년 7월 → 2024년 7월, 12개월 합계)."
+          en: "Licences from 1 December 2023 cover natural flake graphite and its products, spherical included, and high-purity artificial graphite. Flake exports fell from 23,502 tonnes in November 2023 to 1,427 in December, a drop Fastmarkets' sources put down to a November rush to buy and long licence reviews; USGS has China's flake exports 78% below a year earlier in January–February 2024 and 4% below in March–October."
+          ko: "2023년 12월 1일부터의 허가제는 천연 인상흑연과 그 제품(구상흑연 포함), 고순도 인조흑연을 대상으로 합니다. 인상흑연 수출은 2023년 11월 23,502톤에서 12월 1,427톤으로 줄었습니다. Fastmarkets의 취재원들은 11월의 선매수와 긴 허가 심사 기간을 그 이유로 들었습니다. USGS에 따르면 중국의 인상흑연 수출은 2024년 1~2월에 전년동기대비 78% 적었고, 3~10월에는 4% 적었습니다."
+          sources: [2, 11, 12]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "MOFCOM and GAC Announcement No. 23 of 2023 on export controls on gallium- and germanium-related items (text reproduced by Hong Kong's Trade and Industry Department)", publisher: "Ministry of Commerce and General Administration of Customs of China", date: 2023-07-03, url: "https://www.tid.gov.hk/en/tradecircular/files/2023/ci2023453a.pdf"}
+      - {n: 2, title: "MOFCOM and GAC announcement on optimising the temporary export controls on graphite items (text reproduced by Hong Kong's Trade and Industry Department)", publisher: "Ministry of Commerce and General Administration of Customs of China", date: 2023-10-20, url: "https://www.tid.gov.hk/en/tradecircular/files/2023/ci2023773a.pdf"}
+      - {n: 3, title: "MOFCOM Announcement No. 46 of 2024 on strengthening export controls on related dual-use items to the United States", publisher: "Ministry of Commerce of China", date: 2024-12-03, url: "https://www.mofcom.gov.cn/zwgk/zcfb/art/2024/art_3d5e990b43424e60828030f58a547b60.html"}
+      - {n: 4, title: "MOFCOM Announcement No. 72 of 2025 on adjusting the implementation of Announcement No. 46 of 2024", publisher: "Ministry of Commerce of China", date: 2025-11-09, url: "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html"}
+      - {n: 5, title: "Mineral Commodity Summaries 2025: Gallium", publisher: "U.S. Geological Survey", date: 2025-01-31, url: "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gallium.pdf"}
+      - {n: 6, title: "Mineral Commodity Summaries 2025: Germanium", publisher: "U.S. Geological Survey", date: 2025-01-31, url: "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf"}
+      - {n: 7, title: "Mineral Commodity Summaries 2025: Indium", publisher: "U.S. Geological Survey", date: 2025-01-31, url: "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-indium.pdf"}
+      - {n: 8, title: "Mineral Commodity Summaries 2025: Niobium (Columbium)", publisher: "U.S. Geological Survey", date: 2025-01-31, url: "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-niobium.pdf"}
+      - {n: 9, title: "China allows a trickle of critical minerals exports ahead of graphite curbs", publisher: "Bloomberg (via AJOT)", date: 2023-11-22, url: "https://www.ajot.com/news/china-allows-a-trickle-of-critical-minerals-exports-ahead-of-graphite-curbs"}
+      - {n: 10, title: "China exports zero germanium, gallium in August amid national security curbs", publisher: "Reuters (via CNBC)", date: 2023-09-20, url: "https://www.cnbc.com/2023/09/20/china-exports-zero-germanium-gallium-in-august-amid-national-security-curbs.html"}
+      - {n: 11, title: "China's graphite exports plunge in December after introduction of export controls", publisher: "Fastmarkets", date: 2024-01-24, url: "https://www.fastmarkets.com/insights/chinas-graphite-exports-plunge-in-december-after-introduction-of-export-controls/"}
+      - {n: 12, title: "Mineral Commodity Summaries 2025: Graphite (Natural)", publisher: "U.S. Geological Survey", date: 2025-01-31, url: "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-graphite.pdf"}
+
+  - id: red-sea-2023
+    num: "9"
+    start: 2023-11-19
+    end: null
+    ongoing: true
+    kind: logistics
+    title: {en: "Houthi attacks in the Red Sea send ships around the Cape", ko: "후티 홍해 공격, 선박들 희망봉 우회"}
+    dek:
+      en: "Yemen's Houthis seized the Galaxy Leader on 19 November 2023 and went on to attack merchant ships; from December 2023 container lines diverted around the Cape of Good Hope. Attacks paused in November 2025, a first return to Suez in February 2026 was reversed as the Iran war began, and returns gathered pace from July 2026: in early October 2026 container transits passed half their 2023 level for the first time."
+      ko: "예멘 후티 반군은 2023년 11월 19일 갤럭시 리더호를 나포한 뒤 상선을 잇따라 공격했습니다. 컨테이너 선사들은 2023년 12월부터 희망봉으로 우회했습니다. 공격은 2025년 11월 멈췄습니다. 2026년 2월의 첫 수에즈 복귀는 이란 전쟁이 시작되며 되돌려졌습니다. 2026년 7월부터 복귀가 이어져, 10월 초 수에즈 통과 컨테이너선 용량이 처음으로 2023년의 절반을 넘었습니다."
+    timeline:
+      - {date: 2023-11-19, en: "Houthis seize the Galaxy Leader in the Red Sea", ko: "후티, 홍해에서 갤럭시 리더호 나포", source: 1}
+      - {date: 2024-01-12, en: "UK and US strike Houthi military targets in Yemen", ko: "영국·미국, 예멘 후티 군사시설 공습", source: 2}
+      - {date: 2024-02-22, en: "UNCTAD: container tonnage through Suez down 82%", ko: "UNCTAD, 수에즈 통과 컨테이너 톤수 82% 감소", source: 3}
+      - {date: 2025-11-11, en: "Houthi attacks on ships pause for about three and a half months", ko: "후티 상선 공격, 약 3개월 반 중단", source: 4}
+      - {date: 2026-02-03, en: "Maersk and Hapag-Lloyd's ME11 service returns to Suez", ko: "머스크·하파크로이트 ME11 노선 수에즈 복귀", source: 4}
+      - {date: 2026-03-02, en: "Houthis say they will resume attacks after strikes on Iran", ko: "이란 공습 뒤 후티, 공격 재개 예고", source: 4}
+      - {date: 2026-07-06, en: "Gemini Alliance moves AE15/SE3 back to Suez", ko: "제미니 동맹, AE15/SE3 노선 수에즈 복귀 발표", source: 5}
+      - {date: 2026-10-19, en: "BIMCO: Suez container transits pass half the 2023 level", ko: "BIMCO, 수에즈 컨테이너 통과량 2023년의 절반 넘어", source: 5}
+    products: ["TOTAL", "B:natural_gas", "B:refined_oil"]
+    economies: [YEM, EGY, ISR]
+    view: {f: M, p: "TOTAL", base: 202302, t: 202402, lens: M}
+    watch:
+      en: "Whether Asia–Europe trade values hold while their timing shifts. Customs data record origin and destination, not the route or the freight paid, so the diversion itself does not show in the network."
+      ko: "아시아–유럽 교역액은 유지되고 시점만 밀리는지 살펴봅니다. 통관자료는 출발국과 도착국만 기록하고 항로와 운임은 담지 않습니다. 따라서 우회 자체는 네트워크에 드러나지 않습니다."
+    reading:
+      window:
+        en: "Dec 2023–Feb 2024 starts a month into the attacks (first seizure 19 November 2023) and covers the months container lines left the Red Sea: weekly Suez passages were down more than 45% in February 2024 and Cape passages had more than doubled. Customs values record origin and destination, not the route: the page shows the immediate effect on who traded with whom."
+        ko: "2023년 12월~2024년 2월은 공격 시작(2023년 11월 19일 첫 나포) 한 달 뒤부터의 석 달입니다. 이 기간은 컨테이너 선사들이 홍해를 떠난 기간입니다. 2024년 2월 수에즈 주간 통과 척수는 전년동월대비 45% 넘게 줄었고, 희망봉 통과는 두 배를 넘었습니다. 통관 금액은 출발국과 도착국만 기록하고 항로는 기록하지 않습니다. 따라서 이 페이지의 수치는 누가 누구와 교역했는지에 미친 즉각적 효과입니다."
+      items:
+        - kind: definition
+          number:
+            en: "World all-goods trade −2.7% on a year earlier (Dec 2023–Feb 2024, $5.5tn), after −1.3% at the base (Dec 2022–Feb 2023, $5.7tn)."
+            ko: "세계 전체 상품 교역은 전년동기대비 −2.7%입니다(2023년 12월~2024년 2월, $5.5tn). 기준 기간(2022년 12월~2023년 2월, $5.7tn)에는 −1.3%였습니다."
+          en: "The disruption moved ships, not origins and destinations. Suez Canal trade volume in January–February 2024 was down 50% on a year earlier and Cape of Good Hope transit up 74%; containerised shipments through the canal fell 72% between November 2023 and February 2024 and Asia-to-Europe freight rates rose 270% on February 2023, while containers shipped worldwide in January still topped 14 million."
+          ko: "교란은 배의 항로를 바꿨지, 출발국과 도착국을 바꾸지 않았습니다. 2024년 1~2월 수에즈 운하 통과 교역량은 전년동기대비 50% 줄고 희망봉 우회는 74% 늘었습니다. 운하를 지나는 컨테이너 화물은 2023년 11월~2024년 2월에 72% 줄었습니다. 아시아→유럽 운임은 2023년 2월 대비 270% 올랐습니다. 그래도 1월 세계 컨테이너 운송량은 1,400만 개를 넘었습니다."
+          sources: [6, 7, 8]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Yemen's imports $561m → $644m (Dec 2022–Feb 2023 → Dec 2023–Feb 2024), no change bar: its partners' reports at the base, its own at t."
+            ko: "예멘의 수입은 $561m에서 $644m입니다(2022년 12월~2023년 2월 → 2023년 12월~2024년 2월). 변화 막대는 표시하지 않습니다. 기준 시점은 상대국 보고, t 시점은 예멘 자체 보고이기 때문입니다."
+          en: "Yemen filed no monthly data to UN Comtrade for 2020–2022; its monthly series begins in January 2023. The base window is therefore read from its partners' export reports and the later one from Yemen's own report, which puts $644m against the $2.5bn that 72 partners report shipping to Yemen in the same three months."
+          ko: "예멘은 2020~2022년 월별 자료를 UN Comtrade에 제출하지 않았습니다. 예멘의 월별 자료는 2023년 1월부터 있습니다. 따라서 기준 창은 교역 상대국의 수출 보고로, 이후 창은 예멘 자체 보고로 읽습니다. 예멘 보고로는 $644m입니다. 같은 3개월 동안 72개 상대국이 예멘으로 수출했다고 보고한 금액은 $2.5bn입니다."
+          sources: [9]
+          checked: 2026-10-25
+        - kind: overlap
+          number:
+            en: "Israel's imports −12.8% ($22.3bn → $19.4bn); Israel's exports −1.6% ($18.9bn → $18.6bn)."
+            ko: "이스라엘의 수입은 −12.8%($22.3bn → $19.4bn), 수출은 −1.6%($18.9bn → $18.6bn)입니다."
+          en: "The war from 7 October 2023 falls inside the later window: the Bank of Israel says it split the year, with GDP contracting and imports declining considerably in the fourth quarter. Israel's statistics bureau puts 2023 goods imports at NIS 332.9bn (−6.7%); in October–December trend imports excluding ships, aircraft, diamonds and fuels fell at a 13.9% annual rate, consumer goods at 18.5%."
+          ko: "2023년 10월 7일 시작된 전쟁이 뒤 기간에 들어 있습니다. 이스라엘은행은 전쟁으로 그해가 전후로 갈렸다고 분석했습니다. 4분기에는 GDP가 줄고 수입이 크게 감소했습니다. 이스라엘 중앙통계국은 2023년 상품 수입을 3,329억 셰켈(−6.7%)로 집계했습니다. 10~12월 선박·항공기·다이아몬드·연료를 뺀 수입 추세는 연율 13.9%, 소비재는 18.5% 줄었습니다."
+          sources: [11, 10]
+          checked: 2026-10-25
+        - kind: overlap
+          number:
+            en: "Egypt's exports −9.5% ($13.6bn → $12.3bn); Egypt → Italy 8.4% → 4.3% of Egypt's exports."
+            ko: "이집트의 수출은 −9.5%($13.6bn → $12.3bn)입니다. 이집트 수출에서 이탈리아가 차지하는 비중은 8.4%에서 4.3%로 낮아졌습니다."
+          en: "Egypt exported no LNG cargo between July and October 2023 as gas went to summer power demand, and its 2023 LNG exports fell nearly 50% to 3.7 million tonnes. In this store's natural gas basket Egypt's exports fell from $2.58bn to $436m between the two windows and the flow to Italy from $514m to $26m, more than the whole fall in Egypt's exports."
+          ko: "이집트는 여름 전력 수요에 가스를 돌리느라 2023년 7~10월에 LNG를 한 척도 수출하지 않았습니다. 2023년 LNG 수출은 50% 가까이 줄어 370만 톤이었습니다. 이 사이트의 천연가스 품목 묶음에서 이집트 수출은 두 기간 사이 25억 8,000만 달러에서 4억 3,600만 달러로 줄었습니다. 이탈리아행은 5억 1,400만 달러에서 2,600만 달러로 줄어, 이집트 수출 감소분 전체보다 큽니다."
+          sources: [12]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Yemen's Houthi rebels hijack an Israeli-linked ship in the Red Sea and take 25 crew members hostage", publisher: "Associated Press (via WLOS)", date: 2023-11-19, url: "https://wlos.com/news/nation-world/yemens-houthi-rebels-hijack-an-israeli-linked-ship-in-the-red-sea-and-take-25-crew-members-hostage"}
+      - {n: 2, title: "PM statement on strikes against Houthi military targets: 12 January 2024", publisher: "UK Prime Minister's Office and Ministry of Defence", date: 2024-01-12, url: "https://www.gov.uk/government/news/pm-statement-on-strikes-against-houthi-military-targets-12-january-2024"}
+      - {n: 3, title: "Navigating troubled waters: Impact to global trade of disruption of shipping routes in the Red Sea, Black Sea and Panama Canal", publisher: "UNCTAD", date: 2024-02-22, url: "https://unctad.org/system/files/official-document/osginf2024d2_en.pdf"}
+      - {n: 4, title: "Red Sea Corridor Slips Back Into Crisis as Houthi Threats Resurface", publisher: "gCaptain", date: 2026-03-02, url: "https://gcaptain.com/red-sea-corridor-slips-back-into-crisis-as-houthi-threats-resurface/"}
+      - {n: 5, title: "'Suez Canal container traffic passes 50% recovery mark' (BIMCO Shipping number of the week)", publisher: "SWZ Maritime", date: 2026-10-19, url: "https://swzmaritime.nl/news/2026/10/19/suez-canal-container-traffic-passes-50-recovery-mark/"}
+      - {n: 6, title: "Red Sea Attacks Disrupt Global Trade", publisher: "IMF Blog (Chart of the Week; Kamali, Koepke, Sozzi, Verschuur)", date: 2024-03-07, url: "https://www.imf.org/en/Blogs/Articles/2024/03/07/Red-Sea-Attacks-Disrupt-Global-Trade"}
+      - {n: 7, title: "Global Trade Outlook and Statistics, April 2024", publisher: "World Trade Organization", date: 2024-04-10, url: "https://www.wto.org/english/res_e/booksp_e/trade_outlook24_e.pdf"}
+      - {n: 8, title: "Kiel Trade Indicator 2/24: Freight Volume in the Red Sea Continues to Decline, Fewer Ships in Hamburg", publisher: "Kiel Institute for the World Economy", date: 2024-02-07, url: "https://www.kielinstitut.de/media/news/freight-volume-in-the-red-sea-continues-to-decline-fewer-ships-in-hamburg/"}
+      - {n: 9, title: "Data availability: reporter 887 (Yemen), monthly, HS (getDA/C/M/HS)", publisher: "UN Comtrade (comtradeapi.un.org)", date: null, accessed: 2026-10-25, url: "https://comtradeapi.un.org/public/v1/getDA/C/M/HS?reporterCode=887"}
+      - {n: 10, title: "Israel's Foreign Trade in Goods – 2023 (Media Release 012/2024)", publisher: "Central Bureau of Statistics, Israel", date: 2024-01-14, url: "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/012/16_24_012e.pdf"}
+      - {n: 11, title: "Bank of Israel Annual Report 2023: Governor's letter to the Government and the Knesset Finance Committee", publisher: "Bank of Israel", date: 2024-03-28, url: "https://boi.org.il/media/p53drk2p/governor-letter-2023.pdf"}
+      - {n: 12, title: "Ongoing global risks heighten Egyptian LNG, LPG export uncertainty", publisher: "S&P Global Commodity Insights (Platts), via Hellenic Shipping News", date: 2024-02-12, url: "https://www.hellenicshippingnews.com/ongoing-global-risks-heighten-egyptian-lng-lpg-export-uncertainty/"}
+
+  - id: us-china-tariffs-rare-earths-2025
+    num: "10"
+    start: 2025-04-02
+    end: null
+    ongoing: true          # MOFCOM, 28 Sep 2026: the Kuala Lumpur arrangement (suspensions to 10 Nov 2026) extended to 10 Jan 2027
+    kind: tariff
+    title: {en: "US sets reciprocal tariffs, China curbs rare-earth exports", ko: "미국 상호관세 부과, 중국 희토류 수출통제"}
+    dek:
+      en: "On 2 April 2025 the US ordered tariffs on imports from all countries, and on 4 April China put seven rare earths under export licensing; the US rate on Chinese goods rose to 125% before a truce in Geneva on 12 May. After Xi and Trump met in Busan on 30 October, China suspended the wider controls it had announced on 9 October, a truce since extended to 10 January 2027."
+      ko: "미국은 2025년 4월 2일 모든 나라의 수입품에 관세를 부과하기로 했습니다. 중국은 4월 4일 희토류 7종을 수출허가 대상으로 지정했습니다. 미국의 대중 상호관세율은 125%까지 올랐다가 5월 12일 제네바 합의로 인하됐습니다. 10월 30일 부산 회담 뒤 중국은 10월 9일 발표한 확대 통제를 유예했습니다. 이 휴전은 2027년 1월 10일까지 연장됐습니다."
+    timeline:
+      - {date: 2025-04-02, en: "US orders reciprocal tariffs: 10% on all countries from 5 April, higher rates from 9 April", ko: "미국, 상호관세 발표(4월 5일 10% 기본관세)", source: 1}
+      - {date: 2025-04-04, en: "China requires export licences for seven medium and heavy rare earths", ko: "중국, 중·중(重)희토류 7종 수출허가제 시행", source: 2}
+      - {date: 2025-04-09, en: "US pauses the higher rates for 90 days except for China, whose reciprocal rate rises to 125%", ko: "미국, 중국 외 고율관세 90일 유예·대중 125%", source: 3}
+      - {date: 2025-05-12, en: "Geneva joint statement: both sides suspend 24 points of their tariffs for 90 days", ko: "제네바 공동성명, 양국 관세 90일 인하", source: 4}
+      - {date: 2025-10-09, en: "China adds five rare earths and requires licences for goods containing even trace amounts", ko: "중국, 희토류 5종 추가·역외 통제 확대", source: 5}
+      - {date: 2025-10-30, en: "Xi and Trump meet in Busan; China agrees to suspend the October expansion for a year", ko: "부산 미·중 정상회담, 확대 통제 1년 유예 합의", source: 5}
+      - {date: 2025-11-07, en: "China suspends its October control announcements until 10 November 2026", ko: "중국, 10월 통제 공고 2026년 11월 10일까지 유예", source: 6}
+      - {date: 2026-02-20, en: "US Supreme Court rules that IEEPA does not authorize the President to impose tariffs", ko: "미 대법원, IEEPA 관세 권한 불인정", source: 7}
+    products: ["TOTAL", "C:magnets:magnets", "B:rare_earths"]
+    economies: [USA, CHN]
+    # t 202506: Apr-Jun 2025, the months of the 125% rate and the Geneva cut, against Apr-Jun 2024.
+    # Importer-reported: China has filed only to Dec 2024, so its 2025 exports are seen through the
+    # US's, Japan's and India's imports (filed to Jul-Aug 2026); Korea's from its customs service from Jan 2026.
+    view: {f: M, p: "TOTAL", base: 202406, t: 202506, lens: M}
+    watch:
+      en: "Reporters' monthly imports from China against the same months a year earlier, through the April 2025 escalation, the Geneva cut and the 2026 ruling; rare-earth magnet (8505.11) exports by destination and who else supplies magnets and rare-earth compounds. China has filed only to December 2024, so after that its exports show only as partners' imports."
+      ko: "각국의 월별 중국산 수입을 전년동월과 비교합니다. 2025년 4월 확전, 제네바 인하, 2026년 판결 전후가 기준입니다. 희토류 영구자석(8505.11)의 목적지별 수출과 자석·희토류 화합물의 다른 공급국도 살펴봅니다. 중국은 2024년 12월분까지만 신고했습니다. 그 뒤 중국의 수출은 상대국 수입으로만 나타납니다."
+    # 9 Oct 2025 primary texts (checked): MOFCOM Announcement No. 61 of 2025 (foreign-made items with
+    # 0.1% or more Chinese rare-earth content by value), https://www.mofcom.gov.cn/zcfb/blgg/gg/2025/art/2025/art_e2587592fd774f23a62925ee51641071.html ;
+    # MOFCOM/GAC No. 57 of 2025 (holmium and others, effective 8 Nov 2025), https://www.mofcom.gov.cn/zcfb/blgg/gg/2025/art/2025/art_9510f263c3c246d8936fbfa684a58ca8.html
+    # The plan's Mining.com link (https://www.mining.com/?p=1191831) resolves to source 5.
+    reading:
+      window:
+        en: "Apr–Jun 2025 spans the 10% baseline tariff (5 April), the 125% rate on China (9 April to the Geneva truce of 12 May) and the first weeks of China's rare-earth licences: the immediate impact, after a first quarter in which US imports ran 25% above a year earlier on front-loading. China's filings end in December 2024, so its figures are read from partners."
+        ko: "2025년 4~6월에는 10% 기본관세(4월 5일)가 들어 있습니다. 대중국 125% 관세(4월 9일부터 5월 12일 제네바 합의까지)와 중국 희토류 수출허가제의 첫 몇 주도 포함됩니다. 이 기간은 미국 수입이 선주문으로 전년동기대비 25% 많았던 1분기 직후의 즉각적 영향을 나타냅니다. 중국의 신고는 2024년 12월에 끝나므로 중국 수치는 상대국 신고로 읽습니다."
+      items:
+        - kind: reporting
+          number:
+            en: "Hong Kong → China: 0.83% → 1.9% of China's all-goods imports, $5.2bn → $8.0bn (Apr–Jun 2024 → Apr–Jun 2025)."
+            ko: "홍콩 → 중국 수출이 중국 전체 상품 수입에서 차지하는 비중은 0.83%에서 1.9%로, 금액은 $5.2bn에서 $8.0bn으로 늘었습니다(2024년 4~6월 → 2025년 4~6월)."
+          en: "China's filings end in December 2024, so the 2025 figure is Hong Kong's export report spliced to China's own level (the ratio of the two reports in the 12 months to December 2024). Hong Kong's report counts re-exports of goods made elsewhere (of HK$295.6bn exported to the US in 2024, HK$289.7bn were re-exports). Importers record goods by country of origin, so in 2024 China reported $18.5bn of imports from Hong Kong against Hong Kong's $378bn of exports to China."
+          ko: "중국의 신고 자료는 2024년 12월에서 끝납니다. 그래서 2025년 수치는 홍콩의 수출 보고를 중국 자체 수준에 맞춰 이어 붙인 것입니다(2024년 12월까지 12개월간 두 보고의 비율 적용). 홍콩의 보고에는 다른 지역에서 생산된 상품의 재수출이 포함됩니다(2024년 미국으로 수출한 HK$295.6bn 가운데 HK$289.7bn이 재수출). 수입국은 원산지 기준으로 상품을 기록합니다. 이 때문에 2024년 중국이 보고한 홍콩으로부터의 수입은 $18.5bn이지만, 홍콩이 중국으로 수출했다고 보고한 금액은 $378bn입니다."
+          sources: [12, 13]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "China's all-goods exports and imports: no change bars at Apr–Jun 2025 (China's own report at the base, its partners' at t)."
+            ko: "중국의 전체 상품 수출입에는 2025년 4~6월 변화 막대가 없습니다(기준 시점은 중국 자체 보고, t 시점은 상대국 보고 기준)."
+          en: "China has filed nothing for 2025, so its 2025 windows are its partners' reports (spliced to China's level), so the page draws no change bar against its own 2024 report; and Taiwan (not a Comtrade reporter), Vietnam, Russia and the UAE are missing from the sum. China's customs put first-half 2025 exports at +7.2% and imports at −2.7% in yuan terms; trade with the United States fell 9.3% and trade with ASEAN rose 9.6%."
+          ko: "중국은 2025년 자료를 전혀 제출하지 않았습니다. 따라서 2025년 창은 상대국 보고를 중국 수준에 맞춰 이어 붙인 것이며, 페이지는 중국 자체의 2024년 보고와 비교한 변화 막대를 그리지 않습니다. 대만(Comtrade 보고국 아님)·베트남·러시아·아랍에미리트(UAE)는 합계에서 빠져 있습니다. 중국 세관 통계로는 2025년 상반기 위안화 기준 수출이 +7.2%, 수입이 −2.7%였습니다. 미국과의 교역은 9.3% 줄었고 ASEAN과의 교역은 9.6% 늘었습니다."
+          sources: [14, 15, 16]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "China → United States: 12.8% → 8.2% of US all-goods imports, $106.5bn → $69.2bn; Vietnam → United States 4.1% → 6.0% (Apr–Jun 2024 → Apr–Jun 2025)."
+            ko: "중국 → 미국 수입은 미국 전체 상품 수입의 12.8%에서 8.2%로, $106.5bn에서 $69.2bn으로 줄었습니다. 베트남 → 미국은 4.1%에서 6.0%로 늘었습니다(2024년 4~6월 → 2025년 4~6월)."
+          en: "Census tables agree: imports from China $100.8bn → $64.7bn in April–June, after a first quarter only 5.5% above 2024, while imports from Vietnam rose $32.9bn → $48.6bn. The WTO attributes early-2025 trade growth to a surge in North American imports ahead of tariff hikes; Vietnam's statistics office puts first-half exports to the US at $70.9bn and imports from China at $84.7bn."
+          ko: "미국 센서스국 자료도 같습니다. 4~6월 중국산 수입은 1,008억 달러에서 647억 달러로 줄었습니다. 그 앞 1분기는 2024년보다 5.5% 많았을 뿐입니다. 베트남산 수입은 329억 달러에서 486억 달러로 늘었습니다. WTO는 2025년 초 교역 증가를 관세 인상 전 북미 수입 증가로 설명했습니다. 베트남 통계청은 2025년 상반기 대미 수출을 709억 달러, 중국산 수입을 847억 달러로 집계했습니다."
+          sources: [9, 10, 11, 18]
+          checked: 2026-10-25
+        - kind: scope
+          number:
+            en: "United States imports of permanent magnets −36.1% on a year earlier (Apr–Jun 2025); China 77.1% → 66.9% of them."
+            ko: "미국의 영구자석 수입은 전년동기대비 −36.1%입니다(2025년 4~6월). 이 가운데 중국 비중은 77.1%에서 66.9%로 낮아졌습니다."
+          en: "From 4 April 2025 China's licence covers samarium-cobalt magnets and NdFeB magnets containing terbium or dysprosium, not every magnet in 8505.11. Customs data reported by Reuters: China's magnet exports fell to 1,238 tonnes in May, 74% below a year earlier, then 3,188 tonnes in June, of which 353 tonnes went to the US, up 660% from May."
+          ko: "2025년 4월 4일부터 중국의 수출허가 대상은 사마륨코발트 자석과, 테르븀·디스프로슘을 함유한 네오디뮴 자석입니다. 8505.11의 모든 자석이 대상은 아닙니다. 로이터가 전한 해관 자료에 따르면 중국의 자석 수출은 5월 1,238톤으로 전년동월대비 74% 감소했습니다. 6월에는 3,188톤으로 늘었습니다. 그중 353톤이 미국으로 향해 5월보다 660% 많았습니다."
+          sources: [2, 17]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Fact Sheet: President Donald J. Trump Declares National Emergency to Increase our Competitive Edge, Protect our Sovereignty, and Strengthen our National and Economic Security", publisher: "The White House", date: 2025-04-02, url: "https://www.whitehouse.gov/fact-sheets/2025/04/fact-sheet-president-donald-j-trump-declares-national-emergency-to-increase-our-competitive-edge-protect-our-sovereignty-and-strengthen-our-national-and-economic-security/"}
+      - {n: 2, title: "商务部 海关总署公告2025年第18号 公布对部分中重稀土相关物项实施出口管制的决定 (Announcement No. 18 of 2025: export controls on certain medium and heavy rare-earth items)", publisher: "Ministry of Commerce of China (MOFCOM) and General Administration of Customs", date: 2025-04-04, url: "https://www.mofcom.gov.cn/zcfb/blgg/gg/2025/art/2025/art_5e663d0bfec7452dabd950d0f0e42153.html"}
+      - {n: 3, title: "Modifying Reciprocal Tariff Rates to Reflect Trading Partner Retaliation and Alignment (Executive Order 14266)", publisher: "The White House", date: 2025-04-09, url: "https://www.whitehouse.gov/presidential-actions/2025/04/modifying-reciprocal-tariff-rates-to-reflect-trading-partner-retaliation-and-alignment/"}
+      - {n: 4, title: "Joint Statement on U.S.-China Economic and Trade Meeting in Geneva", publisher: "The White House", date: 2025-05-12, url: "https://www.whitehouse.gov/briefings-statements/2025/05/joint-statement-on-u-s-china-economic-and-trade-meeting-in-geneva/"}
+      - {n: 5, title: "China to suspend new REE export controls for 1 year", publisher: "MINING.COM", date: 2025-10-30, url: "https://www.mining.com/china-to-suspend-new-ree-export-controls-for-1-year/"}
+      - {n: 6, title: "商务部、海关总署公告2025年第70号 公布暂停实施商务部、海关总署公告2025年第55号、56号、57号、58号及商务部公告2025年第61号、62号的决定 (Announcement No. 70 of 2025: suspending Announcements Nos. 55-58, 61 and 62)", publisher: "Ministry of Commerce of China (MOFCOM) and General Administration of Customs", date: 2025-11-07, url: "https://www.mofcom.gov.cn/zcfb/blgg/gg/2025/art/2025/art_da147202d0934ddebe252772e95ed7b3.html"}
+      - {n: 7, title: "Learning Resources, Inc. v. Trump, No. 24-1287 (slip opinion)", publisher: "Supreme Court of the United States", date: 2026-02-20, url: "https://www.supremecourt.gov/opinions/25pdf/607us2r12_8nj9.pdf"}
+      - {n: 8, title: "商务部美大司负责人解读第八轮中美经贸磋商成果 (MOFCOM official explains the results of the eighth round of China-US trade talks)", publisher: "Ministry of Commerce of China (MOFCOM)", date: 2026-09-28, url: "https://www.mofcom.gov.cn/syxwfb/art/2026/art_d9ea01824fc44fd8a29f7dc3f8ca9c72.html"}
+      - {n: 9, title: "Trade in Goods with China", publisher: "US Census Bureau, Foreign Trade", date: null, accessed: 2026-10-25, url: "https://www.census.gov/foreign-trade/balance/c5700.html"}
+      - {n: 10, title: "Trade in Goods with Vietnam", publisher: "US Census Bureau, Foreign Trade", date: null, accessed: 2026-10-25, url: "https://www.census.gov/foreign-trade/balance/c5520.html"}
+      - {n: 11, title: "AI goods and frontloading lift world trade in 2025 but outlook dims for 2026 (Global Trade Outlook and Statistics update)", publisher: "World Trade Organization", date: 2025-10-07, url: "https://www.wto.org/english/news_e/news25_e/stat_07oct25_e.htm"}
+      - {n: 12, title: "Hong Kong – US Trade Relations: summary of Hong Kong's merchandise trade with the US", publisher: "Trade and Industry Department, Hong Kong SAR", date: null, accessed: 2026-10-25, url: "https://www.tid.gov.hk/en/our_work/statistics/trade_partners/us.html"}
+      - {n: 13, title: "Asymmetries in bilateral trade statistics (presentation by Ronald Jansen, UN Statistics Division)", publisher: "UN Comtrade (comtradeapi.un.org wiki)", date: null, accessed: 2026-10-25, url: "https://comtradeapi.un.org/files/v1/app/wiki/xviii.-UNSD-Asymmetries-in-bilateral-trade-statistics.pdf"}
+      - {n: 14, title: "Reporters reference table (Reporters.json)", publisher: "UN Comtrade (comtradeapi.un.org)", date: null, accessed: 2026-10-25, url: "https://comtradeapi.un.org/files/v1/app/reference/Reporters.json"}
+      - {n: 15, title: "Review of China's Foreign Trade in the First Half of 2025", publisher: "General Administration of Customs of the People's Republic of China", date: 2025-07-14, url: "http://english.customs.gov.cn/Statics/e7daf5b3-c8df-48bd-9dac-7995a90cff5d.html"}
+      - {n: 16, title: "China's foreign trade demonstrates resilience despite global headwinds", publisher: "The State Council of the People's Republic of China (Xinhua)", date: 2025-07-14, url: "https://english.www.gov.cn/archive/statistics/202507/14/content_WS6874fdcfc6d0868f4e8f4236.html"}
+      - {n: 17, title: "China's exports of rare earth magnets to the US surge in June", publisher: "Reuters (Amy Lv, Colleen Howe), via Kitco News", date: 2025-07-21, url: "https://www.kitco.com/news/off-the-wire/2025-07-21/chinas-exports-rare-earth-magnets-us-surge-june"}
+      - {n: 18, title: "Report on socio-economic situation in second quarter and six months of 2025", publisher: "National Statistics Office of Viet Nam", date: 2025-07-05, url: "https://www.nso.gov.vn/en/data-and-statistics/2025/07/report-on-socio-economic-situation-in-second-quarter-and-six-months-of-2025/"}
+
+  - id: twelve-day-war-2025
+    num: "11"
+    start: 2025-06-13
+    end: 2025-06-24             # the ceasefire takes effect
+    ongoing: false
+    kind: war
+    title: {en: "Twelve-Day War: Israel and the US strike Iran", ko: "12일 전쟁, 이스라엘·미국이 이란 공습"}
+    dek:
+      en: "Israel struck Iran's nuclear and military sites on 13 June 2025 and the US bombed three nuclear sites on 22 June; a ceasefire took effect on 24 June. Oil prices spiked mid-month and returned to pre-conflict levels after the ceasefire."
+      ko: "이스라엘이 2025년 6월 13일 이란의 핵·군사 시설을 공습했고, 미국이 6월 22일 핵시설 세 곳을 폭격했습니다. 6월 24일 휴전이 발효됐고, 한때 치솟은 유가는 휴전 뒤 분쟁 이전 수준으로 돌아갔습니다."
+    timeline:
+      - {date: 2025-06-13, en: "Israel strikes Iran's nuclear and military sites", ko: "이스라엘, 이란 핵·군사 시설 공습", source: 1}
+      - {date: 2025-06-13, en: "Israel orders the Karish and Leviathan gas fields shut; restarts authorised on 24–25 June", ko: "이스라엘, 카리시·리바이어던 가스전 가동 중단 지시(6월 24~25일 재가동 허가)", source: 11}
+      - {date: 2025-06-22, en: "US bombs Fordo, Natanz and Isfahan (Tehran time)", ko: "미국, 포르도·나탄즈·이스파한 폭격", source: 2}
+      - {date: 2025-06-23, en: "Iran fires missiles at a US base in Qatar", ko: "이란, 카타르의 미군 기지에 미사일 발사", source: 3}
+      - {date: 2025-06-24, en: "Ceasefire takes effect", ko: "휴전 발효", source: 3}
+      - {date: 2025-07-11, en: "IEA: oil prices back to pre-conflict levels", ko: "IEA, 유가 분쟁 이전 수준 회복", source: 4}
+    products: ["B:crude_oil", "B:natural_gas", "TOTAL"]
+    economies: [IRN, ISR, USA, QAT]
+    # May-Jul 2025 against May-Jul 2024: the war month and the one after, on the lens of event 12
+    view: {f: M, p: "B:crude_oil", base: 202407, t: 202507, lens: M}
+    watch:
+      en: "A short test: Gulf crude and LNG flows to the importers should barely move in monthly values, since prices were back to pre-conflict levels within weeks; a contrast with 2026."
+      ko: "짧은 시험대입니다. 유가가 몇 주 만에 분쟁 이전 수준으로 돌아갔으므로, 걸프산 원유·LNG 흐름은 월별 값에서 거의 움직이지 않아야 합니다. 2026년과 대비됩니다."
+    reading:
+      window:
+        en: "May–Jul 2025 against May–Jul 2024 holds the twelve days of war inside a quarter in which Brent averaged $68 against $83 a year earlier and China's filings were absent. The IEA: Dated \"briefly surpassing $80/bbl before returning to pre-conflict levels after a ceasefire accord\", no impact on Iranian flows, and supply up 950 kb/d in June, led by Saudi Arabia, after OPEC+ added 411 kb/d for June and for July."
+        ko: "2024년 5~7월 대비 2025년 5~7월 비교는 12일의 전쟁을 한 분기 안에 담습니다. 그 분기 브렌트유는 1년 전 배럴당 83달러에서 68달러로 하락했습니다. 중국의 신고는 없었습니다. IEA는 유가가 \"잠시 배럴당 80달러를 넘었다가 휴전 합의 뒤 분쟁 이전 수준으로 돌아갔\"다고 밝혔습니다. 이란의 원유 흐름에는 영향이 없었습니다. IEA에 따르면 OPEC+는 6월과 7월에 목표를 하루 41만 1,000배럴씩 올렸습니다. 6월 세계 공급은 사우디아라비아를 중심으로 하루 95만 배럴 늘었습니다."
+      items:
+        - kind: reporting
+          number:
+            en: "Saudi Arabia: 14.2% → 24.3% of world crude oil exports (+10.2 pp); Saudi Arabia → Asia, not elsewhere specified: none in May–Jul 2024, $33.1bn in May–Jul 2025 (94.9% of that area's crude imports)."
+            ko: "사우디아라비아의 세계 원유 수출 비중은 14.2%에서 24.3%로 높아졌습니다(+10.2%p). 사우디아라비아 → 기타 아시아(달리 분류되지 않음) 원유 수출은 2024년 5~7월에는 없었고, 2025년 5~7월에는 $33.1bn이었습니다(이 지역 원유 수입의 94.9%)."
+          en: "Saudi Arabia's filings name no buyer for crude. To December 2024 all of it went to \"Areas, nes\"; from January 2025 about four-fifths goes to \"Other Asia, nes\" (area 490), which this site shows as Asia, not elsewhere specified, never as Taiwan. UN Statistics says the code holds Taiwan's trade \"except for several countries (such as Saudi Arabia, which report all of their exports to unknown countries)\". The EIA puts Taiwan's 2025 crude and condensate imports at 794,000 b/d."
+          ko: "사우디아라비아는 신고 자료에 원유 구매국을 적지 않습니다. 2024년 12월까지는 전량이 \"Areas, nes\"로 신고됐습니다. 2025년 1월부터는 약 5분의 4가 \"Other Asia, nes\"(지역 코드 490)로 신고됩니다. 이 사이트는 이 코드를 기타 아시아(달리 분류되지 않음)로 표시하며, 대만으로 표시하지 않습니다. 유엔 통계국(UN Statistics)은 이 코드에 대만의 교역이 담기지만 \"일부 국가(모든 수출을 미상 국가 앞으로 신고하는 사우디아라비아 등)는 예외\"라고 설명합니다. 미국 에너지정보청(EIA)은 대만의 2025년 원유·콘덴세이트 수입을 하루 794,000배럴로 추정합니다."
+          sources: [5, 6, 7]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "World crude oil trade −25.7% ($325.4bn → $241.9bn); China's imports −$69.1bn (−84.0%); Russia 10.1% → 5.6% and Iraq 7.6% → 5.4% of world exports."
+            ko: "세계 원유 교역은 −25.7%($325.4bn → $241.9bn), 중국의 수입은 −$69.1bn(−84.0%)입니다. 세계 수출에서 러시아 비중은 10.1%에서 5.6%로, 이라크 비중은 7.6%에서 5.4%로 낮아졌습니다."
+          en: "China's monthly filings end in December 2024 in this store. The $82.3bn of crude it took in May–Jul 2024, 25.3% of world trade, came nearly half from economies that had not filed May–Jul 2025 (Russia, Iraq, Oman, UAE, Kuwait, Qatar) and $13.4bn from Saudi Arabia, whose filings name no buyer, so those flows vanish at t. China's customs counted 12.14 million b/d of crude imports in June 2025, the most since August 2023."
+          ko: "이 사이트 데이터 저장소의 중국 월별 신고 자료는 2024년 12월에서 끝납니다. 중국이 2024년 5~7월 수입한 원유는 $82.3bn으로 세계 교역의 25.3%였습니다. 이 가운데 절반가량은 2025년 5~7월 자료를 신고하지 않은 경제(러시아·이라크·오만·UAE·쿠웨이트·카타르)에서 들어왔습니다. $13.4bn은 구매국을 밝히지 않는 사우디아라비아에서 들어왔습니다. 그래서 이 흐름들은 t 시점에서 사라집니다. 중국 해관은 2025년 6월 원유 수입을 하루 12.14백만 배럴로 집계했습니다. 2023년 8월 이후 최대입니다."
+          sources: [8]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Iran · crude exports: no bar and no partner chart; no buyer reported Iranian crude in every month of either window, so the monthly rule draws none."
+            ko: "이란 원유 수출에는 막대와 상대국 차트가 없습니다. 두 창 어느 쪽에서도 매달 이란산 원유를 보고한 구매국이 없어 월별 규칙에 따라 그리지 않습니다."
+          en: "Iran has filed no monthly return since March 2010, so its exports here are its buyers' reports, and no buyer reported Iranian crude in every month of either window (India entered $112m for June 2025 alone), so neither window holds a flow. China \"has officially not imported Iranian crude since 2022\", while its customs data \"regularly shows more Malaysia-sourced oil than the Southeast Asian country actually produces\"; Kpler counted 1.37 million b/d of Iranian-origin crude into China in January–October 2025."
+          ko: "이란은 2010년 3월 이후 월별 신고를 하지 않았습니다. 그래서 이 사이트의 이란 수출은 구매국의 보고 자료입니다. 두 창 어느 쪽에서도 매달 이란산 원유를 보고한 구매국이 없어 흐름이 잡히지 않습니다(인도는 2025년 6월 한 달만 $112m을 기록). 중국은 \"2022년 이후 공식적으로 이란산 원유를 수입하지 않았다\"고 합니다. 그러나 중국 해관 자료에는 \"말레이시아산 원유가 말레이시아의 실제 생산량보다 많게 나타나는 일이 잦다\"는 지적이 있습니다. 케이플러(Kpler)는 2025년 1~10월 중국에 들어간 이란산 원유를 하루 1.37백만 배럴로 집계했습니다."
+          sources: [9]
+          checked: 2026-10-25
+        - kind: definition
+          number:
+            en: "Israel's crude exports go to the Netherlands alone in both windows (100.0%), so no diversion bar; Israel · crude exports −54.7% ($131m → $59m)."
+            ko: "이스라엘의 원유 수출은 두 창 모두 네덜란드로만 향합니다(100.0%). 따라서 수출처 전환 막대가 없습니다. 이스라엘 · 원유 수출 −54.7%($131m → $59m)."
+          en: "Israel's crude exports date from February 2023, when Energean first sold condensate, a by-product of gas production, from the Karish field abroad through Vitol. The figures here are the Dutch and German import reports; Israel's own filings record crude exports only in November–December 2024. The Energy Ministry shut Karish and Leviathan from 13 June 2025 and authorised restarts on 24–25 June; the series has no Mar–May 2025 window, no flow being positive in all three months."
+          ko: "이스라엘의 원유 수출은 2023년 2월에 시작됐습니다. 이때 에너지안(Energean)이 카리시(Karish) 가스전에서 가스 생산의 부산물인 콘덴세이트를 비톨(Vitol)을 통해 처음 해외에 팔았습니다. 이 사이트의 수치는 네덜란드와 독일의 수입 보고입니다. 이스라엘 자체 신고에는 2024년 11~12월에만 원유 수출이 기록돼 있습니다. 이스라엘 에너지부는 2025년 6월 13일부터 카리시와 리바이어선(Leviathan) 가스전 가동을 중단시켰고, 6월 24~25일 재가동을 승인했습니다. 이 시계열에는 2025년 3~5월 창이 없습니다. 세 달 모두 양수인 흐름이 없기 때문입니다."
+          sources: [10, 11, 12]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "What we know as Israel-Iran conflict intensifies", publisher: "BBC News", date: 2025-06-13, url: "https://www.bbc.com/news/articles/cdj9vj8glg2o"}
+      - {n: 2, title: "What we know about US air strikes on three Iranian nuclear sites", publisher: "BBC News", date: 2025-06-22, url: "https://www.bbc.com/news/articles/cvg9r4q99g4o"}
+      - {n: 3, title: "Trump is not happy with Israel after saying it and Iran both broke a ceasefire", publisher: "NPR (Michigan Public)", date: 2025-06-24, url: "https://www.michiganpublic.org/2025-06-24/trump-is-not-happy-with-israel-after-saying-it-and-iran-both-broke-a-ceasefire"}
+      - {n: 4, title: "Oil Market Report - July 2025", publisher: "International Energy Agency", date: 2025-07-11, url: "https://www.iea.org/reports/oil-market-report-july-2025"}
+      - {n: 5, title: "UN Comtrade reference tables: partner areas (partnerAreas.json)", publisher: "UN Comtrade (UN Statistics Division)", date: null, accessed: 2026-10-25, url: "https://comtradeapi.un.org/files/v1/app/reference/partnerAreas.json"}
+      - {n: 6, title: "Unveiling structure and dynamics of global digital production technology networks (UNU-MERIT Working Paper 2023-044), footnote 12 quoting UN Statistics (2021) on code 490", publisher: "A. Andreoni, G. Anzolin, M. Labrunie, D. Sartorello Spinola; UNU-MERIT, via EconStor", date: null, accessed: 2026-10-25, url: "https://www.econstor.eu/bitstream/10419/326894/1/wp2023-044.pdf"}
+      - {n: 7, title: "Taiwan (Country Analysis Brief)", publisher: "US Energy Information Administration", date: 2026-04-02, url: "https://www.eia.gov/international/content/analysis/countries_short/Taiwan/"}
+      - {n: 8, title: "China's surplus crude oil surges in June, giving refiners options (Clyde Russell)", publisher: "Reuters, via Hydrocarbon Processing", date: 2025-07-16, url: "https://hydrocarbonprocessing.com/news/2025/07/chinas-surplus-crude-oil-surges-in-june-giving-refiners-options/"}
+      - {n: 9, title: "Are surging Chinese imports of Indonesia oil rebranded Iranian crude?", publisher: "Reuters, via Baird Maritime", date: 2025-11-24, url: "https://www.bairdmaritime.com/shipping/tankers/are-surging-chinese-imports-of-indonesia-oil-rebranded-iranian-crude"}
+      - {n: 10, title: "Energean begins exports from Israel of gas-byproduct condensate", publisher: "Reuters, via Kitco News", date: 2023-02-14, url: "https://www.kitco.com/news/off-the-wire/2023-02-14/energean-begins-exports-israel-gas-byproduct-condensate"}
+      - {n: 11, title: "Energean instructed to halt production through offshore Israel FPSO", publisher: "Offshore Magazine", date: 2025-06-14, url: "https://www.offshore-mag.com/production/news/55297192/energean-energean-instructed-to-halt-production-through-offshore-israel-fpso"}
+      - {n: 12, title: "Israel lifts suspension of offshore gas operations", publisher: "Offshore Magazine", date: 2025-06-25, url: "https://www.offshore-mag.com/regional-reports/middle-east/news/55299343/israel-lifts-suspension-of-offshore-gas-operations"}
+      - {n: 13, title: "Global price of Brent Crude (POILBREUSDM, IMF Primary Commodity Prices)", publisher: "FRED, Federal Reserve Bank of St. Louis", date: null, accessed: 2026-10-25, url: "https://fred.stlouisfed.org/series/POILBREUSDM"}
+      - {n: 14, title: "Oil Market Report - June 2025", publisher: "International Energy Agency", date: 2025-06-17, url: "https://www.iea.org/reports/oil-market-report-june-2025"}
+      - {n: 15, title: "OPEC+ countries agree production adjustment of 411,000 barrels per day in July 2025", publisher: "ANI/WAM, via The Tribune (copy of the OPEC statement of 31 May 2025)", date: 2025-05-31, url: "https://www.tribuneindia.com/news/world/opec-countries-agree-production-adjustment-of-411000-barrels-per-day-in-july-2025"}
+      - {n: 16, title: "OPEC+ will accelerate oil output in July 2025 with a targeted hike of 411 kb/d", publisher: "Enerdata", date: 2025-06-03, url: "https://www.enerdata.net/publications/daily-energy-news/opec-will-accelerate-oil-output-july-2025-targeted-hike-411-kbd.html"}
+
+  - id: iran-war-2026
+    num: "12"
+    start: 2026-02-28
+    end: null
+    ongoing: true
+    kind: war
+    title: {en: "War on Iran shuts the Strait of Hormuz", ko: "이란 전쟁으로 호르무즈 해협 봉쇄"}
+    dek:
+      en: "The US and Israel struck Iran on 28 February 2026 and tanker traffic through the Strait of Hormuz all but stopped. A ceasefire (8 April), a US blockade of Iran's ports (13 April) and a memorandum (17 June) did not hold: fighting resumed on 8 July and spread to Bab al-Mandab in September."
+      ko: "미국과 이스라엘이 2026년 2월 28일 이란을 공습하자 호르무즈 해협의 유조선 통항이 사실상 멈췄습니다. 휴전(4월 8일), 미국의 이란 항만 봉쇄(4월 13일), 양해각서(6월 17일)가 이어졌습니다. 그러나 7월 8일 교전이 재개됐고, 9월에는 바브엘만데브 해협으로 번졌습니다."
+    timeline:
+      - {date: 2026-02-28, en: "US and Israel strike Iran; tanker traffic through Hormuz stops", ko: "미·이스라엘, 이란 공습… 호르무즈 통항 중단", source: 2}
+      - {date: 2026-04-08, en: "Two-week ceasefire; Iran to let ships through the strait", ko: "2주 휴전, 해협 통항 허용", source: 4}
+      - {date: 2026-04-13, en: "US naval blockade of Iran's ports takes effect", ko: "미국, 이란 항만 해상봉쇄 발효", source: 5}
+      - {date: 2026-06-17, en: "US and Iranian presidents sign a memorandum to end the war", ko: "미·이란 대통령, 종전 양해각서 서명", source: 7}
+      - {date: 2026-07-08, en: "Truce collapses: US strikes after Iran hits three ships", ko: "휴전 붕괴, 이란의 선박 공격에 미국 공습", source: 8}
+      - {date: 2026-07-13, en: "US announces it will reinstate the blockade", ko: "미국, 해상봉쇄 재개 발표", source: 9}
+      - {date: 2026-09-11, en: "Houthis take Mokha and Perim at Bab al-Mandab", ko: "후티, 바브엘만데브의 모카·페림 장악", source: 10}
+      - {date: 2026-10-22, en: "Iran says seven tankers hit in Hormuz; the US disputes it", ko: "이란, 유조선 7척 피격 주장… 미국은 반박", source: 11}
+    products: ["B:crude_oil", "B:natural_gas", "C:fertiliser:nitrogen"]
+    economies: [JPN, IND, SAU, ARE, QAT, IRQ, KWT, USA, IRN, OMN, ISR, BHR, YEM]
+    # Mar-May 2026 against Mar-May 2025: the first three full months after the strait closed;
+    # importer-reported (Japan, India, the US, EU members and others; no China filings; Korea from its customs service)
+    view: {f: M, p: "B:crude_oil", base: 202505, t: 202605, lens: M}
+    watch:
+      en: "Crude and LNG imports by supplier for the economies that have filed: the Gulf's share of Japan's and India's crude and LNG falling after March 2026, and who replaced it; the Gulf's exports of urea, ammonia and aluminium. China (after Dec 2024) is missing from the store; Korea's months from Jan 2026 come from its customs service."
+      ko: "신고를 마친 경제의 공급국별 원유·LNG 수입을 살펴봅니다. 핵심은 2026년 3월 이후 일본·인도의 원유·LNG 수입에서 걸프 비중이 하락하는지입니다. 어느 공급국이 그 감소분을 대체했는지, 걸프의 요소·암모니아·알루미늄 수출이 어떻게 변했는지도 살펴봅니다. 중국(2024년 12월 이후)은 아직 자료에 없고, 한국의 2026년 1월 이후 자료는 관세청 통계입니다."
+    reading:
+      window:
+        en: "Mar–May 2026 is the first three full months of the closure; Mar–May 2025 a quarter of falling prices. At May 2026, 71 economies had filed (62% of 2024 world exports): Japan, India and the US had, Korea through its customs service, Saudi Arabia to April, Kuwait to December 2024; Iran, the UAE, Qatar and Iraq never do."
+        ko: "2026년 3~5월은 해협 봉쇄 뒤 첫 석 달이고, 2025년 3~5월은 유가가 하락하던 분기입니다. 2026년 5월까지 자료가 있는 경제는 71개국(2024년 세계 수출의 62%)입니다. 일본·인도·미국은 신고했고, 한국은 관세청 통계로 포함합니다. 사우디아라비아는 4월까지, 쿠웨이트는 2024년 12월까지만 신고했습니다. 이란·아랍에미리트·카타르·이라크는 신고하지 않습니다."
+      items:
+        - kind: price
+          number:
+            en: "World crude oil trade −9.4% on a year earlier at May 2026 ($272.2bn → $246.6bn), after −18.0% at May 2025; Japan · imports −18.2% ($16.2bn → $13.2bn), India · imports −0.2% ($41.3bn → $41.2bn)."
+            ko: "2026년 5월 세계 원유 교역은 전년동월대비 −9.4%($272.2bn → $246.6bn)로, 2025년 5월(−18.0%)에 이어 감소했습니다. 일본 · 수입 −18.2%($16.2bn → $13.2bn), 인도 · 수입 −0.2%($41.3bn → $41.2bn)입니다."
+          en: "Brent averaged $102 a barrel in March–May 2026 against $68 a year earlier, and the values here are in dollars. In barrels, the IEA has Japan's crude imports down 1.9 mb/d and India's 760 kb/d between February and April 2026, with Gulf output 14.4 mb/d below pre-war levels; METI's April figure for Japan is 66% below a year earlier."
+          ko: "브렌트유는 2026년 3~5월 배럴당 평균 102달러로 전년동기(68달러)보다 높았습니다. 여기 금액은 달러 기준입니다. IEA 집계로 물량 기준 일본의 원유 수입은 2026년 2월에서 4월 사이 하루 190만 배럴, 인도는 76만 배럴 줄었습니다. 걸프 산유량은 전쟁 전보다 하루 1,440만 배럴 적었습니다. 경제산업성 자료로 일본의 4월 수입은 전년동월대비 66% 적었습니다."
+          sources: [13, 15, 19]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "Japan's crude imports by supplier: Saudi Arabia 38.1% → 42.9%, UAE 47.3% → 45.2%, United States 3.7% → 9.5%, Kuwait 5.5% → 0.0%, Qatar 5.5% → 0.0% (May 2025 → May 2026)."
+            ko: "일본의 원유 수입을 공급국별로 보면 사우디아라비아 38.1% → 42.9%, 아랍에미리트(UAE) 47.3% → 45.2%, 미국 3.7% → 9.5%, 쿠웨이트 5.5% → 0.0%, 카타르 5.5% → 0.0%입니다(2025년 5월 → 2026년 5월)."
+          en: "Only Saudi Arabia and the UAE have pipelines around Hormuz, about 4.7 mb/d of bypass capacity; by late March the East-West line ran at 7 mb/d, with about 5 mb/d of crude loading at Yanbu. The IEA counted Iraq's and Kuwait's crude as locked in. US crude exports reached a record 5.6 mb/d in April, and Japan's intake of US crude a record 331 kb/d in May."
+          ko: "호르무즈를 우회하는 송유관은 사우디아라비아와 아랍에미리트에만 있고, 우회 용량은 하루 약 470만 배럴입니다. 3월말 동서 송유관은 최대치인 하루 700만 배럴로 가동됐습니다. 얀부에서는 하루 약 500만 배럴의 원유가 선적됐습니다. IEA는 이라크와 쿠웨이트의 원유가 갇혀 있다고 평가했습니다. 미국의 원유 수출은 4월 하루 560만 배럴로 통계 집계 이후 최대였습니다. 일본의 미국산 원유 수입도 5월 하루 33만 1,000배럴로 집계 이후 최대였습니다."
+          sources: [14, 16, 17, 18, 19]
+          checked: 2026-10-25
+        - kind: substitution
+          number:
+            en: "Iraq → India 18.9% → 2.4% of India's crude imports ($7.8bn → $999m); Russia → India 33.2% → 43.2% ($13.7bn → $17.8bn); Iran → India: none in either window, India's Iranian cargoes not arriving in every month."
+            ko: "인도의 원유 수입에서 이라크산 비중은 18.9% → 2.4%($7.8bn → $999m), 러시아산 비중은 33.2% → 43.2%($13.7bn → $17.8bn)입니다. 이란산은 두 창 모두 없습니다. 인도로 가는 이란산 화물은 매달 들어오지 않기 때문입니다."
+          en: "Iraq exported about 3.5 mb/d before the war, mostly through Hormuz; around 200 kb/d has gone out via Ceyhan. Russian crude reached a record 2.8 mb/d, 55.5% of India's imports, in July. The Iranian cargoes were India's first since May 2019, bought under OFAC General License U, which covered Iranian oil loaded by 20 March for delivery to 19 April."
+          ko: "이라크는 전쟁 전 하루 약 350만 배럴을 수출했고, 대부분 호르무즈를 지났습니다. 그 뒤로는 제이한을 거쳐 하루 20만 배럴 안팎이 수출됐습니다. 러시아산 원유는 7월 하루 280만 배럴로 인도 수입의 55.5%를 차지해 최대였습니다. 이란산 화물은 2019년 5월 이후 인도의 첫 수입입니다. 인도는 미국 재무부 해외자산통제국의 일반허가 U에 따라 이를 수입했습니다. 이 허가는 3월 20일까지 선적된 이란산 원유를 4월 19일까지 넘겨받는 거래를 허용했습니다."
+          sources: [20, 21, 22, 23]
+          checked: 2026-10-25
+        - kind: reporting
+          number:
+            en: "Saudi Arabia → Asia, not elsewhere specified 54.6% of Saudi crude exports in Mar–May 2025, absent in Mar–May 2026 (Saudi Arabia's May 2026 filing is missing and no importer reports the flow); Saudi Arabia · exports, no bar (its own report at the base, its partners' at t); Korea 10.1% → 22.5%."
+            ko: "사우디아라비아 → 기타 아시아(미분류)는 2025년 3~5월 사우디 원유 수출의 54.6%였으나 2026년 3~5월에는 없습니다(사우디아라비아의 2026년 5월 신고가 없고 이 흐름을 보고한 수입국도 없기 때문입니다). 사우디아라비아 · 수출은 막대가 없습니다(기준 시점은 자국 보고, t 시점은 상대국 보고). 한국 10.1% → 22.5%입니다."
+          en: "Saudi Arabia's monthly filings record crude exports by region, not by country: \"Other Asia, nes\" (Comtrade partner code 490, $9.7–15.8bn a month since January 2025), which this site shows as Asia, not elsewhere specified, never as Taiwan, beside \"Other Europe, nes\" and \"North America and Central America, nes\". Its May 2026 filing is missing and no importer reports Saudi crude booked to that area, so under the monthly rule the flow is not in the window to May 2026; the rest is read from the importers' reports, Korea's from its customs service."
+          ko: "사우디아라비아는 월별 신고에서 원유 수출을 나라별이 아니라 지역별로 집계합니다. \"Other Asia, nes\"(Comtrade 상대국 코드 490, 2025년 1월 이후 월 $9.7–15.8bn)가 그 예입니다. 이 사이트는 이 항목을 대만이 아닌 기타 아시아(미분류)로 표시합니다. 같은 방식의 항목으로 \"Other Europe, nes\"와 \"North America and Central America, nes\"도 있습니다. 사우디아라비아의 2026년 5월 신고가 없고, 이 지역으로 계상된 사우디산 원유를 보고한 수입국도 없습니다. 따라서 월별 규칙에 따라 이 흐름은 2026년 5월까지의 창에 포함되지 않습니다. 나머지는 수입국의 보고로 읽으며, 한국은 관세청 자료를 씁니다."
+          sources: [24]
+          checked: 2026-10-25
+    sources:
+      - {n: 1, title: "Oil price jumps after Qatar minister warns all Gulf production could stop", publisher: "BBC News", date: 2026-03-06, url: "https://www.bbc.co.uk/news/articles/cy031ylgepro"}
+      - {n: 2, title: "Oil Market Report - March 2026", publisher: "International Energy Agency", date: 2026-03-12, url: "https://www.iea.org/reports/oil-market-report-march-2026"}
+      - {n: 3, title: "Gulf smelter cuts tighten aluminium outlook", publisher: "ING Think", date: 2026-03-16, url: "https://think.ing.com/articles/gulf-smelter-cuts-tighten-aluminium-outlook/"}
+      - {n: 4, title: "What we know about the US and Iran's ceasefire deal", publisher: "BBC News", date: 2026-04-08, url: "https://www.bbc.com/news/articles/ce84z6y3ke4o"}
+      - {n: 5, title: "US naval blockade of Iran takes effect as Trump's deadline passes", publisher: "The Times of Israel", date: 2026-04-13, url: "https://www.timesofisrael.com/liveblog_entry/us-naval-blockade-of-iran-appears-to-take-effect-as-trumps-deadline-passes/"}
+      - {n: 6, title: "Fertilizer prices surge as Strait of Hormuz disruptions tighten supplies", publisher: "World Bank Data Blog", date: 2026-05-14, url: "https://blogs.worldbank.org/en/opendata/fertilizer-prices-surge-as-strait-of-hormuz-disruptions-tighten-"}
+      - {n: 7, title: "Trump, Iran's president sign deal to end West Asia war", publisher: "AFP (Deccan Chronicle)", date: 2026-06-18, url: "https://www.deccanchronicle.com/world/iran-mou-signed-on-wednesday-by-trump-iran-president-us-official-1964365"}
+      - {n: 8, title: "US and Iran threaten return to war after fiercest exchange of fire since truce", publisher: "The Guardian", date: 2026-07-08, url: "https://www.theguardian.com/world/2026/jul/08/iran-us-war-ceasefire-peace-agreement-strikes-strait-of-hormuz"}
+      - {n: 9, title: "Why did the US-Iran ceasefire collapse?", publisher: "The Indian Express", date: 2026-07-19, url: "https://indianexpress.com/article/world/us-iran-conflict-timeline-ceasefire-breakdown-july-2026-10793917/"}
+      - {n: 10, title: "Iran war: Saudi-Houthi escalation intensifies Yemen conflict", publisher: "Deutsche Welle", date: 2026-09-11, url: "https://www.dw.com/en/iran-war-saudi-houthi-escalation-intensifies-yemen-conflict/a-79226627"}
+      - {n: 11, title: "Iran says seven ships hit in Hormuz Strait, warns US of wider response", publisher: "Al Jazeera", date: 2026-10-22, url: "https://www.aljazeera.com/news/2026/10/22/iran-says-seven-ships-hit-in-hormuz-strait-warns-us-of-wider-response"}
+      - {n: 12, title: "Energy markets are adapting to the Iran war as a 'forever conflict'", publisher: "Fortune", date: 2026-10-23, url: "https://fortune.com/2026/10/23/oil-prices-energy-markets-iran-war-forever-conflict-hormuz-persian-gulf-mutually-assured-destruction/"}
+      - {n: 13, title: "Global price of Brent Crude (POILBREUSDM, IMF Primary Commodity Prices)", publisher: "FRED, Federal Reserve Bank of St. Louis", date: null, accessed: 2026-10-25, url: "https://fred.stlouisfed.org/series/POILBREUSDM"}
+      - {n: 14, title: "Oil Market Report - April 2026", publisher: "International Energy Agency", date: 2026-04-14, url: "https://www.iea.org/reports/oil-market-report-april-2026"}
+      - {n: 15, title: "Oil Market Report - May 2026", publisher: "International Energy Agency", date: 2026-05-13, url: "https://www.iea.org/reports/oil-market-report-may-2026"}
+      - {n: 16, title: "U.S. exports of crude oil and petroleum products reached record in April", publisher: "US Energy Information Administration, Today in Energy", date: 2026-07-08, url: "https://www.eia.gov/todayinenergy/detail.php?id=67825"}
+      - {n: 17, title: "World Oil Transit Chokepoints", publisher: "US Energy Information Administration", date: 2026-03-03, url: "https://www.eia.gov/international/content/analysis/special_topics/World_Oil_Transit_Chokepoints/"}
+      - {n: 18, title: "Saudi pipeline to bypass Hormuz hits 7 million barrel goal", publisher: "Bloomberg (via Fortune)", date: 2026-03-28, url: "https://fortune.com/2026/03/28/saudi-arabia-east-west-oil-pipeline-strait-hormuz-bypass-7-million-barrels-yanbu-red-sea/"}
+      - {n: 19, title: "US oil supplies help offset falling Middle Eastern imports to Japan", publisher: "Reuters (via Baird Maritime)", date: 2026-06-30, url: "https://www.bairdmaritime.com/shipping/tankers/us-oil-supplies-help-offset-falling-middle-eastern-imports-to-japan"}
+      - {n: 20, title: "Iran-related General License U: Authorizing the Delivery and Sale of Crude Oil and Petroleum Products of Iranian-Origin Loaded on Vessels as of March 20, 2026", publisher: "US Department of the Treasury, Office of Foreign Assets Control", date: 2026-03-20, url: "https://ofac.treasury.gov/media/935376/download"}
+      - {n: 21, title: "India Resumes Iranian Oil Imports After Seven-Year Hiatus", publisher: "Reuters (via MarineLink)", date: 2026-04-06, url: "https://www.marinelink.com/news/india-resumes-iranian-oil-imports-537684"}
+      - {n: 22, title: "Iraq and Turkey strike a 1-year oil pipeline deal to boost exports during ongoing Hormuz closures", publisher: "Associated Press (via WTOP)", date: 2026-08-01, url: "https://wtop.com/world/2026/08/iraq-and-turkey-strike-a-1-year-oil-pipeline-deal-to-boost-exports-during-ongoing-hormuz-closures/"}
+      - {n: 23, title: "India's Russian crude imports hit record for second straight month", publisher: "PTI (via DT Next), citing CREA", date: 2026-08-10, url: "https://www.dtnext.in/news/national/indias-russian-crude-imports-hit-record-for-second-straight-month"}
+      - {n: 24, title: "Partner areas reference table (partnerAreas.json)", publisher: "UN Comtrade", date: null, accessed: 2026-10-25, url: "https://comtradeapi.un.org/files/v1/app/reference/partnerAreas.json"}

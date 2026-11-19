@@ -1,0 +1,599 @@
+# Display names for trade-flow, in English and Korean: short names for the economies
+# (Comtrade node ids), the HS chapters, the country groups and product baskets of
+# trade-collector/config/network.yaml, and Korean names and caveats for the product-chain
+# stages of config/chains.yaml (their English labels and caveats stay in chains.yaml).
+# scripts/build_snapshots.py reads this file.
+
+economies:            # every node id of the network, in Comtrade's order
+  ABW: {en: Aruba, ko: 아루바}
+  AFG: {en: Afghanistan, ko: 아프가니스탄}
+  AGO: {en: Angola, ko: 앙골라}
+  AIA: {en: Anguilla, ko: 앵귈라}
+  ALA: {en: Åland Islands, ko: 올란드 제도}
+  ALB: {en: Albania, ko: 알바니아}
+  AND: {en: Andorra, ko: 안도라}
+  ANT: {en: Netherlands Antilles (former), ko: 네덜란드령 안틸레스(구)}
+  ARE: {en: UAE, ko: 아랍에미리트}
+  ARG: {en: Argentina, ko: 아르헨티나}
+  ARM: {en: Armenia, ko: 아르메니아}
+  ASM: {en: American Samoa, ko: 아메리칸사모아}
+  ATA: {en: Antarctica, ko: 남극}
+  ATB: {en: British Antarctic Territory, ko: 영국령 남극 지역}
+  ATF: {en: French Southern Territories, ko: 프랑스령 남방 지역}
+  ATG: {en: Antigua and Barbuda, ko: 앤티가 바부다}
+  AUS: {en: Australia, ko: 호주}
+  AUT: {en: Austria, ko: 오스트리아}
+  AZE: {en: Azerbaijan, ko: 아제르바이잔}
+  BDI: {en: Burundi, ko: 부룬디}
+  BEL: {en: Belgium, ko: 벨기에}
+  BEN: {en: Benin, ko: 베냉}
+  BES: {en: Bonaire, ko: 보네르}
+  BFA: {en: Burkina Faso, ko: 부르키나파소}
+  BGD: {en: Bangladesh, ko: 방글라데시}
+  BGR: {en: Bulgaria, ko: 불가리아}
+  BHR: {en: Bahrain, ko: 바레인}
+  BHS: {en: Bahamas, ko: 바하마}
+  BIH: {en: Bosnia and Herzegovina, ko: 보스니아 헤르체고비나}
+  BLM: {en: St Barthélemy, ko: 생바르텔레미}
+  BLR: {en: Belarus, ko: 벨라루스}
+  BLZ: {en: Belize, ko: 벨리즈}
+  BMU: {en: Bermuda, ko: 버뮤다}
+  BOL: {en: Bolivia, ko: 볼리비아}
+  BRA: {en: Brazil, ko: 브라질}
+  BRB: {en: Barbados, ko: 바베이도스}
+  BRN: {en: Brunei, ko: 브루나이}
+  BTN: {en: Bhutan, ko: 부탄}
+  BVT: {en: Bouvet Island, ko: 부베섬}
+  BWA: {en: Botswana, ko: 보츠와나}
+  CAF: {en: Central African Republic, ko: 중앙아프리카공화국}
+  CAN: {en: Canada, ko: 캐나다}
+  CCK: {en: Cocos Islands, ko: 코코스 제도}
+  CHE: {en: Switzerland, ko: 스위스}
+  CHL: {en: Chile, ko: 칠레}
+  CHN: {en: China, ko: 중국}
+  CIV: {en: "Côte d'Ivoire", ko: 코트디부아르}
+  CMR: {en: Cameroon, ko: 카메룬}
+  COD: {en: DR Congo, ko: 콩고민주공화국}
+  COG: {en: Congo, ko: 콩고}
+  COK: {en: Cook Islands, ko: 쿡 제도}
+  COL: {en: Colombia, ko: 콜롬비아}
+  COM: {en: Comoros, ko: 코모로}
+  CPV: {en: Cabo Verde, ko: 카보베르데}
+  CRI: {en: Costa Rica, ko: 코스타리카}
+  CSK: {en: Czechoslovakia (former), ko: 체코슬로바키아(구)}
+  CUB: {en: Cuba, ko: 쿠바}
+  CUW: {en: Curaçao, ko: 퀴라소}
+  CXR: {en: Christmas Island, ko: 크리스마스섬}
+  CYM: {en: Cayman Islands, ko: 케이맨 제도}
+  CYP: {en: Cyprus, ko: 키프로스}
+  CZE: {en: Czechia, ko: 체코}
+  DDR: {en: East Germany (former), ko: 동독(구)}
+  DEU: {en: Germany, ko: 독일}
+  DJI: {en: Djibouti, ko: 지부티}
+  DMA: {en: Dominica, ko: 도미니카연방}
+  DNK: {en: Denmark, ko: 덴마크}
+  DOM: {en: Dominican Republic, ko: 도미니카공화국}
+  DZA: {en: Algeria, ko: 알제리}
+  ECU: {en: Ecuador, ko: 에콰도르}
+  EGY: {en: Egypt, ko: 이집트}
+  ERI: {en: Eritrea, ko: 에리트레아}
+  ESH: {en: Western Sahara, ko: 서사하라}
+  ESP: {en: Spain, ko: 스페인}
+  EST: {en: Estonia, ko: 에스토니아}
+  ETH: {en: Ethiopia, ko: 에티오피아}
+  FIN: {en: Finland, ko: 핀란드}
+  FJI: {en: Fiji, ko: 피지}
+  FLK: {en: Falkland Islands, ko: 포클랜드 제도}
+  FRA: {en: France, ko: 프랑스}
+  FRO: {en: Faroe Islands, ko: 페로 제도}
+  FSM: {en: Micronesia, ko: 미크로네시아}
+  GAB: {en: Gabon, ko: 가봉}
+  GBR: {en: UK, ko: 영국}
+  GEO: {en: Georgia, ko: 조지아}
+  GGY: {en: Guernsey, ko: 건지섬}
+  GHA: {en: Ghana, ko: 가나}
+  GIB: {en: Gibraltar, ko: 지브롤터}
+  GIN: {en: Guinea, ko: 기니}
+  GLP: {en: Guadeloupe, ko: 과들루프}
+  GMB: {en: Gambia, ko: 감비아}
+  GNB: {en: Guinea-Bissau, ko: 기니비사우}
+  GNQ: {en: Equatorial Guinea, ko: 적도기니}
+  GRC: {en: Greece, ko: 그리스}
+  GRD: {en: Grenada, ko: 그레나다}
+  GRL: {en: Greenland, ko: 그린란드}
+  GTM: {en: Guatemala, ko: 과테말라}
+  GUF: {en: French Guiana, ko: 프랑스령 기아나}
+  GUM: {en: Guam, ko: 괌}
+  GUY: {en: Guyana, ko: 가이아나}
+  HKG: {en: Hong Kong, ko: 홍콩}
+  HMD: {en: Heard and McDonald Islands, ko: 허드 맥도널드 제도}
+  HND: {en: Honduras, ko: 온두라스}
+  HRV: {en: Croatia, ko: 크로아티아}
+  HTI: {en: Haiti, ko: 아이티}
+  HUN: {en: Hungary, ko: 헝가리}
+  IDN: {en: Indonesia, ko: 인도네시아}
+  IMN: {en: Isle of Man, ko: 맨섬}
+  IND: {en: India, ko: 인도}
+  IOT: {en: British Indian Ocean Territory, ko: 영국령 인도양 지역}
+  IRL: {en: Ireland, ko: 아일랜드}
+  IRN: {en: Iran, ko: 이란}
+  IRQ: {en: Iraq, ko: 이라크}
+  ISL: {en: Iceland, ko: 아이슬란드}
+  ISR: {en: Israel, ko: 이스라엘}
+  ITA: {en: Italy, ko: 이탈리아}
+  JAM: {en: Jamaica, ko: 자메이카}
+  JEY: {en: Jersey, ko: 저지섬}
+  JOR: {en: Jordan, ko: 요르단}
+  JPN: {en: Japan, ko: 일본}
+  KAZ: {en: Kazakhstan, ko: 카자흐스탄}
+  KEN: {en: Kenya, ko: 케냐}
+  KGZ: {en: Kyrgyzstan, ko: 키르기스스탄}
+  KHM: {en: Cambodia, ko: 캄보디아}
+  KIR: {en: Kiribati, ko: 키리바시}
+  KNA: {en: St Kitts and Nevis, ko: 세인트키츠 네비스}
+  KOR: {en: Korea, ko: 한국}
+  KWT: {en: Kuwait, ko: 쿠웨이트}
+  LAO: {en: Laos, ko: 라오스}
+  LBN: {en: Lebanon, ko: 레바논}
+  LBR: {en: Liberia, ko: 라이베리아}
+  LBY: {en: Libya, ko: 리비아}
+  LCA: {en: St Lucia, ko: 세인트루시아}
+  LIE: {en: Liechtenstein, ko: 리히텐슈타인}
+  LKA: {en: Sri Lanka, ko: 스리랑카}
+  LSO: {en: Lesotho, ko: 레소토}
+  LTU: {en: Lithuania, ko: 리투아니아}
+  LUX: {en: Luxembourg, ko: 룩셈부르크}
+  LVA: {en: Latvia, ko: 라트비아}
+  MAC: {en: Macao, ko: 마카오}
+  MAF: {en: St Martin, ko: 생마르탱}
+  MAR: {en: Morocco, ko: 모로코}
+  MDA: {en: Moldova, ko: 몰도바}
+  MDG: {en: Madagascar, ko: 마다가스카르}
+  MDV: {en: Maldives, ko: 몰디브}
+  MEX: {en: Mexico, ko: 멕시코}
+  MHL: {en: Marshall Islands, ko: 마셜 제도}
+  MKD: {en: North Macedonia, ko: 북마케도니아}
+  MLI: {en: Mali, ko: 말리}
+  MLT: {en: Malta, ko: 몰타}
+  MMR: {en: Myanmar, ko: 미얀마}
+  MNE: {en: Montenegro, ko: 몬테네그로}
+  MNG: {en: Mongolia, ko: 몽골}
+  MNP: {en: Northern Marianas, ko: 북마리아나 제도}
+  MOZ: {en: Mozambique, ko: 모잠비크}
+  MRT: {en: Mauritania, ko: 모리타니}
+  MSR: {en: Montserrat, ko: 몬트세랫}
+  MTQ: {en: Martinique, ko: 마르티니크}
+  MUS: {en: Mauritius, ko: 모리셔스}
+  MWI: {en: Malawi, ko: 말라위}
+  MYS: {en: Malaysia, ko: 말레이시아}
+  MYT: {en: Mayotte, ko: 마요트}
+  NAM: {en: Namibia, ko: 나미비아}
+  NCL: {en: New Caledonia, ko: 뉴칼레도니아}
+  NER: {en: Niger, ko: 니제르}
+  NFK: {en: Norfolk Island, ko: 노퍽섬}
+  NGA: {en: Nigeria, ko: 나이지리아}
+  NIC: {en: Nicaragua, ko: 니카라과}
+  NIU: {en: Niue, ko: 니우에}
+  NLD: {en: Netherlands, ko: 네덜란드}
+  NOR: {en: Norway, ko: 노르웨이}
+  NPL: {en: Nepal, ko: 네팔}
+  NRU: {en: Nauru, ko: 나우루}
+  NZL: {en: New Zealand, ko: 뉴질랜드}
+  OMN: {en: Oman, ko: 오만}
+  PAK: {en: Pakistan, ko: 파키스탄}
+  PAN: {en: Panama, ko: 파나마}
+  PCI: {en: Pacific Islands (former), ko: 태평양 신탁통치령(구)}
+  PCN: {en: Pitcairn Islands, ko: 핏케언 제도}
+  PCZ: {en: Panama Canal Zone (former), ko: 파나마 운하 지대(구)}
+  PER: {en: Peru, ko: 페루}
+  PHL: {en: Philippines, ko: 필리핀}
+  PLW: {en: Palau, ko: 팔라우}
+  PNG: {en: Papua New Guinea, ko: 파푸아뉴기니}
+  POL: {en: Poland, ko: 폴란드}
+  PRI: {en: Puerto Rico, ko: 푸에르토리코}
+  PRK: {en: North Korea, ko: 북한}
+  PRT: {en: Portugal, ko: 포르투갈}
+  PRY: {en: Paraguay, ko: 파라과이}
+  PSE: {en: Palestine, ko: 팔레스타인}
+  PUS: {en: US Pacific Islands, ko: 미국령 태평양 제도}
+  PYF: {en: French Polynesia, ko: 프랑스령 폴리네시아}
+  QAT: {en: Qatar, ko: 카타르}
+  REU: {en: Réunion, ko: 레위니옹}
+  ROU: {en: Romania, ko: 루마니아}
+  RUS: {en: Russia, ko: 러시아}
+  RWA: {en: Rwanda, ko: 르완다}
+  SAU: {en: Saudi Arabia, ko: 사우디아라비아}
+  SCG: {en: Serbia and Montenegro (former), ko: 세르비아·몬테네그로(구)}
+  SDN: {en: Sudan, ko: 수단}
+  SEN: {en: Senegal, ko: 세네갈}
+  SGP: {en: Singapore, ko: 싱가포르}
+  SGS: {en: South Georgia, ko: 사우스조지아}
+  SHN: {en: St Helena, ko: 세인트헬레나}
+  SJM: {en: Svalbard and Jan Mayen, ko: 스발바르 얀마옌}
+  SLB: {en: Solomon Islands, ko: 솔로몬 제도}
+  SLE: {en: Sierra Leone, ko: 시에라리온}
+  SLV: {en: El Salvador, ko: 엘살바도르}
+  SMR: {en: San Marino, ko: 산마리노}
+  SOM: {en: Somalia, ko: 소말리아}
+  SPM: {en: St Pierre and Miquelon, ko: 생피에르 미클롱}
+  SRB: {en: Serbia, ko: 세르비아}
+  SSD: {en: South Sudan, ko: 남수단}
+  STP: {en: São Tomé and Príncipe, ko: 상투메 프린시페}
+  SUN: {en: USSR (former), ko: 소련(구)}
+  SUR: {en: Suriname, ko: 수리남}
+  SVK: {en: Slovakia, ko: 슬로바키아}
+  S19: {en: "Asia, not elsewhere specified", ko: ""}   # Comtrade partner 490, not an economy (build_snapshots ASIA_NES)
+  SVN: {en: Slovenia, ko: 슬로베니아}
+  SWE: {en: Sweden, ko: 스웨덴}
+  SWZ: {en: Eswatini, ko: 에스와티니}
+  SXM: {en: Sint Maarten, ko: 신트마르턴}
+  SYC: {en: Seychelles, ko: 세이셸}
+  SYR: {en: Syria, ko: 시리아}
+  TCA: {en: Turks and Caicos, ko: 터크스 케이커스 제도}
+  TCD: {en: Chad, ko: 차드}
+  TGO: {en: Togo, ko: 토고}
+  THA: {en: Thailand, ko: 태국}
+  TJK: {en: Tajikistan, ko: 타지키스탄}
+  TKL: {en: Tokelau, ko: 토켈라우}
+  TKM: {en: Turkmenistan, ko: 투르크메니스탄}
+  TLS: {en: Timor-Leste, ko: 동티모르}
+  TON: {en: Tonga, ko: 통가}
+  TTO: {en: Trinidad and Tobago, ko: 트리니다드 토바고}
+  TUN: {en: Tunisia, ko: 튀니지}
+  TUR: {en: Türkiye, ko: 튀르키예}
+  TUV: {en: Tuvalu, ko: 투발루}
+  TWN: {en: Taiwan, ko: 대만}
+  TZA: {en: Tanzania, ko: 탄자니아}
+  UGA: {en: Uganda, ko: 우간다}
+  UKR: {en: Ukraine, ko: 우크라이나}
+  UMI: {en: US Outlying Islands, ko: 미국령 군소 제도}
+  URY: {en: Uruguay, ko: 우루과이}
+  USA: {en: United States, ko: 미국}
+  UZB: {en: Uzbekistan, ko: 우즈베키스탄}
+  VAT: {en: Vatican, ko: 바티칸}
+  VCT: {en: St Vincent and Grenadines, ko: 세인트빈센트 그레나딘}
+  VDR: {en: North Vietnam (former), ko: 북베트남(구)}
+  VEN: {en: Venezuela, ko: 베네수엘라}
+  VGB: {en: British Virgin Islands, ko: 영국령 버진아일랜드}
+  VIR: {en: US Virgin Islands, ko: 미국령 버진아일랜드}
+  VNM: {en: Vietnam, ko: 베트남}
+  VUT: {en: Vanuatu, ko: 바누아투}
+  WLF: {en: Wallis and Futuna, ko: 왈리스 푸투나}
+  WSM: {en: Samoa, ko: 사모아}
+  XKX: {en: Kosovo, ko: 코소보}
+  YEM: {en: Yemen, ko: 예멘}
+  YMD: {en: South Yemen (former), ko: 남예멘(구)}
+  YUG: {en: Yugoslavia (former), ko: 유고슬라비아(구)}
+  ZA1: {en: SACU (to 1999), ko: 남아프리카관세동맹(1999년까지)}
+  ZAF: {en: South Africa, ko: 남아프리카공화국}
+  ZMB: {en: Zambia, ko: 잠비아}
+  ZWE: {en: Zimbabwe, ko: 짐바브웨}
+  _CI: {en: Channel Islands, ko: 채널 제도}
+  _MI: {en: Midway Islands, ko: 미드웨이 제도}
+  _PM: {en: Malaya (former), ko: 말라야(구)}
+  _RI: {en: Ryukyu Islands, ko: 류큐 제도}
+  _RN: {en: Rhodesia-Nyasaland (former), ko: 로디지아·니아살랜드(구)}
+  _SH: {en: North Borneo (former), ko: 북보르네오(구)}
+  _SK: {en: Sarawak, ko: 사라왁}
+  _SM: {en: Sikkim (former), ko: 시킴(구)}
+  _TK: {en: Tanganyika (former), ko: 탕가니카(구)}
+  _WI: {en: Wake Island, ko: 웨이크섬}
+  _ZP: {en: Zanzibar (former), ko: 잔지바르(구)}
+
+chapters:             # HS chapters (77 is reserved; 99 holds unspecified goods)
+  "01": {en: Live animals, ko: 산 동물}
+  "02": {en: Meat and offal, ko: 육류·식용 설육}
+  "03": {en: Fish and seafood, ko: 어류·갑각류·연체동물}
+  "04": {en: "Dairy, eggs and honey", ko: 낙농품·새의 알·천연꿀}
+  "05": {en: Other animal products, ko: 기타 동물성 생산품}
+  "06": {en: Live plants and cut flowers, ko: 산 식물·절화}
+  "07": {en: Vegetables, ko: 채소·뿌리·괴경}
+  "08": {en: Fruit and nuts, ko: 과실·견과류}
+  "09": {en: "Coffee, tea and spices", ko: 커피·차·향신료}
+  "10": {en: Cereals, ko: 곡물}
+  "11": {en: "Flour, malt and starch", ko: 제분 제품·맥아·전분}
+  "12": {en: "Oilseeds, seeds and fodder", ko: 채유용 종자·사료용 식물}
+  "13": {en: "Lac, gums and resins", ko: 락·검·수지·식물성 추출물}
+  "14": {en: Vegetable plaiting materials, ko: 식물성 편조물용 재료}
+  "15": {en: Animal and vegetable fats and oils, ko: 동식물성 유지}
+  "16": {en: Meat and fish preparations, ko: 육류·어류 조제품}
+  "17": {en: Sugar and confectionery, ko: 당류·설탕과자}
+  "18": {en: Cocoa and chocolate, ko: 코코아와 그 조제품}
+  "19": {en: Cereal preparations and bakery, ko: 곡물 조제품·베이커리}
+  "20": {en: Vegetable and fruit preparations, ko: 채소·과실 조제품}
+  "21": {en: Miscellaneous food preparations, ko: 각종 조제 식료품}
+  "22": {en: "Beverages, spirits and vinegar", ko: 음료·주류·식초}
+  "23": {en: Food residues and animal feed, ko: 식품 잔재물·조제 사료}
+  "24": {en: Tobacco and nicotine products, ko: 담배·니코틴 제품}
+  "25": {en: "Salt, sulphur, stone and cement", ko: 소금·황·토석류·시멘트}
+  "26": {en: "Ores, slag and ash", ko: 광석·슬래그·회}
+  "27": {en: Mineral fuels and oils, ko: 광물성 연료·광물유}
+  "28": {en: Inorganic chemicals, ko: 무기화학품}
+  "29": {en: Organic chemicals, ko: 유기화학품}
+  "30": {en: Pharmaceuticals, ko: 의료용품}
+  "31": {en: Fertilisers, ko: 비료}
+  "32": {en: "Dyes, pigments, paints and inks", ko: 염료·안료·페인트·잉크}
+  "33": {en: Essential oils and cosmetics, ko: 정유·향료·화장품}
+  "34": {en: "Soap, detergents and waxes", ko: 비누·세제·윤활제·왁스}
+  "35": {en: "Albumins, starches, glues and enzymes", ko: 단백질·변성 전분·접착제·효소}
+  "36": {en: "Explosives, fireworks and matches", ko: 화약류·화공품·성냥}
+  "37": {en: Photographic and film goods, ko: 사진용·영화용 재료}
+  "38": {en: Miscellaneous chemical products, ko: 각종 화학공업 생산품}
+  "39": {en: Plastics and plastic articles, ko: 플라스틱과 그 제품}
+  "40": {en: Rubber and rubber articles, ko: 고무와 그 제품}
+  "41": {en: "Raw hides, skins and leather", ko: 원피·가죽}
+  "42": {en: Leather goods and handbags, ko: 가죽제품·여행용구·핸드백}
+  "43": {en: Furskins and artificial fur, ko: 모피·인조모피}
+  "44": {en: "Wood, wood articles and charcoal", ko: 목재·목제품·목탄}
+  "45": {en: Cork and cork articles, ko: 코르크와 그 제품}
+  "46": {en: Straw goods and basketware, ko: 짚 제품·바구니 세공물}
+  "47": {en: Wood pulp and recovered paper, ko: 펄프·회수 종이}
+  "48": {en: Paper and paperboard, ko: 종이·판지와 그 제품}
+  "49": {en: "Books, newspapers and printed matter", ko: 서적·신문 등 인쇄물}
+  "50": {en: Silk, ko: 견(실크)}
+  "51": {en: Wool and animal hair, ko: 양모·동물 털과 그 직물}
+  "52": {en: Cotton, ko: 면}
+  "53": {en: Other vegetable fibres, ko: 기타 식물성 섬유·지사}
+  "54": {en: Man-made filaments, ko: 인조 필라멘트}
+  "55": {en: Man-made staple fibres, ko: 인조 스테이플 섬유}
+  "56": {en: "Wadding, felt, nonwovens and rope", ko: 워딩·펠트·부직포·로프}
+  "57": {en: Carpets and floor coverings, ko: 양탄자·바닥깔개}
+  "58": {en: "Special fabrics, lace and embroidery", ko: 특수직물·레이스·자수포}
+  "59": {en: Coated and industrial textiles, ko: 도포 직물·공업용 섬유제품}
+  "60": {en: Knitted fabrics, ko: 메리야스·뜨개질 편물}
+  "61": {en: Knitted apparel, ko: 편물제 의류}
+  "62": {en: "Apparel, not knitted", ko: 비편물제 의류}
+  "63": {en: Made-up textiles and worn clothing, ko: 기타 섬유제품·중고 의류}
+  "64": {en: Footwear, ko: 신발류}
+  "65": {en: Headgear, ko: 모자류}
+  "66": {en: Umbrellas and walking sticks, ko: 우산·양산·지팡이}
+  "67": {en: "Feathers, artificial flowers, wigs", ko: 깃털·조화·인모 제품}
+  "68": {en: "Articles of stone, cement and mica", ko: 돌·시멘트·석면 제품}
+  "69": {en: Ceramic products, ko: 도자제품}
+  "70": {en: Glass and glassware, ko: 유리와 유리제품}
+  "71": {en: "Precious metals, gems and jewellery", ko: 귀금속·귀석·장신구}
+  "72": {en: Iron and steel, ko: 철강}
+  "73": {en: Iron and steel articles, ko: 철강 제품}
+  "74": {en: Copper and copper articles, ko: 구리와 그 제품}
+  "75": {en: Nickel and nickel articles, ko: 니켈과 그 제품}
+  "76": {en: Aluminium and aluminium articles, ko: 알루미늄과 그 제품}
+  "78": {en: Lead and lead articles, ko: 납과 그 제품}
+  "79": {en: Zinc and zinc articles, ko: 아연과 그 제품}
+  "80": {en: Tin and tin articles, ko: 주석과 그 제품}
+  "81": {en: Other base metals and cermets, ko: 기타 비금속·서멧}
+  "82": {en: Tools and cutlery, ko: 공구·칼붙이}
+  "83": {en: Miscellaneous base-metal articles, ko: 각종 비금속 제품}
+  "84": {en: Nuclear reactors and machinery, ko: 원자로·보일러·기계류}
+  "85": {en: Electrical machinery and electronics, ko: 전기기기·전자제품}
+  "86": {en: Railway vehicles and equipment, ko: 철도 차량·궤도 장비}
+  "87": {en: Vehicles and parts, ko: 차량·부품}
+  "88": {en: Aircraft and spacecraft, ko: 항공기·우주선}
+  "89": {en: Ships and boats, ko: 선박·보트·부유구조물}
+  "90": {en: Optical and medical instruments, ko: 광학·의료기기}
+  "91": {en: Clocks and watches, ko: 시계}
+  "92": {en: Musical instruments, ko: 악기}
+  "93": {en: Arms and ammunition, ko: 무기·총포탄}
+  "94": {en: "Furniture, bedding and lighting", ko: 가구·침구·조명기구}
+  "95": {en: "Toys, games and sports goods", ko: 완구·게임용구·운동용구}
+  "96": {en: Miscellaneous manufactures, ko: 잡품}
+  "97": {en: Works of art and antiques, ko: 예술품·수집품·골동품}
+  "99": {en: Goods not specified by kind, ko: 분류되지 않은 물품}
+
+groups:               # keys of network.yaml groups
+  EU27: {en: European Union (27), ko: 유럽연합(27개국)}
+  G7: {en: G7, ko: G7}
+  BRICS: {en: BRICS (2025 membership), ko: 브릭스(2025년 회원국)}
+  ASEAN: {en: ASEAN, ko: 아세안}
+  USMCA: {en: USMCA (North America), ko: USMCA(북미)}
+  OPEC: {en: OPEC (2025 membership), ko: OPEC(2025년 회원국)}
+  WEST: {en: West (narrow bloc), ko: 서방(좁은 블록)}
+  EAST: {en: East (narrow bloc), ko: 동방(좁은 블록)}
+
+baskets:              # keys of network.yaml baskets
+  semiconductors: {en: Semiconductors, ko: 반도체}
+  chips_ic: {en: Integrated circuits, ko: 집적회로}
+  chip_equipment: {en: Chip-making equipment, ko: 반도체 제조장비}
+  rare_earths: {en: Rare earths, ko: 희토류}
+  lithium: {en: Lithium chemicals, ko: 리튬 화합물}
+  cobalt: {en: Cobalt, ko: 코발트}
+  graphite: {en: Natural graphite, ko: 천연흑연}
+  nickel: {en: Nickel, ko: 니켈}
+  li_batteries: {en: Lithium-ion batteries, ko: 리튬이온 배터리}
+  solar: {en: Solar cells and modules, ko: 태양전지·모듈}
+  ev: {en: Electric cars, ko: 전기차}
+  cars: {en: Passenger cars, ko: 승용차}
+  car_parts: {en: Car parts, ko: 자동차 부품}
+  crude_oil: {en: Crude oil, ko: 원유}
+  refined_oil: {en: Refined oil products, ko: 석유제품}
+  natural_gas: {en: Natural gas, ko: 천연가스}
+  coal: {en: Coal, ko: 석탄}
+  wheat: {en: Wheat, ko: 밀}
+  maize: {en: Maize (corn), ko: 옥수수}
+  soybeans: {en: Soybeans, ko: 대두}
+  fertilisers: {en: Fertilisers, ko: 비료}
+  vaccines: {en: Vaccines and blood products, ko: 백신·혈액제제}
+  medicines: {en: Medicines, ko: 의약품}
+  masks: {en: Masks and other textile goods, ko: 마스크 등 섬유제품}
+  ventilators: {en: Ventilators, ko: 인공호흡기}
+  gloves: {en: Rubber gloves, ko: 고무장갑}
+  aircraft: {en: Aircraft and spacecraft, ko: 항공기·우주선}
+  smartphones: {en: Mobile phones, ko: 휴대전화}
+  computers: {en: Computers, ko: 컴퓨터}
+
+stages:               # "<chain>:<stage key>" for every stage of chains.yaml
+  "batteries:li_ore":
+    ko: 리튬 광석(스포듀민 정광)
+    caveat_ko: "'달리 분류되지 않은 광물성 물질'을 담는 잔여 코드입니다. 리튬 정광이 이 코드의 대부분을 차지한 것은 2021~23년 가격 급등 이후부터입니다. 염호 리튬(칠레, 아르헨티나)은 광석 형태로 교역되지 않습니다."
+  "batteries:nickel_ore":
+    ko: 니켈 광석
+    caveat_ko: "인도네시아는 2020년 광석 수출을 금지했습니다. 따라서 인도네시아의 광석은 이제 중간재와 니켈 선철 형태로만 나타납니다."
+  "batteries:cobalt_ore":
+    ko: 코발트 광석
+    caveat_ko: 콩고민주공화국 코발트는 대부분 광석이 아니라 수산화물(S2 단계)로 나갑니다.
+  "batteries:graphite_nat": {ko: 천연흑연}
+  "batteries:li_carbonate": {ko: 탄산리튬}
+  "batteries:li_hydroxide":
+    ko: 수산화리튬
+    caveat_ko: 산화리튬도 들어 있습니다.
+  "batteries:nickel_int":
+    ko: 니켈 매트·중간재(혼합수산화침전물 MHP 포함)
+    caveat_ko: 황산니켈(2833.24)이 매트와 함께 이 단계에 들어 있습니다. 매트는 대부분 배터리가 아니라 스테인리스강으로 갑니다.
+  "batteries:cobalt_int": {ko: 코발트 중간재·산화물·수산화물}
+  "batteries:cathode":
+    ko: 양극재(양극 활물질)
+    caveat_ko: "고유 코드가 없습니다. NCM과 NCA는 대부분 2841.90에, LFP는 2842.90에 들어가며, 일부 세관은 3824.99로 분류합니다. 두 코드 모두 무관한 염류도 포함합니다."
+  "batteries:anode":
+    ko: 음극재(인조흑연)
+    caveat_ko: 제강로용 전극의 원료이기도 합니다. 구상 천연흑연은 2504.90에 남습니다.
+  "batteries:cell_parts":
+    ko: 배터리 부품(분리막·캔 등)
+    caveat_ko: "납축전지를 포함한 모든 축전지의 부품입니다. 분리막, 캔, 배터리 관리 부품은 이 코드로 분류됩니다. 전해액은 잔여 화학 코드에 들어가 따로 나타나지 않습니다."
+  "batteries:cells":
+    ko: 리튬이온 배터리 셀·팩
+    caveat_ko: 휴대전화와 노트북 배터리가 자동차용 팩과 같은 코드에 들어 있습니다.
+  "batteries:bev":
+    ko: 순수전기차·플러그인 하이브리드차
+    caveat_ko: HS2017 이전에는 전기차가 다른 차량과 함께 8703.90에 들어 있었습니다.
+
+  "semiconductors:quartz": {ko: 석영(규석)}
+  "semiconductors:si_metal":
+    ko: "금속 실리콘(순도 99.99% 미만)"
+    caveat_ko: 금속급 실리콘은 대부분 반도체가 아니라 알루미늄 합금과 실리콘(유기규소) 제품으로 갑니다.
+  "semiconductors:polysilicon":
+    ko: "폴리실리콘(순도 99.99% 이상)"
+    caveat_ko: 태양광용과 반도체용이 같은 코드를 씁니다. 물량은 태양광용이 대부분입니다.
+  "semiconductors:minor_metals":
+    ko: 갈륨·게르마늄·인듐(미가공)
+    caveat_ko: "니오븀·바나듐과 같은 코드를 씁니다. 갈륨은 화합물 웨이퍼로, 인듐은 디스플레이 전극(ITO)으로 갑니다."
+  "semiconductors:wafers":
+    ko: 도핑 웨이퍼
+    caveat_ko: "반도체 웨이퍼(일본, 대만, 한국)와 태양광 웨이퍼(중국)가 한 코드에 들어 있습니다."
+  "semiconductors:chip_tools":
+    ko: 반도체 제조장비(부수 투입재)
+    caveat_ko: "칩 안에 들어가는 재료가 아니라 자본재이므로, 부수 투입재로 그립니다."
+  "semiconductors:photoresist":
+    ko: 포토레지스트 등 사진용 화학제품(보조 투입)
+    caveat_ko: "현상액, 정착액 등 다른 사진용 화학제품도 들어 있습니다. 일본·한국·대만 사이의 교역에서는 반도체·디스플레이용 포토레지스트가 대부분입니다. 2019년 일본의 대한국 수출규제는 이 코드를 대상으로 삼았습니다."
+  "semiconductors:ics":
+    ko: 집적회로
+    caveat_ko: "칩 하나가 같은 코드로 여러 번 국경을 넘습니다(팹 → 조립·테스트 → 기판 제조사). 따라서 이 단계는 자기 자신으로 되돌아오는 고리를 이룹니다."
+  "semiconductors:discretes":
+    ko: 개별 소자(다이오드·트랜지스터·사이리스터)
+    caveat_ko: "칩 옆에 실장되는 전력·신호 소자입니다. LED와 태양전지(8541.4)는 넣지 않았습니다."
+  "semiconductors:pcb":
+    ko: 인쇄회로기판(미실장)
+    caveat_ko: "부품을 실장하지 않은 기판만입니다. 실장된 기판은 그것이 들어가는 기기의 부품(8517.79, 8473.30)으로 분류됩니다."
+  "semiconductors:displays":
+    ko: 평판 디스플레이 모듈
+    caveat_ko: "HS2022에서 새로 생긴 호입니다. 그 전에는 디스플레이 모듈이 9013.80과 8529.90에 다른 광학기기·부품과 함께 들어 있었습니다. 따라서 시계열은 2022년부터입니다."
+  "semiconductors:parts":
+    ko: 휴대전화·컴퓨터 부품(실장 기판 등)
+    caveat_ko: "실장 기판과 카메라 모듈부터 케이스까지 온갖 부품이 들어 있다. 8517.79에는 네트워크 장비 부품도 들어 있다. HS2022 이전의 8517.70은 모든 전화·전송 장치의 부품을 담았다."
+  "semiconductors:phones":
+    ko: 스마트폰
+    caveat_ko: HS2022 이전에는 스마트폰이든 아니든 모든 휴대전화가 8517.12에 포함되었습니다.
+  "semiconductors:computers": {ko: 노트북·컴퓨터 본체}
+
+  "solar:quartz": {ko: 석영(규석)}
+  "solar:si_metal": {ko: 금속 실리콘}
+  "solar:polysilicon":
+    ko: 폴리실리콘
+    caveat_ko: "중국은 세계 폴리실리콘의 대부분을 생산해 자국에서 씁니다. 따라서 교역에는 다른 생산국의 잉여 물량만 나타납니다."
+  "solar:wafers": {ko: 웨이퍼}
+  "solar:pv_cells":
+    ko: 태양전지
+    caveat_ko: "HS2022에서 따로 분리되었습니다. 그 전에는 태양전지, 모듈, LED가 8541.40을 함께 썼습니다."
+  "solar:pv_modules":
+    ko: 태양광 모듈
+    caveat_ko: "HS2022 이전에는 8541.40이며, 이 코드에는 태양전지와 LED도 포함됩니다."
+  "solar:inverters":
+    ko: 정지형 변환기(태양광 인버터 포함)
+    caveat_ko: "충전기, 전원공급장치, 인버터를 아우르는 넓은 코드입니다. 이 사슬의 부수 제품입니다."
+
+  "steel:iron_ore": {ko: 철광석(분광·괴광·펠릿)}
+  "steel:coal":
+    ko: 유연탄(원료탄 포함)
+    caveat_ko: HS에는 원료탄 코드가 없습니다. 발전용 연료탄도 같은 소호에 들어 있습니다.
+  "steel:scrap": {ko: 철 스크랩}
+  "steel:coke": {ko: 코크스}
+  "steel:pig_iron": {ko: 선철}
+  "steel:dri": {ko: 직접환원철}
+  "steel:ferroalloys": {ko: 페로알로이}
+  "steel:semis": {ko: 반제품(슬래브·빌릿)}
+  "steel:flat": {ko: 열연·냉연·도금 강판}
+  "steel:elec_steel":
+    ko: 전기강판
+    caveat_ko: "변압기와 모터에 들어가며, 구리 사슬과 자석 사슬로 이어지는 연결 고리입니다."
+  "steel:car_parts": {ko: 자동차 부품·엔진}
+  "steel:cars": {ko: 승용차}
+
+  "aluminium:bauxite": {ko: 보크사이트}
+  "aluminium:alumina":
+    ko: 알루미나
+    caveat_ko: 알루미나 약 2톤으로 알루미늄 1톤을 생산합니다.
+  "aluminium:pet_coke": {ko: 하소 석유코크스(양극 원료)}
+  "aluminium:al_unwrought": {ko: 알루미늄 괴(미가공)}
+  "aluminium:al_scrap": {ko: 알루미늄 스크랩}
+  "aluminium:al_semis": {ko: 알루미늄 봉·형재·판·박}
+  "aluminium:al_products":
+    ko: 구조물·캔·용기
+    caveat_ko: "알루미늄은 대부분 자동차, 항공기, 기계 안에 들어갑니다. 이런 간접 교역은 여기서 집계하지 않습니다."
+
+  "copper:cu_conc":
+    ko: 동 정광
+    caveat_ko: 정광은 무게로 약 4분의 1이 구리입니다.
+  "copper:cu_blister": {ko: 동 매트·조동·양극동}
+  "copper:cu_cathode": {ko: 전기동}
+  "copper:cu_scrap": {ko: 동 스크랩}
+  "copper:cu_semis":
+    ko: 동선·동대·동박
+    caveat_ko: 동박(7410)은 회로기판과 배터리 음극에도 들어갑니다.
+  "copper:cable":
+    ko: 절연 전선·케이블
+    caveat_ko: 자동차 와이어링 하니스(8544.42)와 광섬유 케이블(8544.70)을 포함합니다.
+  "copper:transformers": {ko: 전력용 변압기}
+
+  "magnets:ree_ore":
+    ko: 희토류 정광(고유 코드 없음)
+    caveat_ko: "바스트네사이트는 리튬 광석과 함께 잔여 코드 2530.90에 들어 있습니다. 모나자이트는 일부가 토륨 광석(2612.20)에 들어 있습니다. 광석 교역은 대부분 미얀마, 라오스, 미국에서 중국으로 가는 흐름입니다."
+  "magnets:ree_compounds": {ko: 희토류 화합물(산화물·탄산염)}
+  "magnets:ree_metals": {ko: 희토류 금속·합금}
+  "magnets:magnets":
+    ko: "금속 영구자석(NdFeB, SmCo)"
+    caveat_ko: 페라이트 자석은 8505.19이며 희토류를 쓰지 않습니다.
+  "magnets:motors":
+    ko: "전동기(다상 교류, 대형 직류)"
+    caveat_ko: 전기차 구동 모터는 대부분 모터 단품이 아니라 차 안에 실린 채로 이동합니다.
+  "magnets:wind": {ko: 풍력 터빈}
+
+  "plastics:crude": {ko: 원유}
+  "plastics:gas_lpg": {ko: 천연가스·LPG}
+  "plastics:naphtha":
+    ko: "경질유(나프타, 휘발유 포함)"
+    caveat_ko: 나프타는 자동차용 휘발유와 같은 코드를 씁니다. 각국의 8단위·10단위 세번에서 둘이 나뉩니다.
+  "plastics:olefins": {ko: 올레핀·방향족}
+  "plastics:intermediates": {ko: 고순도 테레프탈산(PTA)·에틸렌글리콜(MEG)·염화비닐}
+  "plastics:polymers": {ko: "합성수지(PE, PP, PVC, PET, PS)"}
+  "plastics:synth_rubber": {ko: 합성고무(SBR)}
+  "plastics:plastic_goods": {ko: 필름·시트·포장재}
+  "plastics:tyres": {ko: 승용차 타이어}
+
+  "textiles:cotton": {ko: 원면}
+  "textiles:pta_meg": {ko: 고순도 테레프탈산(PTA)·에틸렌글리콜(MEG)}
+  "textiles:cotton_yarn": {ko: 면사}
+  "textiles:polyester": {ko: 폴리에스터 섬유·필라멘트}
+  "textiles:fabric": {ko: 직물·편직물}
+  "textiles:apparel": {ko: 의류(편물제·직물제)}
+
+  "fertiliser:gas": {ko: 천연가스}
+  "fertiliser:phosphate_rock": {ko: 인광석}
+  "fertiliser:ammonia": {ko: 암모니아}
+  "fertiliser:phos_acid":
+    ko: 인산
+    caveat_ko: 물량은 비료용이 대부분이고, 식품용·공업용도 같은 코드를 씁니다.
+  "fertiliser:nitrogen": {ko: "질소비료(요소, 질산암모늄)"}
+  "fertiliser:phosphates": {ko: "인산비료(인산이암모늄(DAP), 인산일암모늄(MAP))"}
+  "fertiliser:potash":
+    ko: 염화칼륨(칼리)
+    caveat_ko: 한곳에서 채굴하고 정제하므로 광석은 교역되지 않습니다. 처음 교역되는 형태는 비료입니다.
+  "fertiliser:crops": {ko: 밀·옥수수·대두}

@@ -1,0 +1,7 @@
+/* Larch font stacks with Fontsource's variable Literata ("Literata Variable") put first; the rest of each stack is the
+   token stack as written in design/tokens.json. The other families keep their token names ("Fira Sans", "Gowun Batang",
+   "Pretendard Variable"), so their stacks need no change. Loaded after tokens.css, so these two win. */
+:root {
+  --font-serif: "Literata Variable", "Literata", "Gowun Batang", "Noto Serif KR", AppleMyungjo, Georgia, serif;
+  --font-ko-serif: "Gowun Batang", "Noto Serif KR", "Literata Variable", "Literata", AppleMyungjo, serif;
+}

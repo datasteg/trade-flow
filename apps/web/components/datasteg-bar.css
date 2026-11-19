@@ -1,0 +1,44 @@
+/* The datasteg bar (family/datasteg-bar.css): the same band on every public site. It sets its own colours and type
+   (Cairn's: Libre Franklin on white, hairline rule, each site's signature colour under the current one), so it looks
+   the same whatever design system the page below it uses; it follows the page's dark theme (data-theme="dark", or
+   the system setting when the page has no saved choice). */
+.dsb {
+  --dsb-bg: #ffffff; --dsb-ink: #121212; --dsb-ink-2: #545454; --dsb-rule: #e2e2e2; --dsb-hover: #f7f7f5; --dsb-focus: #006c9b;
+  position: relative; z-index: 60; background: var(--dsb-bg); border-bottom: 1px solid var(--dsb-rule); color: var(--dsb-ink-2);
+  font-family: 'Libre Franklin Variable', 'Pretendard Variable', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12.5px; font-weight: 500; line-height: 1; letter-spacing: 0.01em; -webkit-font-smoothing: antialiased;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dsb:not([data-site="www"]) { --dsb-bg: #111315; --dsb-ink: #ececec; --dsb-ink-2: #a4a7aa; --dsb-rule: #2a2d30; --dsb-hover: #1b1e21; --dsb-focus: #7cc4e4; } }
+:root[data-theme="dark"] .dsb { --dsb-bg: #111315; --dsb-ink: #ececec; --dsb-ink-2: #a4a7aa; --dsb-rule: #2a2d30; --dsb-hover: #1b1e21; --dsb-focus: #7cc4e4; }
+.dsb-row {
+  list-style: none; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left, 0px)); max-width: none;
+  display: flex; align-items: stretch; gap: 2px; height: 34px; overflow-x: auto; overscroll-behavior-x: contain;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.dsb-row::-webkit-scrollbar { display: none; }
+.dsb-row li { display: flex; flex: none; }
+.dsb-row a {
+  display: inline-flex; align-items: center; gap: 7px; padding: 0 10px; color: inherit; text-decoration: none; white-space: nowrap;
+  box-shadow: inset 0 -2px 0 transparent; transition: color 120ms ease, background-color 120ms ease;
+}
+.dsb-row a:hover { color: var(--dsb-ink); background: var(--dsb-hover); }
+.dsb-row a:focus-visible { outline: 2px solid var(--dsb-focus); outline-offset: -2px; }
+.dsb-row a[aria-current="true"] { color: var(--dsb-ink); font-weight: 650; }
+.dsb-row a svg { flex: none; }
+.dsb-home { margin-right: 10px; padding-right: 10px; border-right: 1px solid var(--dsb-rule); }
+.dsb-home a { font-weight: 650; color: var(--dsb-ink); padding-left: 2px; }
+.dsb-row a[aria-current="true"][data-sig="www"] { box-shadow: inset 0 -2px 0 #006c9b; }
+.dsb-row a[aria-current="true"][data-sig="articles"] { box-shadow: inset 0 -2px 0 #5bcef3; }
+.dsb-row a[aria-current="true"][data-sig="money-flow"] { box-shadow: inset 0 -2px 0 #0a55d6; }
+.dsb-row a[aria-current="true"][data-sig="trade-flow"] { box-shadow: inset 0 -2px 0 #e2a73a; }
+.dsb-row a[aria-current="true"][data-sig="global-network"] { box-shadow: inset 0 -2px 0 #e07b22; }
+.dsb-row a[aria-current="true"][data-sig="open-research"] { box-shadow: inset 0 -2px 0 #55692b; }
+@media (max-width: 720px) {
+  .dsb-row { height: 40px; padding: 0 8px; gap: 0; }
+  .dsb-row a { padding: 0 9px; gap: 6px; font-size: 12px; }
+  .dsb-home { margin-right: 4px; padding-right: 4px; }
+  /* a fade at the right edge says the row scrolls */
+  .dsb::after { content: ''; position: absolute; top: 0; right: 0; bottom: 1px; width: 28px; pointer-events: none; background: linear-gradient(to right, transparent, var(--dsb-bg)); }
+}
+@media (prefers-reduced-motion: reduce) { .dsb-row a { transition: none; } }
+@media print { .dsb { display: none; } }

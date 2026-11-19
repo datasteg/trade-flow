@@ -1,0 +1,9 @@
+{
+  "name": "@larch/tokens-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Writes design/tokens.css from design/tokens.json (the port of scripts/tokens_css.py; same output byte for byte)",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

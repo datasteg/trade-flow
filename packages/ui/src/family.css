@@ -1,0 +1,31 @@
+/* The family strip and the "Other sites" menu (Family.tsx), in Larch tokens only. Imported by the app's root layout
+   after larch.css. */
+
+.lr-family { padding: var(--space-6) var(--space-5) var(--space-2); border-top: 1px solid var(--line); background: var(--surface); }
+.lr-family__inner { display: grid; gap: var(--space-3); max-width: calc(var(--width-page) + 2 * var(--gutter)); margin: 0 auto; }
+.lr-family__cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.lr-family__card { display: grid; align-content: start; gap: var(--space-2); min-width: 0; padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-raised); }
+.lr-family__card.is-current { border-color: var(--accent); }
+.lr-family__name { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); margin: 0; font: 600 15px/22px var(--font-sans); color: var(--ink); }
+.lr-family__here { font: 500 11px/16px var(--font-sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--resin-text); }
+.lr-family__here:lang(ko) { letter-spacing: 0; text-transform: none; }
+.lr-family__role { margin: 0; font: 400 13px/19px var(--font-sans); color: var(--ink-secondary); }
+.lr-family__link { justify-self: start; font: 500 13px/18px var(--font-sans); color: var(--link); text-decoration: none; }
+.lr-family__link:hover { text-decoration: underline; }
+@media (max-width: 719px) {
+  .lr-family { padding: var(--space-5) var(--space-4) var(--space-2); }
+  .lr-family__cards { grid-template-columns: 1fr; }
+}
+
+/* the masthead item */
+.lr-family-menu { position: relative; }
+.lr-family-menu > summary { display: inline-flex; align-items: center; height: var(--control-height); padding: 0 var(--space-3); border-radius: var(--radius-sm); list-style: none; font: 500 14px/20px var(--font-sans); color: var(--ink-secondary); white-space: nowrap; cursor: pointer; }
+.lr-family-menu > summary::-webkit-details-marker { display: none; }
+.lr-family-menu > summary:hover, .lr-family-menu[open] > summary { background: var(--surface-sunk); color: var(--ink); }
+.lr-family-menu__panel { position: absolute; right: 0; top: calc(100% + 6px); z-index: var(--z-dropdown); display: grid; gap: var(--space-3); width: min(calc(100vw - 2 * var(--space-4)), 760px); padding: var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-float); }
+@media (max-width: 719px) {
+  .lr-family-menu { position: static; }
+  .lr-family-menu > summary { padding: 0 var(--space-2); font-size: 13px; }
+  .lr-family-menu__panel { left: var(--space-3); right: var(--space-3); top: calc(var(--header-height) + 4px); width: auto; }
+  .lr-family-menu__panel .lr-family__cards { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,808 @@
+# Product chains for trade-flow: which HS codes hold each stage of production, and which
+# stage feeds which. See docs/PRODUCT-CHAINS.html for the method and the numbers.
+#
+# Each chain has its own ladder (`levels`): the traded forms a material takes between the ground
+# and the shop, in the order they are made, one rung per process step that customs records can see.
+# Ladders differ in length because the processes do: clothing has four rungs (raw fibre, yarn,
+# fabric, clothing), steel six, chips eight (quartz, silicon metal, polysilicon, wafers, chips,
+# boards, modules and parts, devices). A rung carries its name in both languages and `who` makes it
+# (the Trail's column heads). Every product under `stages` sits on one rung (`stage`, 1 = the
+# ground); several products may share a rung, and a feed may skip rungs (scrap into semis) or stay
+# on one (coke into pig iron). scripts/build_snapshots.py refuses a product off its ladder and a
+# rung with no product.
+#
+# Codes are HS2022 (H6) six-digit subheadings; four digits mean the whole heading, two digits the
+# whole chapter. `codes_pre2022` replaces `codes` for files reported in HS2017 or older, where a
+# code was split in 2022 (an empty list: the stage cannot be told apart before 2022).
+# `feeds` lists the stages this one goes into, within the chain. `shared` marks a stage that also
+# feeds another chain. `caveat` says what else the code holds or what trade cannot see.
+#
+# `role: side` marks an input that joins a stage without becoming part of the product (chip-making
+# machines, calcined petroleum coke for anodes): the trail draws it with a dashed feed.
+#
+# Shared stages: a customs code records what crossed the border, not
+# what it was for. `role: feedstock` marks a side input whose output mostly goes elsewhere (crude
+# oil, natural gas and LPG, silicon metal); it joins the trail from above and has a map of its own,
+# but no ribbon. `use_share`, keyed by chain, is the share of the stage's output (or demand) that
+# goes to that chain, from a dated source outside trade: share (0-1, or null when no free source
+# gives it), what it measures, source, year, url and the source's own sentence. The map always
+# shows the whole flow; the trail and the scenario scale by the share.
+
+chains:
+  batteries:
+    label: Lithium-ion batteries and electric cars
+    label_ko: 리튬이온 배터리와 전기차
+    levels:
+      - {en: Ores and graphite, ko: 광석·흑연, who: {en: Miners, ko: 채굴국}}
+      - {en: Refined chemicals, ko: 정제 화학물, who: {en: Refiners, ko: 정제국}}
+      - {en: Electrode materials and parts, ko: 전극 소재·부품, who: {en: Material makers, ko: 소재 생산국}}
+      - {en: Cells and packs, ko: 셀·팩, who: {en: Cell makers, ko: 셀 생산국}}
+      - {en: Electric cars, ko: 전기차, who: {en: Carmakers, ko: 완성차 생산국}}
+    stages:
+      - key: li_ore
+        stage: 1
+        label: Lithium ore (spodumene concentrate)
+        codes: ["253090"]
+        feeds: [li_hydroxide, li_carbonate]
+        caveat: Residual code "mineral substances n.e.c."; lithium concentrate dominates it only
+          since the 2021-23 price boom. Brine lithium (Chile, Argentina) never trades as ore.
+      - key: nickel_ore
+        stage: 1
+        label: Nickel ore
+        codes: ["260400"]
+        feeds: [nickel_int]
+        caveat: Indonesia banned ore exports in 2020, so its ore now shows up only as
+          intermediates and nickel pig iron.
+      - key: cobalt_ore
+        stage: 1
+        label: Cobalt ore
+        codes: ["260500"]
+        feeds: [cobalt_int]
+        caveat: Most Congolese cobalt leaves as hydroxide (the S2 stage), not as ore.
+      - key: graphite_nat
+        stage: 1
+        label: Natural graphite
+        codes: ["250410", "250490"]
+        feeds: [anode]
+        use_share:
+          batteries:
+            share: 0.32
+            what: {en: "of world graphite demand (natural and synthetic) goes to batteries for electric vehicles and storage", ko: "세계 흑연 수요(천연·인조) 중 전기차·에너지저장 배터리 비중"}
+            source: "IEA, Global Critical Minerals Outlook 2025, annex table Graphite demand, p. 301"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Graphite demand … Clean energy … 1 505 … Total demand … 4 766 … Share of clean energy … 32%"
+            published: 2025-05-21
+      - key: li_carbonate
+        stage: 2
+        label: Lithium carbonate
+        codes: ["283691"]
+        feeds: [cathode]
+      - key: li_hydroxide
+        stage: 2
+        label: Lithium hydroxide
+        codes: ["282520"]
+        feeds: [cathode]
+        caveat: Also holds lithium oxide.
+      - key: nickel_int
+        stage: 2
+        label: Nickel mattes and intermediates (incl. MHP)
+        codes: ["750110", "750120", "283324"]
+        feeds: [cathode]
+        use_share:
+          batteries:
+            share: 0.15
+            what: {en: "of world nickel use goes to lithium-ion batteries for electric and hybrid cars (all nickel, not only these intermediates; stainless steel takes 64%)", ko: "세계 니켈 소비 중 전기·하이브리드차용 리튬이온 배터리 비중(스테인리스강 64%)"}
+            source: "Natural Resources Canada, Nickel facts"
+            year: 2024
+            url: "https://natural-resources.canada.ca/our-natural-resources/minerals-mining/mining-data-statistics-and-analysis/minerals-metals-facts/nickel-facts/20519"
+            quote: "A key emerging and growing use of nickel is in the production of lithium-ion batteries for electric and hybrid vehicles, which accounted for 15% of global nickel consumption in 2024."
+            published: 2026-01-05
+        caveat: Nickel sulphate (2833.24) sits here with the mattes; most mattes go to stainless
+          steel, not batteries.
+      - key: cobalt_int
+        stage: 2
+        label: Cobalt intermediates, oxides and hydroxides
+        codes: ["810520", "282200"]
+        feeds: [cathode]
+      - key: cathode
+        stage: 3
+        label: Cathode active material
+        codes: ["284190", "284290"]
+        feeds: [cells]
+        caveat: No code of its own. NCM and NCA mostly fall in 2841.90, LFP in 2842.90, and some
+          customs put them in 3824.99. Both codes hold unrelated salts too.
+      - key: anode
+        stage: 3
+        label: Anode graphite (artificial)
+        codes: ["380110"]
+        feeds: [cells]
+        use_share:
+          batteries:
+            share: 0.32
+            what: {en: "of world graphite demand (natural and synthetic) goes to batteries for electric vehicles and storage", ko: "세계 흑연 수요(천연·인조) 중 전기차·에너지저장 배터리 비중"}
+            source: "IEA, Global Critical Minerals Outlook 2025, annex table Graphite demand, p. 301"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Graphite demand … Clean energy … 1 505 … Total demand … 4 766 … Share of clean energy … 32%"
+            published: 2025-05-21
+        caveat: Also electrodes' feedstock for steel furnaces; spherical natural graphite stays in
+          2504.90.
+      - key: cell_parts
+        stage: 3
+        label: Battery parts (separators, cans, other parts)
+        codes: ["850790"]
+        feeds: [cells]
+        caveat: Parts of every kind of accumulator, lead-acid included. Separators, cans and battery
+          management parts travel here; electrolyte does not (it sits in residual chemical codes).
+      - key: cells
+        stage: 4
+        label: Lithium-ion cells and packs
+        codes: ["850760"]
+        feeds: [bev]
+        shared: [semiconductors]
+        use_share:
+          batteries:
+            share: 0.9
+            what: {en: "of lithium-ion battery demand is for the energy sector (electric vehicles and grid storage; EVs take over 90% of that)", ko: "리튬이온 배터리 수요 중 에너지 부문(전기차·전력저장) 비중"}
+            source: "IEA, Batteries and Secure Energy Transitions (2024), p. 11"
+            year: 2023
+            url: "https://iea.blob.core.windows.net/assets/cb39c1bf-d2b3-446d-8c35-aae6b1f3a4a0/BatteriesandSecureEnergyTransitions.pdf"
+            quote: "Despite the continuing use of lithium-ion batteries in billions of personal devices in the world, the energy sector now accounts for over 90% of annual lithium-ion battery demand."
+            published: 2024-04-25
+          semiconductors:
+            share: null
+            what: {en: "of lithium-ion battery demand that goes to phones, laptops and other devices: under 10%, no finer split in a free source", ko: "리튬이온 배터리 수요 중 휴대폰·노트북 등 기기용 비중: 10% 미만, 세부 수치 없음"}
+            source: "IEA, Batteries and Secure Energy Transitions (2024), p. 11"
+            year: 2023
+            url: "https://iea.blob.core.windows.net/assets/cb39c1bf-d2b3-446d-8c35-aae6b1f3a4a0/BatteriesandSecureEnergyTransitions.pdf"
+            quote: "Despite the continuing use of lithium-ion batteries in billions of personal devices in the world, the energy sector now accounts for over 90% of annual lithium-ion battery demand."
+            published: 2024-04-25
+        caveat: Phone and laptop batteries are in the same code as car packs.
+      - key: bev
+        stage: 5
+        label: Battery-electric and plug-in cars
+        codes: ["870380", "870360", "870370"]
+        caveat: Before HS2017 electric cars were in 8703.90 with other vehicles.
+
+  semiconductors:
+    label: Chips and electronics
+    label_ko: 반도체와 전자제품
+    levels:
+      - {en: Quartz, ko: 석영, who: {en: Quartz miners, ko: 석영 채굴국}}
+      - {en: Silicon metal, ko: 금속 실리콘, who: {en: Silicon smelters, ko: 실리콘 제련국}}
+      - {en: Polysilicon and minor metals, ko: 폴리실리콘·소수 금속, who: {en: Refiners, ko: 정제국}}
+      - {en: Wafers, ko: 웨이퍼, who: {en: Wafer makers, ko: 웨이퍼 생산국}}
+      - {en: Chips, ko: 칩, who: {en: Chipmakers, ko: 반도체 생산국}}
+      - {en: Printed circuit boards, ko: 인쇄회로기판, who: {en: Board makers, ko: 기판 생산국}}
+      - {en: Modules and parts, ko: 모듈·부품, who: {en: Module makers and assemblers, ko: 모듈·부품 생산국}}
+      - {en: Devices, ko: 완제품 기기, who: {en: Device makers, ko: 기기 생산국}}
+    stages:
+      - key: quartz
+        stage: 1
+        label: Quartz
+        codes: ["250610"]
+        feeds: [si_metal]
+        shared: [solar]
+      - key: si_metal
+        stage: 2
+        label: Silicon metal (below 99.99%)
+        codes: ["280469"]
+        feeds: [polysilicon]
+        shared: [solar]
+        role: feedstock
+        use_share:
+          semiconductors:
+            share: null
+            what: {en: "of silicon metal that becomes chip-grade silicon: not given; solar takes over 95% of high-purity silicon, chips and battery anodes share the rest", ko: "금속 실리콘 중 반도체용 비중: 출처 없음(고순도 실리콘의 95% 이상이 태양광용)"}
+            source: "IEA, Global Critical Minerals Outlook 2025, p. 186"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Today, solar PV accounts for over 95% of high-purity silicon demand, representing nearly a third of total silicon production."
+            published: 2025-05-21
+        caveat: Most metallurgical silicon goes to aluminium alloys and silicones, not chips.
+      - key: polysilicon
+        stage: 3
+        label: Polysilicon (99.99% and purer)
+        codes: ["280461"]
+        feeds: [wafers]
+        shared: [solar]
+        use_share:
+          semiconductors:
+            share: null
+            what: {en: "of polysilicon that goes to chips: under 5% by tonnage, shared with battery anodes; not given separately", ko: "폴리실리콘 중 반도체용 비중: 물량의 5% 미만(배터리 음극재와 합산), 별도 수치 없음"}
+            source: "IEA, Global Critical Minerals Outlook 2025, p. 186"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Today, solar PV accounts for over 95% of high-purity silicon demand, representing nearly a third of total silicon production."
+            published: 2025-05-21
+        caveat: Solar-grade and electronic-grade share the code; solar is most of the tonnage.
+      - key: minor_metals
+        stage: 3
+        label: Gallium, germanium, indium (unwrought)
+        codes: ["811292"]
+        feeds: [wafers, displays]
+        caveat: Shares the code with niobium and vanadium. Gallium goes into compound wafers, indium
+          into display electrodes (ITO).
+      - key: wafers
+        stage: 4
+        label: Doped wafers
+        codes: ["381800"]
+        feeds: [ics]
+        shared: [solar]
+        use_share:
+          semiconductors:
+            share: null
+            what: {en: "of doped wafers (3818) that are chip wafers: no free source; chip wafers carry a far higher unit value, so the layer splits by unit-value band", ko: "도핑 웨이퍼(3818) 중 반도체용 비중: 무료 출처 없음(단가 구간으로 구분)"}
+            source: "none free; unit-value bands on the layer"
+            year: null
+            url: null
+            quote: null
+        caveat: Chip wafers (Japan, Taiwan, Korea) and solar wafers (China) in one code.
+      - key: chip_tools
+        stage: 5
+        label: Chip-making machines (side input)
+        codes: ["848610", "848620", "848690"]
+        feeds: [ics]
+        role: side
+        caveat: Capital goods, not material that ends up in the chip; drawn as a side input.
+      - key: photoresist
+        stage: 5
+        label: Photoresists and photographic chemicals (side input)
+        codes: ["370790"]
+        feeds: [ics, displays]
+        role: side
+        caveat: Also developers, fixers and other photographic chemicals. In the trade between
+          Japan, Korea and Taiwan, photoresists for chips and displays are most of it (Japan's 2019
+          export controls on Korea named this code).
+      - key: ics
+        stage: 5
+        label: Integrated circuits
+        codes: ["854231", "854232", "854233", "854239"]
+        feeds: [parts]
+        caveat: A chip crosses borders several times under the same code (fab, then assembly and
+          test, then the board maker), so the stage loops on itself.
+      - key: discretes
+        stage: 5
+        label: Discrete semiconductors (diodes, transistors, thyristors)
+        codes: ["854110", "854121", "854129", "854130"]
+        feeds: [parts]
+        caveat: Power and signal devices mounted beside the chips; LEDs and solar cells (8541.4)
+          are left out.
+      - key: pcb
+        stage: 6
+        label: Printed circuit boards (bare)
+        codes: ["853400"]
+        feeds: [parts]
+        caveat: Bare boards only. A board with components mounted is a part of the device it goes
+          into (8517.79, 8473.30).
+      - key: displays
+        stage: 7
+        label: Flat panel display modules
+        codes: ["8524"]
+        codes_pre2022: []
+        feeds: [phones, computers]
+        caveat: A new heading in HS2022. Before that display modules sat in 9013.80 and 8529.90
+          with other optical devices and parts, so the series starts in 2022.
+      - key: parts
+        stage: 7
+        label: Phone and computer parts (assembled boards and others)
+        codes: ["851779", "847330"]
+        codes_pre2022: ["851770", "847330"]
+        feeds: [phones, computers]
+        caveat: Parts of every kind, from populated boards and camera modules to casings; 8517.79
+          also holds parts of network equipment. Before HS2022, 8517.70 held the parts of all
+          telephone and transmission apparatus.
+      - key: phones
+        stage: 8
+        label: Smartphones
+        codes: ["851713"]
+        codes_pre2022: ["851712"]
+        caveat: Before HS2022, 8517.12 held every mobile phone, smart or not.
+      - key: computers
+        stage: 8
+        label: Laptops and computer units
+        codes: ["847130", "847150"]
+
+  solar:
+    label: Solar photovoltaics
+    label_ko: 태양광
+    levels:
+      - {en: Quartz, ko: 석영, who: {en: Quartz miners, ko: 석영 채굴국}}
+      - {en: Silicon metal, ko: 금속 실리콘, who: {en: Silicon smelters, ko: 실리콘 제련국}}
+      - {en: Polysilicon, ko: 폴리실리콘, who: {en: Polysilicon makers, ko: 폴리실리콘 생산국}}
+      - {en: Wafers, ko: 웨이퍼, who: {en: Wafer makers, ko: 웨이퍼 생산국}}
+      - {en: Cells, ko: 태양전지, who: {en: Cell makers, ko: 셀 생산국}}
+      - {en: Modules and inverters, ko: 모듈·인버터, who: {en: Module makers, ko: 모듈 생산국}}
+    stages:
+      - key: quartz
+        stage: 1
+        label: Quartz
+        codes: ["250610"]
+        feeds: [si_metal]
+        shared: [semiconductors]
+      - key: si_metal
+        stage: 2
+        label: Silicon metal
+        codes: ["280469"]
+        feeds: [polysilicon]
+        shared: [semiconductors]
+        role: feedstock
+        use_share:
+          solar:
+            share: 0.3
+            what: {en: "of silicon metal goes to solar-grade polysilicon (nearly a third)", ko: "금속 실리콘 중 태양광용 폴리실리콘으로 쓰이는 비중(약 3분의 1)"}
+            source: "IEA, Global Critical Minerals Outlook 2025, p. 186"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Today, solar PV accounts for over 95% of high-purity silicon demand, representing nearly a third of total silicon production."
+            published: 2025-05-21
+      - key: polysilicon
+        stage: 3
+        label: Polysilicon
+        codes: ["280461"]
+        feeds: [wafers]
+        shared: [semiconductors]
+        use_share:
+          solar:
+            share: 0.95
+            what: {en: "of high-purity silicon (polysilicon) demand is for solar PV, by tonnage", ko: "고순도 실리콘(폴리실리콘) 수요 중 태양광 비중(물량 기준)"}
+            source: "IEA, Global Critical Minerals Outlook 2025, p. 186"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/ef5e9b70-3374-4caa-ba9d-19c72253bfc4/GlobalCriticalMineralsOutlook2025.pdf"
+            quote: "Today, solar PV accounts for over 95% of high-purity silicon demand, representing nearly a third of total silicon production."
+            published: 2025-05-21
+        caveat: China makes most of the world's polysilicon and uses it at home, so trade shows
+          the surplus of other makers.
+      - key: wafers
+        stage: 4
+        label: Wafers
+        codes: ["381800"]
+        feeds: [pv_cells]
+        shared: [semiconductors]
+        use_share:
+          solar:
+            share: null
+            what: {en: "of doped wafers (3818) that are solar wafers: no free source; the layer splits by unit-value band", ko: "도핑 웨이퍼(3818) 중 태양광용 비중: 무료 출처 없음(단가 구간으로 구분)"}
+            source: "none free; unit-value bands on the layer"
+            year: null
+            url: null
+            quote: null
+      - key: pv_cells
+        stage: 5
+        label: Solar cells
+        codes: ["854142"]
+        codes_pre2022: []
+        feeds: [pv_modules]
+        caveat: Split out in HS2022; before that cells, modules and LEDs shared 8541.40.
+      - key: pv_modules
+        stage: 6
+        label: Solar modules
+        codes: ["854143"]
+        codes_pre2022: ["854140"]
+        caveat: Before HS2022 this is 8541.40, which also holds cells and LEDs.
+      - key: inverters
+        stage: 6
+        label: Static converters (incl. solar inverters)
+        codes: ["850440"]
+        caveat: Broad code (chargers, power supplies, inverters); a side product of the chain.
+
+  steel:
+    label: Steel and cars
+    label_ko: 철강과 자동차
+    levels:
+      - {en: Ores, coal and scrap, ko: 광석·석탄·스크랩, who: {en: Miners, ko: 채굴국}}
+      - {en: Coke, iron and ferro-alloys, ko: 코크스·철·페로알로이, who: {en: Ironmakers, ko: 제철국}}
+      - {en: Semi-finished steel, ko: 반제품, who: {en: Steelmakers, ko: 제강국}}
+      - {en: Rolled steel, ko: 압연 강재, who: {en: Rolling mills, ko: 압연국}}
+      - {en: Car parts, ko: 자동차 부품, who: {en: Parts makers, ko: 부품 생산국}}
+      - {en: Cars, ko: 승용차, who: {en: Carmakers, ko: 완성차 생산국}}
+    stages:
+      - key: iron_ore
+        stage: 1
+        label: Iron ore (fines, lump, pellets)
+        codes: ["260111", "260112"]
+        feeds: [pig_iron, dri]
+      - key: coal
+        stage: 1
+        label: Bituminous coal (incl. coking coal)
+        codes: ["270112"]
+        feeds: [coke, pig_iron]
+        use_share:
+          steel:
+            share: 0.24
+            what: {en: "of world coal trade (all coal codes) is metallurgical coal for steel, by tonnage (368 of 1,544 Mt); the rest is thermal coal", ko: "세계 석탄 교역(모든 석탄 코드) 중 제철용 석탄 비중(물량 기준, 1,544Mt 중 368Mt)"}
+            source: "IEA, Coal 2025, p. 62"
+            year: 2024
+            url: "https://iea.blob.core.windows.net/assets/113a8274-500c-4684-951f-947d25bef3c9/Coal2025.pdf"
+            quote: "This growth was driven by increases in both thermal coal (up 26 Mt to 1 176 Mt) and met coal (up 21 Mt to 368 Mt)."
+            published: 2025-12-17
+        caveat: HS has no coking-coal code; thermal coal for power sits in the same subheading.
+      - key: scrap
+        stage: 1
+        label: Ferrous scrap
+        codes: ["7204"]
+        feeds: [semis]
+      - key: coke
+        stage: 2
+        label: Coke
+        codes: ["270400"]
+        feeds: [pig_iron]
+      - key: pig_iron
+        stage: 2
+        label: Pig iron
+        codes: ["7201"]
+        feeds: [semis]
+      - key: dri
+        stage: 2
+        label: Direct-reduced iron
+        codes: ["720310"]
+        feeds: [semis]
+      - key: ferroalloys
+        stage: 2
+        label: Ferro-alloys
+        codes: ["7202"]
+        feeds: [semis]
+      - key: semis
+        stage: 3
+        label: Semi-finished steel (slabs, billets)
+        codes: ["7207"]
+        feeds: [flat, elec_steel]
+      - key: flat
+        stage: 4
+        label: Flat-rolled steel (hot, cold, coated)
+        codes: ["7208", "7209", "7210", "7211", "7212"]
+        feeds: [car_parts]
+      - key: elec_steel
+        stage: 4
+        label: Electrical steel
+        codes: ["722511", "722519", "722611", "722619"]
+        caveat: Feeds transformers and motors, a link into the copper and magnet chains.
+      - key: car_parts
+        stage: 5
+        label: Car parts and engines
+        codes: ["8708", "840734", "840820"]
+        feeds: [cars]
+      - key: cars
+        stage: 6
+        label: Passenger cars
+        codes: ["8703"]
+
+  aluminium:
+    label: Aluminium
+    label_ko: 알루미늄
+    levels:
+      - {en: Bauxite, ko: 보크사이트, who: {en: Miners, ko: 채굴국}}
+      - {en: Alumina and scrap, ko: 알루미나·스크랩, who: {en: Refiners, ko: 정련국}}
+      - {en: Unwrought aluminium, ko: 알루미늄 괴, who: {en: Smelters, ko: 제련국}}
+      - {en: Bars, sheet and foil, ko: 봉·판·박, who: {en: Mills, ko: 압연·압출국}}
+      - {en: Products, ko: 제품, who: {en: Fabricators, ko: 가공국}}
+    stages:
+      - key: bauxite
+        stage: 1
+        label: Bauxite
+        codes: ["260600"]
+        feeds: [alumina]
+      - key: alumina
+        stage: 2
+        label: Alumina
+        codes: ["281820"]
+        feeds: [al_unwrought]
+        caveat: About two tonnes of alumina make one tonne of aluminium.
+      - key: pet_coke
+        stage: 2
+        label: Calcined petroleum coke (anode input)
+        codes: ["271312"]
+        feeds: [al_unwrought]
+        role: side
+      - key: al_unwrought
+        stage: 3
+        label: Unwrought aluminium
+        codes: ["7601"]
+        feeds: [al_semis]
+      - key: al_scrap
+        stage: 2
+        label: Aluminium scrap
+        codes: ["760200"]
+        feeds: [al_unwrought]
+      - key: al_semis
+        stage: 4
+        label: Bars, profiles, sheet and foil
+        codes: ["7604", "7605", "7606", "7607", "7608"]
+        feeds: [al_products]
+      - key: al_products
+        stage: 5
+        label: Structures, cans and containers
+        codes: ["7610", "7612"]
+        caveat: Most aluminium ends inside cars, aircraft and machines, which are not counted
+          here.
+
+  copper:
+    label: Copper and electrification
+    label_ko: 구리와 전력망
+    levels:
+      - {en: Concentrate, ko: 정광, who: {en: Miners, ko: 채굴국}}
+      - {en: Blister, anodes and scrap, ko: 조동·양극동·스크랩, who: {en: Smelters, ko: 제련국}}
+      - {en: Refined cathode, ko: 전기동, who: {en: Refiners, ko: 정련국}}
+      - {en: Wire, strip and foil, ko: 선재·판재·동박, who: {en: Mills, ko: 가공국}}
+      - {en: Cable and transformers, ko: 케이블·변압기, who: {en: Equipment makers, ko: 기기 생산국}}
+    stages:
+      - key: cu_conc
+        stage: 1
+        label: Copper concentrate
+        codes: ["260300"]
+        feeds: [cu_blister]
+        caveat: Concentrate is roughly a quarter copper by weight.
+      - key: cu_blister
+        stage: 2
+        label: Mattes, blister and anodes
+        codes: ["740100", "740200"]
+        feeds: [cu_cathode]
+      - key: cu_cathode
+        stage: 3
+        label: Refined copper cathode
+        codes: ["740311"]
+        feeds: [cu_semis]
+      - key: cu_scrap
+        stage: 2
+        label: Copper scrap
+        codes: ["740400"]
+        feeds: [cu_cathode, cu_semis]
+      - key: cu_semis
+        stage: 4
+        label: Wire, strip and foil
+        codes: ["7408", "7409", "7410"]
+        feeds: [cable, transformers]
+        use_share:
+          copper:
+            share: null
+            what: {en: "of wire, strip and foil that goes to cable and transformers: no free source; foil (7410), which goes to circuit boards and battery anodes instead, is 5% of copper's first use against 63% for wire", ko: "선재·판재·동박 중 전선·변압기로 가는 비중은 무료 출처가 없습니다(회로기판·배터리 음극으로 가는 동박은 구리 1차 사용의 5%, 선재는 63%)."}
+            source: "ICSG, The World Copper Factbook 2026 (IWCC data), p. 46"
+            year: 2025
+            url: "https://icsg.org/copper-factbook/"
+            quote: null
+            published: 2026-10-15
+        caveat: Copper foil (7410) also feeds circuit boards and battery anodes.
+      - key: cable
+        stage: 5
+        label: Insulated wire and cable
+        codes: ["8544"]
+        caveat: Includes car wiring harnesses (8544.42) and optical fibre cables (8544.70).
+      - key: transformers
+        stage: 5
+        label: Power transformers
+        codes: ["850421", "850422", "850423", "850433", "850434"]
+
+  magnets:
+    label: Rare earths, magnets and motors
+    label_ko: 희토류, 영구자석, 모터
+    levels:
+      - {en: Ore, ko: 광석, who: {en: Miners, ko: 채굴국}}
+      - {en: Compounds, ko: 화합물, who: {en: Separators, ko: 분리·정제국}}
+      - {en: Metals and alloys, ko: 금속·합금, who: {en: Metal makers, ko: 금속 생산국}}
+      - {en: Magnets, ko: 영구자석, who: {en: Magnet makers, ko: 자석 생산국}}
+      - {en: Motors and turbines, ko: 모터·터빈, who: {en: Motor makers, ko: 모터 생산국}}
+    stages:
+      - key: ree_ore
+        stage: 1
+        label: Rare-earth ore (no own code)
+        codes: ["253090", "261220"]
+        feeds: [ree_compounds]
+        caveat: Bastnaesite sits in the residual 2530.90 with lithium ore; monazite partly in
+          thorium ores (2612.20). Trade in ore is mostly Myanmar, Laos and the US into China.
+      - key: ree_compounds
+        stage: 2
+        label: Rare-earth compounds (oxides, carbonates)
+        codes: ["2846"]
+        feeds: [ree_metals]
+      - key: ree_metals
+        stage: 3
+        label: Rare-earth metals and alloys
+        codes: ["280530"]
+        feeds: [magnets]
+      - key: magnets
+        stage: 4
+        label: Permanent magnets of metal (NdFeB, SmCo)
+        codes: ["850511"]
+        feeds: [motors, wind]
+        caveat: Ferrite magnets are 8505.19 and use no rare earths.
+      - key: motors
+        stage: 5
+        label: Electric motors (multi-phase AC, large DC)
+        codes: ["850152", "850153", "850133", "850134"]
+        caveat: EV traction motors mostly travel inside the car, not as motors.
+      - key: wind
+        stage: 5
+        label: Wind turbines
+        codes: ["850231"]
+
+  plastics:
+    label: Oil and gas to plastics
+    label_ko: 석유·가스에서 플라스틱까지
+    levels:
+      - {en: Crude oil, gas and LPG, ko: 원유·가스·LPG, who: {en: Oil and gas producers, ko: 산유·산가스국}}
+      - {en: Naphtha, ko: 나프타, who: {en: Refiners, ko: 정제국}}
+      - {en: Olefins and aromatics, ko: 올레핀·방향족, who: {en: Crackers, ko: 기초유분 생산국}}
+      - {en: Intermediates, ko: 중간 원료, who: {en: Chemical makers, ko: 화학 중간재 생산국}}
+      - {en: Polymers and rubber, ko: 합성수지·합성고무, who: {en: Polymer makers, ko: 수지 생산국}}
+      - {en: Plastic goods and tyres, ko: 플라스틱 제품·타이어, who: {en: Converters, ko: 가공국}}
+    stages:
+      - key: crude
+        stage: 1
+        label: Crude oil
+        codes: ["270900"]
+        feeds: [naphtha]
+        role: feedstock
+        use_share:
+          plastics:
+            share: 0.12
+            what: {en: "of world oil demand is petrochemical feedstock", ko: "세계 석유 수요 중 석유화학 원료로 쓰이는 비중"}
+            source: "IEA, The Future of Petrochemicals (2018), p. 78"
+            year: 2017
+            url: "https://iea.blob.core.windows.net/assets/bee4ef3a-8876-4566-98cf-7a130c013805/The_Future_of_Petrochemicals.pdf"
+            quote: "With around 12 mb/d, global oil demand for chemical feedstock accounted for about 12% of total oil demand in 2017."
+            published: 2018-10-04
+      - key: gas_lpg
+        stage: 1
+        label: Natural gas and LPG
+        codes: ["271111", "271121", "271112", "271113"]
+        feeds: [olefins]
+        shared: [fertiliser]
+        role: feedstock
+        use_share:
+          plastics:
+            share: 0.08
+            what: {en: "of natural gas demand goes to the chemical sector (feedstock and process energy, ammonia and methanol included); no free source gives LPG's petrochemical share", ko: "천연가스 수요 중 화학 부문(원료·공정 에너지, 암모니아·메탄올 포함)이 쓰는 비중"}
+            source: "IEA, The Future of Petrochemicals (2018), p. 27"
+            year: 2017
+            url: "https://iea.blob.core.windows.net/assets/bee4ef3a-8876-4566-98cf-7a130c013805/The_Future_of_Petrochemicals.pdf"
+            quote: "The chemical sector, accounting for 8% of total demand for natural gas, uses twice as much as the entire transport sector."
+            published: 2018-10-04
+      - key: naphtha
+        stage: 2
+        label: Light oils (naphtha, with gasoline)
+        codes: ["271012"]
+        feeds: [olefins]
+        use_share:
+          plastics:
+            share: null
+            what: {en: "of 2710.12 trade that is naphtha for petrochemicals: unknown, because motor gasoline shares the code; national 8- and 10-digit lines split them", ko: "HS 2710.12 교역 중 석유화학용 나프타 비중은 알 수 없습니다. 휘발유와 같은 코드를 쓰기 때문입니다. 국가별 8·10단위 코드로는 구분할 수 있습니다."}
+            source: "none free; national tariff lines (Korea customs, Comtrade Tariffline) to be measured"
+            year: null
+            url: null
+            quote: null
+        caveat: Naphtha shares the code with motor gasoline; national 8- and 10-digit lines split
+          them.
+      - key: olefins
+        stage: 3
+        label: Olefins and aromatics
+        codes: ["290121", "290122", "290124", "290220", "290243", "290250"]
+        feeds: [intermediates, polymers]
+      - key: intermediates
+        stage: 4
+        label: PTA, ethylene glycol, vinyl chloride
+        codes: ["291736", "290531", "290321"]
+        feeds: [polymers]
+        shared: [textiles]
+      - key: polymers
+        stage: 5
+        label: Polymers (PE, PP, PVC, PET, PS)
+        codes: ["3901", "390210", "390410", "390761", "390769", "3903"]
+        feeds: [plastic_goods]
+      - key: synth_rubber
+        stage: 5
+        label: Synthetic rubber (SBR)
+        codes: ["400219"]
+        feeds: [tyres]
+      - key: plastic_goods
+        stage: 6
+        label: Film, sheets and packaging
+        codes: ["3920", "3923"]
+      - key: tyres
+        stage: 6
+        label: Car tyres
+        codes: ["401110"]
+
+  textiles:
+    label: Cotton and polyester to clothing
+    label_ko: 면·폴리에스터에서 의류까지
+    levels:
+      - {en: Raw cotton and fibre feedstock, ko: 원면·섬유 원료, who: {en: Growers and chemical makers, ko: 재배국·원료 생산국}}
+      - {en: Fibre and yarn, ko: 섬유·원사, who: {en: Spinners, ko: 방적·방사국}}
+      - {en: Fabric, ko: 직물, who: {en: Weavers and knitters, ko: 직물 생산국}}
+      - {en: Clothing, ko: 의류, who: {en: Garment makers, ko: 의류 생산국}}
+    stages:
+      - key: cotton
+        stage: 1
+        label: Raw cotton
+        codes: ["520100"]
+        feeds: [cotton_yarn]
+      - key: pta_meg
+        stage: 1
+        label: PTA and ethylene glycol
+        codes: ["291736", "290531"]
+        feeds: [polyester]
+        shared: [plastics]
+      - key: cotton_yarn
+        stage: 2
+        label: Cotton yarn
+        codes: ["5205"]
+        feeds: [fabric]
+      - key: polyester
+        stage: 2
+        label: Polyester fibre and filament
+        codes: ["550320", "540247", "540246"]
+        feeds: [fabric]
+      - key: fabric
+        stage: 3
+        label: Woven and knitted fabric
+        codes: ["5208", "5209", "5210", "5211", "5212", "5407", "6004", "6006"]
+        feeds: [apparel]
+      - key: apparel
+        stage: 4
+        label: Clothing (knitted and woven)
+        codes: ["61", "62"]
+
+  fertiliser:
+    label: Gas and minerals to fertilisers and crops
+    label_ko: 가스·광물에서 비료와 곡물까지
+    levels:
+      - {en: Gas and phosphate rock, ko: 가스·인광석, who: {en: Gas and rock producers, ko: 가스·광석 생산국}}
+      - {en: Ammonia and phosphoric acid, ko: 암모니아·인산, who: {en: Chemical makers, ko: 화학 생산국}}
+      - {en: Fertilisers, ko: 비료, who: {en: Fertiliser makers, ko: 비료 생산국}}
+      - {en: Crops, ko: 곡물, who: {en: Growers, ko: 재배국}}
+    stages:
+      - key: gas
+        stage: 1
+        label: Natural gas
+        codes: ["271111", "271121"]
+        feeds: [ammonia]
+        shared: [plastics]
+        role: feedstock
+        use_share:
+          fertiliser:
+            share: 0.04
+            what: {en: "of world gas supply goes to ammonia production", ko: "세계 가스 공급 중 암모니아 생산에 쓰이는 비중"}
+            source: "Saygin et al., Ammonia Production from Clean Hydrogen and the Implications for Global Natural Gas Demand, Sustainability 15(2), 1623 (2023)"
+            year: 2020
+            url: "https://research.utwente.nl/en/publications/ammonia-production-from-clean-hydrogen-and-the-implications-for-g/"
+            quote: "Gas used for 183 million tons annual ammonia production represents 4% of total global gas supply."
+            published: 2023-01-13
+      - key: phosphate_rock
+        stage: 1
+        label: Phosphate rock
+        codes: ["251010", "251020"]
+        feeds: [phos_acid]
+      - key: ammonia
+        stage: 2
+        label: Ammonia
+        codes: ["281410"]
+        feeds: [nitrogen, phosphates]
+      - key: phos_acid
+        stage: 2
+        label: Phosphoric acid
+        codes: ["280920"]
+        feeds: [phosphates]
+        caveat: Fertiliser-grade acid is most of the tonnage; food and industrial grades share the
+          code.
+      - key: nitrogen
+        stage: 3
+        label: Nitrogen fertilisers (urea, ammonium nitrate)
+        codes: ["310210", "310230"]
+        feeds: [crops]
+      - key: phosphates
+        stage: 3
+        label: Phosphate fertilisers (DAP, MAP)
+        codes: ["310530", "310540"]
+        feeds: [crops]
+      - key: potash
+        stage: 3
+        label: Potash (potassium chloride)
+        codes: ["310420"]
+        feeds: [crops]
+        caveat: Mined and refined in one place, so the ore never trades; the first traded form is
+          the fertiliser.
+      - key: crops
+        stage: 4
+        label: Wheat, maize and soybeans
+        codes: ["100199", "100590", "120190"]

@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "note": "The datasteg flow-site family: one source of truth for the datasteg bar on every public site (www, articles and the four flow sites; DatastegBar.tsx), the family strip and the context links. Copied into each app at deploy (lib/family.json); tests/test_family_sync.py fails when a copy differs. Link templates take {lang}, {iso3}, {a}, {b}, {q}, {chain}, {event}, {stage}.",
+  "kicker": {
+    "en": "datasteg: the flow sites",
+    "ko": "datasteg 흐름 사이트"
+  },
+  "menu": {
+    "en": "Other sites",
+    "ko": "다른 사이트"
+  },
+  "current": {
+    "en": "You are here",
+    "ko": "지금 보는 사이트"
+  },
+  "open": {
+    "en": "Open {name}",
+    "ko": "{name} 열기"
+  },
+  "bar": {
+    "label": {
+      "en": "datasteg sites",
+      "ko": "datasteg 사이트"
+    },
+    "context": {
+      "en": "See this economy on {name}",
+      "ko": "{name}에서 이 경제 보기"
+    }
+  },
+  "sites": [
+    {
+      "id": "money-flow",
+      "host": "https://money-flow.datasteg.com",
+      "name": "money-flow",
+      "prefix": "/mf/",
+      "role": {
+        "en": "Where money is made and where it goes: central bank and bank money, and cross-border positions by country pair.",
+        "ko": "돈이 어디서 만들어지고 어디로 가는지 설명합니다. 중앙은행과 은행의 돈, 나라 쌍별 대외 포지션을 다룹니다."
+      },
+      "links": {
+        "home": "/{lang}",
+        "economy": "/{lang}/e/{iso3}",
+        "world": "/{lang}/world",
+        "world_follow": "/{lang}/world?bf={iso3}",
+        "bank_pair": "/{lang}/m/bank?h={a}&d={b}",
+        "lender_cut": "/{lang}/m/bank?cut=1&by=debtor&e={iso3}",
+        "sovereign": "/{lang}/sovereign?e={iso3}",
+        "method": "/{lang}/method",
+        "sources": "/{lang}/sources",
+        "feed": "/feed"
+      },
+      "economy_from": {
+        "path": "^/(?:en|ko)/e/([A-Za-z]{3})(?:/|$)"
+      }
+    },
+    {
+      "id": "trade-flow",
+      "host": "https://trade-flow.datasteg.com",
+      "name": "trade-flow",
+      "prefix": "/tf/",
+      "role": {
+        "en": "The world trade network and ten product chains from ore to product, with the events that moved them.",
+        "ko": "세계 교역망과 원료에서 제품까지 열 개 공급망 사슬, 그리고 이를 흔든 사건들."
+      },
+      "links": {
+        "home": "/{lang}",
+        "economy": "/{lang}/explore?focus={iso3}",
+        "flow": "/{lang}/explore?flow={a}-{b}",
+        "chain": "/{lang}/chains/{chain}",
+        "chain_focus": "/{lang}/chains/{chain}?focus={iso3}",
+        "events": "/{lang}/events",
+        "event": "/{lang}/events/{event}",
+        "cut_supplier": "/{lang}/cases/tools/cut-supplier?stage={stage}&exporter={iso3}",
+        "method": "/{lang}/method",
+        "feed": "/feed"
+      },
+      "economy_from": {
+        "query": "focus"
+      }
+    },
+    {
+      "id": "global-network",
+      "host": "https://global-network.datasteg.com",
+      "name": "global-network",
+      "prefix": "/gnw/",
+      "role": {
+        "en": "Funding and trade together: how economies earn, who funds whom against who trades with whom, and what past shocks did to both.",
+        "ko": "자금과 교역을 한 화면에 표시합니다. 경제가 어떻게 버는지, 누가 누구에게 자금을 대고 누구와 교역하는지, 과거 충격이 둘에 무엇을 했는지 살펴볼 수 있습니다."
+      },
+      "links": {
+        "home": "/{lang}",
+        "economy": "/{lang}/c/{iso3}",
+        "economy_funding": "/{lang}/c/{iso3}#funding",
+        "economy_trade": "/{lang}/c/{iso3}#trade",
+        "pair": "/{lang}/c/{a}/with/{b}",
+        "shocks": "/{lang}/shocks",
+        "shock": "/{lang}/shocks/{event}",
+        "dollar": "/{lang}/shocks/dollar",
+        "about": "/{lang}/about",
+        "feed": "/feed"
+      },
+      "economy_from": {
+        "path": "^/(?:en|ko)/c/([A-Za-z]{3})(?:/|$)"
+      }
+    },
+    {
+      "id": "open-research",
+      "host": "https://open-research.datasteg.com",
+      "name": "open-research",
+      "prefix": "/or/",
+      "role": {
+        "en": "An open atlas of economic research: 102,596 papers, speeches and reports by topic, JEL code, organisation, person and place.",
+        "ko": "경제 연구의 열린 지도입니다. 논문, 연설, 보고서 102,596건을 주제, JEL 분류, 기관, 사람, 지역별로 추적합니다."
+      },
+      "links": {
+        "home": "/{lang}",
+        "economy": "/{lang}/c/{iso3}",
+        "search": "/{lang}/search?q={q}",
+        "method": "/{lang}/about",
+        "feed": "/feed"
+      },
+      "economy_from": {
+        "path": "^/(?:en|ko)/c/([A-Za-z]{3})(?:/|$)"
+      }
+    }
+  ],
+  "articles": {
+    "id": "articles",
+    "host": "https://articles.datasteg.com",
+    "name": "articles",
+    "role": {
+      "en": "Explainers on economics and finance, with the numbers behind them.",
+      "ko": "경제와 금융을 숫자로 풀어 쓴 해설."
+    },
+    "links": {
+      "home": "/{lang}"
+    }
+  },
+  "portal": {
+    "id": "www",
+    "host": "https://www.datasteg.com",
+    "name": "datasteg",
+    "role": {
+      "en": "The home of the datasteg sites: what data they hold, how they are built and checked, and who makes them.",
+      "ko": "datasteg 사이트의 소개 페이지입니다. 각 사이트가 어떤 데이터를 보유하는지, 어떻게 구축하고 검증하는지, 누가 제작하는지를 설명합니다."
+    },
+    "links": {
+      "home": "/{lang}"
+    }
+  }
+}

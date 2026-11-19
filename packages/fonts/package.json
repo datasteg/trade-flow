@@ -1,0 +1,22 @@
+{
+  "name": "@larch/fonts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted Larch fonts (all SIL OFL 1.1): one place to change font loading",
+  "exports": {
+    ".": "./index.ts",
+    "./fonts.css": "./fonts.css"
+  },
+  "dependencies": {
+    "@fontsource-variable/literata": "5.3.0",
+    "@fontsource/fira-mono": "5.3.0",
+    "@fontsource/fira-sans": "5.3.0",
+    "@fontsource/fira-sans-condensed": "5.3.0",
+    "@fontsource/gowun-batang": "5.3.0",
+    "pretendard": "1.3.9"
+  },
+  "sideEffects": [
+    "*.css",
+    "./index.ts"
+  ]
+}

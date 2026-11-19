@@ -1,0 +1,144 @@
+# trade-flow's views for the datasteg API and MCP service (api/docs/SVC-CONTRACT.md):
+# chart-sized derived views. The routes are apps/web/app/svc/v1/**, built in apps/web/lib/svc/.
+# Licence: every answer carries derived records only (shares, ranks, ratios, HHI) and
+# no original UN Comtrade record; no USD value of a flow, an economy or the world; lists capped at one chart's worth;
+# nothing lists the data folder. apps/web/tests/svc-licence.test.mjs checks every example.
+id: trade-flow
+title: trade-flow
+summary: The world trade network and product chains, ore to product, from UN Comtrade customs records, as shares, ranks and ratios.
+site: https://trade-flow.datasteg.com
+internal: http://trade-flow:8080
+status: live
+surface: "1.0"
+hooks: [search, item, economy, economies]
+item_kinds: [economy, chain, event, case, product]
+search_example: korea
+item_example: economy:KOR
+views:
+  - id: economy
+    path: /economies/{iso3}
+    summary: One economy's largest partners (shares of its exports or imports, ranks, mirror ratios) and largest HS chapters, as the explorer's economy card shows them.
+    params:
+      iso3: { in: path, type: string, pattern: "^[A-Za-z0-9_]{3}$", description: "ISO 3166-1 alpha-3 code, such as KOR" }
+      period: { type: string, pattern: "^[0-9]{4}(-[0-9]{2})?$", description: "YYYY-MM: the 12-month window ending in that month (default: the latest the site shows); YYYY: the year" }
+      product: { type: string, maxLength: 64, default: TOTAL, description: "TOTAL (all goods), a basket such as B:semiconductors or a chain stage such as C:batteries:cells; HS chapters such as HS:85 are annual only" }
+      direction: { type: string, enum: [exports, imports], default: exports, description: "Partners as destinations of its exports or suppliers of its imports" }
+      limit: { type: integer, minimum: 1, maximum: 25, default: 10, description: "How many partners" }
+    table: true
+    max_bytes: 30000
+    example: { iso3: KOR }
+    tool:
+      name: trade_flow_economy
+      title: One economy's trade partners and products
+      description: >-
+        An economy's share of world exports and imports with its rank, its largest destinations or suppliers (shares of its
+        trade, ranks, mirror ratios) and its largest HS chapters, over the latest 12-month window or a month or year you
+        name, from UN Comtrade. Shares only, no values. Use for "who does Korea sell to" or "what does Chile import".
+  - id: bilateral
+    path: /flows/{a}/{b}
+    summary: Trade between two economies in both directions - shares of world trade and of each side's trade, ranks, the mirror ratio, ten years of window shares and the largest HS chapters - as the explorer's flow card shows it.
+    params:
+      a: { in: path, type: string, pattern: "^[A-Za-z0-9_]{3}$", description: "First economy, ISO3, such as KOR" }
+      b: { in: path, type: string, pattern: "^[A-Za-z0-9_]{3}$", description: "Second economy, ISO3, such as USA" }
+      product: { type: string, maxLength: 64, default: TOTAL, description: "TOTAL, a basket, a chain stage or (annual) an HS chapter" }
+      period: { type: string, pattern: "^[0-9]{4}(-[0-9]{2})?$", description: "YYYY-MM (12-month window) or YYYY (year); default the latest window the site shows" }
+    table: true
+    max_bytes: 40000
+    example: { a: KOR, b: USA }
+    tool:
+      name: trade_flow_bilateral
+      title: Trade between two economies
+      description: >-
+        Both directions of trade between two economies from UN Comtrade: each flow's share of world trade and of the
+        exporter's exports and importer's imports, ranks, the mirror ratio (how differently the two report it), its share
+        over ten years and its largest HS chapters. Shares and ratios only. Use for "how much of Korea's exports go to the US".
+  - id: products
+    path: /products
+    summary: The products trade-flow draws - all goods, HS chapters, baskets and chain stages - with names, codes and the years and windows on offer.
+    params:
+      kind: { type: string, enum: [total, chapter, basket, stage], description: "Only one kind" }
+      limit: { type: integer, minimum: 1, maximum: 100, default: 25, description: "How many per page" }
+      cursor: { type: string, maxLength: 8, description: "The cursor a previous answer returned" }
+    table: false
+    max_bytes: 40000
+    example: { kind: basket }
+  - id: product
+    path: /products/{id}
+    summary: One product's world picture - exporters, top exporter and top-five shares, HHI, the largest exporters and importers - as the explorer's overview shows it.
+    params:
+      id: { in: path, type: string, pattern: "^[A-Za-z0-9:_-]{1,64}$", description: "Product id such as TOTAL, HS:85, B:semiconductors or C:batteries:cells (or its slug, HS-85)" }
+      period: { type: string, pattern: "^[0-9]{4}(-[0-9]{2})?$", description: "YYYY-MM (12-month window) or YYYY (year); default the latest the site shows" }
+    table: true
+    max_bytes: 20000
+    example: { id: "B:semiconductors" }
+  - id: chains
+    path: /chains
+    summary: The ten product chains, ore to product, with their stages, chokepoint stage and most two-way stage in the last complete year.
+    params: {}
+    table: false
+    max_bytes: 20000
+    example: {}
+  - id: chain
+    path: /chains/{chain}
+    summary: One chain's stages - exporter HHI, the largest exporters, importers and flows as shares, chokepoints above HHI 0.25 - and, with economy, that economy's place at every stage, as the chain page shows it.
+    params:
+      chain: { in: path, type: string, pattern: "^[a-z_]{2,32}$", description: "Chain id, such as semiconductors or batteries" }
+      economy: { type: string, pattern: "^[A-Za-z0-9_]{3}$", description: "ISO3 of an economy to place at every stage, such as KOR" }
+      year: { type: integer, minimum: 1995, maximum: 2100, description: "A year of the chain (default the last complete year)" }
+    table: true
+    max_bytes: 40000
+    example: { chain: semiconductors, economy: KOR }
+    tool:
+      name: trade_flow_chain
+      title: A product chain, stage by stage
+      description: >-
+        One of ten product chains (batteries, semiconductors, solar, steel, aluminium, copper, magnets, plastics, textiles,
+        fertiliser) from ore to product: each stage's exporter concentration (HHI), largest exporters, importers and flows
+        as shares, its chokepoints, and optionally one economy's share and rank at every stage. UN Comtrade, annual.
+  - id: events
+    path: /events
+    summary: The fourteen economic events trade-flow reads in the trade data, with dates, products and economies.
+    params: {}
+    table: false
+    max_bytes: 20000
+    example: {}
+  - id: event
+    path: /events/{id}
+    summary: One event as its page shows it - timeline, who gained and lost share, the named economies' changes, the reading of the numbers and the dated sources.
+    params:
+      id: { in: path, type: string, pattern: "^[a-z0-9-]{2,64}$", description: "Event id, such as covid-2020 or iran-war-2026" }
+    table: false
+    max_bytes: 60000
+    example: { id: covid-2020 }
+  - id: cases
+    path: /cases
+    summary: The nine case studies - a question from the literature read against the trade network.
+    params: {}
+    table: false
+    max_bytes: 20000
+    example: {}
+  - id: case
+    path: /cases/{id}
+    summary: One case study as its page shows it - papers with verified quotes, the measures as shares and changes, the scenario, Korea and the limits.
+    params:
+      id: { in: path, type: string, pattern: "^[a-z0-9-]{2,64}$", description: "Case id, such as chips or hormuz" }
+    table: false
+    max_bytes: 60000
+    example: { id: chips }
+  - id: supplier_cut
+    path: /tools/cut-supplier
+    summary: The cut-a-supplier scenario on any chain stage - who loses what share of their imports, who could fill the gap and what passes one stage down - as the tool page computes it.
+    params:
+      stage: { type: string, maxLength: 64, description: "Chain stage as <chain>/<stage>, such as semiconductors/ics (default: the first chain's chokepoint)" }
+      exporter: { type: string, pattern: "^[A-Za-z0-9_]{3}$", description: "ISO3 of the exporter cut (default the stage's largest)" }
+      cut: { type: integer, minimum: 1, maximum: 100, default: 100, description: "Share of its exports removed, in percent" }
+    table: true
+    max_bytes: 30000
+    example: { stage: semiconductors/ics, exporter: TWN }
+    tool:
+      name: trade_flow_supplier_cut
+      title: Cut a supplier of a chain stage
+      description: >-
+        First-round arithmetic on UN Comtrade trade shares, not a forecast: cut one exporter of a chain stage (such as
+        Taiwan's chips or China's lithium hydroxide) by a share and see which importers lose what share of their imports,
+        who could fill the gap and how much of the next stage's world exports is exposed.
